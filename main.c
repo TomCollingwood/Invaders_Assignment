@@ -4,12 +4,12 @@
 #include <stdlib.h>
 #include "Invader.h"
 // include the map for the maze.
-// the width of the screen taking into account the maze and block
+// the width of the screen
 #define WIDTH 800
-// the height of the screen taking into account the maze and block
+// the height of the screen
 #define HEIGHT 600
 // an enumeration for direction to move USE more enums!
-enum DIRECTION{UP,DOWN,LEFT,RIGHT,NONE};
+enum DIRECTION{LEFT,RIGHT,FIRE,NONE};
 
 void initializeInvaders(Invader invaders[ROWS][COLS]);
 void updateInvaders(Invader invaders[ROWS][COLS]);
@@ -50,27 +50,31 @@ int main()
   // however we will overdraw all of this so only for reference
   SDL_SetRenderDrawColor(ren, 255, 255, 255, 255);
 
-//  // SDL image is an abstraction for all images
+  // SDL image is an abstraction for all images
   SDL_Surface *image;
-//  // we are going to use the extension SDL_image library to load a png, documentation can be found here
-//  // http://www.libsdl.org/projects/SDL_image/
+  // we are going to use the extension SDL_image library to load a png, documentation can be found here
+  // http://www.libsdl.org/projects/SDL_image/
   image=IMG_Load("InvaderA2.bmp");
   if(!image)
   {
     printf("IMG_Load: %s\n", IMG_GetError());
     return EXIT_FAILURE;
   }
-//  // SDL texture converts the image to a texture suitable for SDL rendering  / blitting
-//  // once we have the texture it will be store in hardware and we don't need the image data anymore
+  // SDL texture converts the image to a texture suitable for SDL rendering  / blitting
+  // once we have the texture it will be store in hardware and we don't need the image data anymore
 
   SDL_Texture *tex = 0;
   tex = SDL_CreateTextureFromSurface(ren, image);
+
+
+
   // free the image
   SDL_FreeSurface(image);
 
 
 
   int quit=0;
+  enum DIRECTION input;
   // now we are going to loop forever, process the keys then draw
 
   while (quit !=1)
@@ -89,25 +93,28 @@ int main()
         {
         // if we have an escape quit
         case SDLK_ESCAPE : quit=1; break;
-
-       }
+        case SDLK_RIGHT : input = RIGHT; break;
+        case SDLK_LEFT : input = LEFT; break;
+        case SDLK_SPACE : input = FIRE; break;
+        }
+      }
     }
-  }
 
-  // now we clear the screen (will use the clear colour set previously)
-  SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
-  SDL_RenderClear(ren);
-  updateInvaders(invaders);
-  drawInvaders(ren,tex,invaders);
-  // Up until now everything was drawn behind the scenes.
-  // This will show the new, red contents of the window.
-  SDL_RenderPresent(ren);
+    // now we clear the screen (will use the clear colour set previously)
+    SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
+    SDL_RenderClear(ren);
+    updateInvaders(invaders);
+    drawInvaders(ren,tex,invaders);
+    // Up until now everything was drawn behind the scenes.
+    // This will show the new, red contents of the window.
+    SDL_RenderPresent(ren);
 
   }
 
   SDL_Quit();
   return 0;
 }
+
 
 
 void initializeInvaders(Invader invaders[ROWS][COLS])
