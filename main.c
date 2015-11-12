@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Invader.h"
+#include "Missile.h"
 // include the map for the maze.
 // the width of the screen
 #define WIDTH 800
@@ -12,15 +13,23 @@
 enum DIRECTION{LEFT,RIGHT,FIRE,NONE};
 
 void initializeInvaders(Invader invaders[ROWS][COLS]);
+void initializeDefender(SDL_Rect *def);
 void updateInvaders(Invader invaders[ROWS][COLS]);
-void drawDefender(SDL_Renderer *ren, SDL_Texture *tex);
-
 void drawInvaders(SDL_Renderer *ren,SDL_Texture *tex,Invader invaders[ROWS][COLS]);
+void updateDefender(SDL_Rect *def, enum DIRECTION input, Missile missiles[]);
+void drawDefender(SDL_Renderer *ren, SDL_Texture *tex, SDL_Rect *def);
+void updateMissiles(Missile missiles[]);
+void drawMissiles(SDL_Renderer *ren, Missile missiles[]);
+
+int xinc = 0;
 
 int main()
 {
   Invader invaders[ROWS][COLS];
+  Missile missiles[5];
+  SDL_Rect def;
   initializeInvaders(invaders);
+  initializeDefender(&def);
   // initialise SDL and check that it worked otherwise exit
   // see here for details http://wiki.libsdl.org/CategoryAPI
   if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
@@ -55,7 +64,7 @@ int main()
   SDL_Surface *image;
   // we are going to use the extension SDL_image library to load a png, documentation can be found here
   // http://www.libsdl.org/projects/SDL_image/
-  image=IMG_Load("InvaderA2.bmp");
+  image=IMG_Load("SpriteSheet.bmp");
   if(!image)
   {
     printf("IMG_Load: %s\n", IMG_GetError());
@@ -97,7 +106,12 @@ int main()
         case SDLK_RIGHT : input = RIGHT; break;
         case SDLK_LEFT : input = LEFT; break;
         case SDLK_SPACE : input = FIRE; break;
+        default : input = NONE; break;
         }
+      }
+      if (event.type == SDL_KEYUP)
+      {
+        input = NONE;
       }
     }
 
@@ -105,9 +119,16 @@ int main()
     SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
 
     SDL_RenderClear(ren);
+
     updateInvaders(invaders);
     drawInvaders(ren,tex,invaders);
-    drawDefender(ren,tex);
+
+    updateDefender(&def,input,missiles);
+    drawDefender(ren,tex,&def);
+
+    updateMissiles(missiles);
+    drawMissiles(ren,missiles);
+
     // Up until now everything was drawn behind the scenes.
     // This will show the new, red contents of the window.
     SDL_RenderPresent(ren);
@@ -118,7 +139,13 @@ int main()
   return 0;
 }
 
-
+void initializeDefender(SDL_Rect *def)
+{
+  def->x=250;
+  def->y=550;
+  def->w=40;
+  def->h=30;
+}
 
 void initializeInvaders(Invader invaders[ROWS][COLS])
 {
@@ -150,20 +177,14 @@ void initializeInvaders(Invader invaders[ROWS][COLS])
   }
 }
 
-void drawDefender(SDL_Renderer *ren, SDL_Texture *tex)
+void drawDefender(SDL_Renderer *ren, SDL_Texture *tex, SDL_Rect *def)
 {
-  SDL_Rect def;
-  def.x=250;
-  def.y=700;
-  def.w=40;
-  def.h=30;
-
   SDL_Rect SrcR;
   SrcR.x=88;
   SrcR.y=0;
   SrcR.w=104;
   SrcR.h=64;
-  SDL_RenderCopy(ren,tex,&SrcR,&def);
+  SDL_RenderCopy(ren,tex,&SrcR,def);
 }
 
 void drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][COLS])
@@ -173,6 +194,7 @@ void drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][CO
   SrcR.y=0;
   SrcR.w=88;
   SrcR.h=64;
+
   for(int r=0; r<ROWS; ++r)
   {
     for(int c=0; c<COLS; ++c)
@@ -219,6 +241,60 @@ void updateInvaders(Invader invaders[ROWS][COLS])
         invaders[r][c].pos.x-=1;
       invaders[r][c].pos.y+=yinc;
 
+    }
+  }
+}
+
+void updateDefender(SDL_Rect *def, enum DIRECTION input, Missile missiles[])
+{
+  if(input == RIGHT)
+  {
+    def->x += 5;
+  }
+  else if (input == LEFT)
+  {
+    def->x += -5;
+  }
+  else if (input == FIRE)
+  {
+    Missile newmissile;
+    newmissile.dir = UP;
+    newmissile.pos.x = def->x + 18;
+    newmissile.pos.y = def->y - 20;
+    newmissile.pos.w = 3;
+    newmissile.pos.h = 14;
+    newmissile.active = 1;
+    for(int m=0; m<MISSILESNUMBER; m++){
+      if(missiles[m].active ==0){
+        missiles[m] = newmissile;
+        break;
+      }
+    }
+  }
+}
+
+void updateMissiles(Missile missiles[]){
+  for(int m=0; m<MISSILESNUMBER; m++){
+    if(missiles[m].pos.y < 0 || missiles[m].pos.x >800){
+      missiles[m].active = 0;
+    }
+    if(missiles[m].active ==1){
+      if(missiles[m].dir == UP){
+        missiles[m].pos.y += -5;
+      }
+      else if (missiles[m].dir == DOWN){
+        missiles[m].pos.y += 5;
+      }
+    }
+  }
+}
+
+void drawMissiles(SDL_Renderer *ren, Missile missiles[])
+{
+  SDL_SetRenderDrawColor(ren, 255, 255, 255, 255);
+  for(int m=0; m<MISSILESNUMBER; m++){
+    if(missiles[m].active ==1){
+      SDL_RenderFillRect(ren,&missiles[m].pos);
     }
   }
 }
