@@ -13,6 +13,7 @@ enum DIRECTION{LEFT,RIGHT,FIRE,NONE};
 
 void initializeInvaders(Invader invaders[ROWS][COLS]);
 void updateInvaders(Invader invaders[ROWS][COLS]);
+void drawDefender(SDL_Renderer *ren, SDL_Texture *tex);
 
 void drawInvaders(SDL_Renderer *ren,SDL_Texture *tex,Invader invaders[ROWS][COLS]);
 
@@ -102,9 +103,11 @@ int main()
 
     // now we clear the screen (will use the clear colour set previously)
     SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
+
     SDL_RenderClear(ren);
     updateInvaders(invaders);
     drawInvaders(ren,tex,invaders);
+    drawDefender(ren,tex);
     // Up until now everything was drawn behind the scenes.
     // This will show the new, red contents of the window.
     SDL_RenderPresent(ren);
@@ -147,6 +150,21 @@ void initializeInvaders(Invader invaders[ROWS][COLS])
   }
 }
 
+void drawDefender(SDL_Renderer *ren, SDL_Texture *tex)
+{
+  SDL_Rect def;
+  def.x=250;
+  def.y=700;
+  def.w=40;
+  def.h=30;
+
+  SDL_Rect SrcR;
+  SrcR.x=88;
+  SrcR.y=0;
+  SrcR.w=104;
+  SrcR.h=64;
+  SDL_RenderCopy(ren,tex,&SrcR,&def);
+}
 
 void drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][COLS])
 {
