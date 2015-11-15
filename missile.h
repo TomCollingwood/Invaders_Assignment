@@ -3,7 +3,7 @@
 
 #define MISSILESNUMBER 5
 
-enum MissileType{STRAIGHT,LETTERT,ZIGZAG};
+enum MissileType{DEFENDER,LETTERT,ZIGZAG};
 enum MISSILEDIR{UP,DOWN};
 
 typedef struct
