@@ -2,7 +2,7 @@
 #define INVADER_H__
 
 enum InvaderType{TYPE1,TYPE2,TYPE3,EXPLOSION};
-enum DIR{FWD,BWD};
+enum DIR{FWD,BWD,DWNFWD,DWNBWD};
 
 #define SPRITEWIDTH 36
 #define SPRITEHEIGHT 24
@@ -18,7 +18,7 @@ typedef struct
   int sprite;
   enum DIR direction;
   enum InvaderType type;
+  int down;
 }Invader;
-
 
 #endif

@@ -292,9 +292,17 @@ void drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][CO
   }
 }
 
-// Updates invaders positions
+// updates invader's positions
 void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
 {
+  // howfast is how many frames it takes a cycle
+  // a cycle is from one frame when all invaders are alligned
+  // to the next when it's all alligned
+
+  // we need howfast to be the range of the first invader to move to
+  // the last invader to move (the frames change after a collision
+  // when cycleover==1). This makes speed gradually quicker as number
+  // of active invaders decreases
   int howfast = 55;
 
   int freezelagfix = freeze;
@@ -302,10 +310,6 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
   if(input == RESET){
     initializeInvaders(invaders);
   }
-
-  enum DIR{FWD,BWD};
-  int yinc=0;
-  static int DIRECTION=FWD;
 
   // find leftmost & rightmost column with at least one active invader
   int lcol = 0;
@@ -323,13 +327,13 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
     }
   }
 
+  // number of rows on respective column that have crossed x boundaries
   int rcolcounter=0;
   for(int i=0; i<ROWS; ++i){
     if(invaders[i][rcol].pos.x>=WIDTH-(2*SPRITEWIDTH)){
       rcolcounter++;
     }
   }
-
   int lcolcounter=0;
   for(int i=0; i<ROWS; ++i){
     if(invaders[i][lcol].pos.x<=SPRITEWIDTH){
@@ -337,22 +341,35 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
     }
   }
 
+  // cycleover==1 when all invaders are alligned in a square
   int cycleover = 0;
-  if(invaders[0][0].pos.x==invaders[ROWS-1][0].pos.x){
+  // this comparison is made as invaders[ROWS-1][COLS-1] is first to move
+  // and invaders[0][0].pos.x is last to move
+  if(invaders[0][0].frame%howfast==0){
     cycleover = 1;
   }
 
-  // mark the side columns before moving them
+  // changes direction when all rows of leftmost/rightmost are outside
+  // respective boundaries when all invaders are alligned (cycleover=1)
   if(rcolcounter==ROWS && cycleover==1)
     {
-    DIRECTION=BWD;
-    //freeze = 1;
-    yinc=GAP;
+    for(int r=0; r<ROWS; ++r)
+    {
+      for(int c=0; c<COLS; ++c)
+      {
+      invaders[r][c].direction=DWNBWD;
+      }
+    }
   }
   else if(lcolcounter==ROWS && cycleover==1)
   {
-    DIRECTION=FWD;
-    yinc=GAP;
+    for(int r=0; r<ROWS; ++r)
+    {
+      for(int c=0; c<COLS; ++c)
+      {
+      invaders[r][c].direction=DWNFWD;
+      }
+    }
   }
 
   // for each invader
@@ -363,12 +380,38 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
       invaders[r][c].frame++;
       if(invaders[r][c].frame%howfast==0){
         if(freeze==0){
-          if(DIRECTION==FWD)
+          // moves the invader depending on direction
+          if(invaders[r][c].direction==FWD)
             invaders[r][c].pos.x+=10;
-          else
+          else if(invaders[r][c].direction==BWD)
             invaders[r][c].pos.x-=10;
-
-          //invaders[r][c].pos.y+=yinc;
+          else if(invaders[r][c].direction==DWNBWD)
+          {
+            invaders[r][c].pos.y+=GAP;
+            invaders[r][c].direction=BWD;
+            invaders[r][c].pos.x-=10;
+          }
+          else if(invaders[r][c].direction==DWNFWD)
+          {
+            // this if/else below corrects a bug that makes (r==ROWS-1 && c>=1) invaders
+            // move downwards an extra time. This is because the bottom right invader
+            // moves first - to see the bug in action remove the if/else and uncomment
+            // the comment below it
+//            if(r==ROWS-1 && c>=1){
+//              if(invaders[ROWS-1][0].direction!=FWD){
+//                invaders[r][c].pos.y+=GAP;
+//              }
+//            }
+//            else{
+//              invaders[r][c].pos.y+=GAP;
+//            }
+            invaders[r][c].pos.y+=GAP;
+            invaders[r][c].direction=FWD;
+            invaders[r][c].pos.x+=10;
+            if(r==ROWS-1 && c==1){
+              printf("%d",invaders[r][c].pos.y);
+            }
+          }
 
           if(invaders[r][c].sprite==0){
             invaders[r][c].sprite=1;
