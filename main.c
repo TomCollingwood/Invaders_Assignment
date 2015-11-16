@@ -322,6 +322,19 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
     }
   }
 
+  int hasfirstbeenfound=0;
+  int firstr;
+  int firstc;
+  for(int r=0; r<ROWS;r++){
+    for(int c=0; c<COLS; c++){
+      if(hasfirstbeenfound==0){
+        firstr = r;
+        firstc = c;
+        hasfirstbeenfound=1;
+      }
+    }
+  }
+
   // number of rows on respective column that have crossed x boundaries
   int rcolcounter=0;
   for(int i=0; i<ROWS; ++i){
@@ -336,11 +349,15 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
     }
   }
 
+  int static howfast = 55;
+
   // cycleover==1 when all invaders are alligned in a square
   int cycleover = 0;
   // this comparison is made as invaders[0][0] is first to move
-  if(invaders[0][0].pos.x+480==invaders[ROWS-1][COLS-1].pos.x){
+  //if(invaders[0][0].pos.x+480==invaders[ROWS-1][COLS-1].pos.x){
+  if(invaders[firstr][firstc].frame%howfast==0){
     cycleover = 1;
+    //freeze=1;
   }
 
   // howfast is how many frames it takes a cycle
@@ -360,17 +377,16 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
       }
     }
   }
-  int static howfast = 55;
 
   if(cycleover==1){
-    //howfast = howmanyactive;
-    printf("!!!! %d !!!!",howmanyactive);
+    howfast = howmanyactive;
+    //printf("!!!! %d !!!!",howmanyactive);
     howmanyactive--;
     for(int r=ROWS-1; r>=0; --r){
       for(int c=COLS-1; c>=0; --c){
         if(invaders[r][c].active==1){
-          //invaders[r][c].frame=howmanyactive;
-          printf("%d,",howmanyactive);
+          invaders[r][c].frame=howmanyactive;
+          //printf("%d,",howmanyactive);
           howmanyactive--;
         }
       }
@@ -387,6 +403,7 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
       for(int c=0; c<COLS; ++c)
       {
       invaders[r][c].direction=DWNBWD;
+      //freeze=1;
       }
     }
   }
@@ -423,22 +440,22 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
       if(invaders[r][c].frame%howfast==0 && freeze==0){
         // moves the invader depending on direction
         if(invaders[r][c].direction==FWD){
-          invaders[r][c].pos.x+=10;
+          invaders[r][c].pos.x+=5;
         }
         else if(invaders[r][c].direction==BWD){
-          invaders[r][c].pos.x-=10;
+          invaders[r][c].pos.x-=5;
         }
         else if(invaders[r][c].direction==DWNBWD)
         {
           invaders[r][c].pos.y+=GAP;
           invaders[r][c].direction=BWD;
-          invaders[r][c].pos.x-=10;
+          invaders[r][c].pos.x-=5;
         }
         else if(invaders[r][c].direction==DWNFWD)
         {
           invaders[r][c].pos.y+=GAP;
           invaders[r][c].direction=FWD;
-          invaders[r][c].pos.x+=10;
+          invaders[r][c].pos.x+=5;
         }
 
         if(invaders[r][c].sprite==0){
