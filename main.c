@@ -143,6 +143,8 @@ int main()
     updateInvaders(invaders,input);
     drawInvaders(ren,tex,invaders);
 
+    // printf("%d",freeze);
+
     // Up until now everything was drawn behind the scenes.
     // This will show the new, red contents of the window.
     SDL_RenderPresent(ren);
@@ -173,8 +175,8 @@ void initializeInvaders(Invader invaders[ROWS][COLS])
   for(int r=0; r<ROWS; r++)
   {
     int xpos = GAP;
-   // if(r == 0) xpos = GAP+3;
-    frameoffset = r*11;
+    // if(r == 0) xpos = GAP+3;
+    frameoffset = (r)*11;
     for(int c=0; c<COLS; ++c)
     {
       pos.x=xpos+SPRITEWIDTH;
@@ -185,6 +187,7 @@ void initializeInvaders(Invader invaders[ROWS][COLS])
       invaders[r][c].frame=0;
       invaders[r][c].frame=frameoffset;
       frameoffset+=1;
+      invaders[r][c].explosionframe=0;
       invaders[r][c].sprite=0;
       invaders[r][c].direction=FWD;
       if(r==0)
@@ -197,6 +200,7 @@ void initializeInvaders(Invader invaders[ROWS][COLS])
     }
     ypos+=(GAP+SPRITEHEIGHT);
   }
+  printf("%d",invaders[ROWS-1][COLS-1].pos.x-invaders[0][0].pos.x);
 }
 
 // Draws the defender texture onto the defender
@@ -295,21 +299,12 @@ void drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][CO
 // updates invader's positions
 void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
 {
-  // howfast is how many frames it takes a cycle
-  // a cycle is from one frame when all invaders are alligned
-  // to the next when it's all alligned
-
-  // we need howfast to be the range of the first invader to move to
-  // the last invader to move (the frames change after a collision
-  // when cycleover==1). This makes speed gradually quicker as number
-  // of active invaders decreases
-  int howfast = 55;
-
-  int freezelagfix = freeze;
-
   if(input == RESET){
+    freeze=0;
     initializeInvaders(invaders);
   }
+
+  int freezelagfix = freeze;
 
   // find leftmost & rightmost column with at least one active invader
   int lcol = 0;
@@ -343,11 +338,45 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
 
   // cycleover==1 when all invaders are alligned in a square
   int cycleover = 0;
-  // this comparison is made as invaders[ROWS-1][COLS-1] is first to move
-  // and invaders[0][0].pos.x is last to move
-  if(invaders[0][0].frame%howfast==0){
+  // this comparison is made as invaders[0][0] is first to move
+  if(invaders[0][0].pos.x+480==invaders[ROWS-1][COLS-1].pos.x){
     cycleover = 1;
   }
+
+  // howfast is how many frames it takes a cycle
+  // a cycle is from one frame when all invaders are alligned
+  // to the next when it's all alligned
+
+  // we need howfast to be the range of the first invader to move to
+  // the last invader to move (the frames change after a collision
+  // when cycleover==1). This makes speed gradually quicker as number
+  // of active invaders decreases
+
+  int howmanyactive=0;
+  for(int r=0; r<ROWS; ++r){
+    for(int c=0; c<COLS; ++c){
+      if(invaders[r][c].active==1){
+        howmanyactive++;
+      }
+    }
+  }
+  int static howfast = 55;
+
+  if(cycleover==1){
+    //howfast = howmanyactive;
+    printf("!!!! %d !!!!",howmanyactive);
+    howmanyactive--;
+    for(int r=ROWS-1; r>=0; --r){
+      for(int c=COLS-1; c>=0; --c){
+        if(invaders[r][c].active==1){
+          //invaders[r][c].frame=howmanyactive;
+          printf("%d,",howmanyactive);
+          howmanyactive--;
+        }
+      }
+    }
+  }
+
 
   // changes direction when all rows of leftmost/rightmost are outside
   // respective boundaries when all invaders are alligned (cycleover=1)
@@ -371,67 +400,59 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
       }
     }
   }
-
+  //static int collisioncounter = 0;
   // for each invader
   for(int r=0; r<ROWS; ++r)
   {
     for(int c=0; c<COLS; ++c)
     {
-      invaders[r][c].frame++;
-      if(invaders[r][c].frame%howfast==0){
-        if(freeze==0){
-          // moves the invader depending on direction
-          if(invaders[r][c].direction==FWD)
-            invaders[r][c].pos.x+=10;
-          else if(invaders[r][c].direction==BWD)
-            invaders[r][c].pos.x-=10;
-          else if(invaders[r][c].direction==DWNBWD)
-          {
-            invaders[r][c].pos.y+=GAP;
-            invaders[r][c].direction=BWD;
-            invaders[r][c].pos.x-=10;
-          }
-          else if(invaders[r][c].direction==DWNFWD)
-          {
-            // this if/else below corrects a bug that makes (r==ROWS-1 && c>=1) invaders
-            // move downwards an extra time. This is because the bottom right invader
-            // moves first - to see the bug in action remove the if/else and uncomment
-            // the comment below it
-//            if(r==ROWS-1 && c>=1){
-//              if(invaders[ROWS-1][0].direction!=FWD){
-//                invaders[r][c].pos.y+=GAP;
-//              }
-//            }
-//            else{
-//              invaders[r][c].pos.y+=GAP;
-//            }
-            invaders[r][c].pos.y+=GAP;
-            invaders[r][c].direction=FWD;
-            invaders[r][c].pos.x+=10;
-            if(r==ROWS-1 && c==1){
-              printf("%d",invaders[r][c].pos.y);
-            }
-          }
+      if(freeze==0){
+        invaders[r][c].frame++;
+      }
+      if(invaders[r][c].type == EXPLOSION){
+        invaders[r][c].explosionframe++;
+      }
+      if(invaders[r][c].type == EXPLOSION && invaders[r][c].explosionframe > 1 && invaders[r][c].active==1){
+        invaders[r][c].active = 0;
+        // If I update freeze directly in middle of iterating through invaders
+        // the rest of the invaders will be ofset from the others so I use
+        // freezelag fix
+        freezelagfix = 0;
+      }
 
-          if(invaders[r][c].sprite==0){
-            invaders[r][c].sprite=1;
-          }
-          else{
-            invaders[r][c].sprite=0;
-          }
+      if(invaders[r][c].frame%howfast==0 && freeze==0){
+        // moves the invader depending on direction
+        if(invaders[r][c].direction==FWD){
+          invaders[r][c].pos.x+=10;
+        }
+        else if(invaders[r][c].direction==BWD){
+          invaders[r][c].pos.x-=10;
+        }
+        else if(invaders[r][c].direction==DWNBWD)
+        {
+          invaders[r][c].pos.y+=GAP;
+          invaders[r][c].direction=BWD;
+          invaders[r][c].pos.x-=10;
+        }
+        else if(invaders[r][c].direction==DWNFWD)
+        {
+          invaders[r][c].pos.y+=GAP;
+          invaders[r][c].direction=FWD;
+          invaders[r][c].pos.x+=10;
         }
 
-        if(invaders[r][c].type == EXPLOSION && invaders[r][c].frame > 1 && invaders[r][c].active==1){
-          invaders[r][c].active = 0;
-          // If I update freeze directly in middle of iterating through invaders
-          // the rest of the invaders will be ofset from the others so I use
-          // freezelag fix
-          freezelagfix = 0;
+        if(invaders[r][c].sprite==0){
+          invaders[r][c].sprite=1;
         }
+        else{
+          invaders[r][c].sprite=0;
+        }
+
       }
     }
   }
   freeze = freezelagfix;
+  //printf(" %d ",collisioncounter);
 }
 
 // Checks missiles list for an active defender missile
@@ -504,6 +525,7 @@ void drawMissiles(SDL_Renderer *ren, Missile missiles[])
 }
 
 void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS]){
+  int freezelag = freeze;
   for(int m=0; m<MISSILESNUMBER; m++){
     if(missiles[m].type == DEFENDER && missiles[m].active ==1){
       int hit = 0;
@@ -518,8 +540,7 @@ void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS]){
             int misH = missiles[m].pos.h;
             if ((misX > invX) && (misX < invX+invW) && (misY-misH < invY) && hit ==0){
               invaders[r][c].type = EXPLOSION;
-              freeze = 1;
-              invaders[r][c].frame = 0;
+              freezelag = 1;
               missiles[m].active = 0;
               hit = 1;
             }
@@ -528,5 +549,6 @@ void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS]){
       }
     }
   }
+  freeze=freezelag;
 }
 
