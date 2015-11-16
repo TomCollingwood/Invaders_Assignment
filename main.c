@@ -309,18 +309,35 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
   // find leftmost & rightmost column with at least one active invader
   int lcol = 0;
   int rcol = COLS-1;
+  int lcolcounter = 0;
+  int rcolcounter = 0;
   for(int c=0; c<COLS; c++){
     int counter = 0;
     for(int r=0; r<ROWS; r++){
       if(invaders[r][c].active==1) counter++;
     }
-    if (counter==0 && lcol==c && lcol != rcol){
+    if (counter==0 && lcol==c){
       lcol=c+1;
     }
-    else if (counter==0 && rcol==c && lcol != rcol){
-      rcol=c-1;
+    else if(lcol==c){
+      lcolcounter=counter;
     }
   }
+
+  for(int c=COLS-1; c>-1; --c){
+    int counter = 0;
+    for(int r=0; r<ROWS; ++r){
+      if(invaders[r][c].active==1) counter++;
+    }
+    if (counter==0 && rcol==c){
+      rcol=c-1;
+    }
+    else if(rcol==c){
+      rcolcounter=counter;
+    }
+  }
+
+  ///separate for loop for rcol
 
   int hasfirstbeenfound=0;
   int firstr;
@@ -335,17 +352,19 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
     }
   }
 
+
+
   // number of rows on respective column that have crossed x boundaries
-  int rcolcounter=0;
+  int rcolcounter2=0;
   for(int i=0; i<ROWS; ++i){
     if(invaders[i][rcol].pos.x>=WIDTH-(2*SPRITEWIDTH)){
-      rcolcounter++;
+      rcolcounter2++;
     }
   }
-  int lcolcounter=0;
+  int lcolcounter2=0;
   for(int i=0; i<ROWS; ++i){
     if(invaders[i][lcol].pos.x<=SPRITEWIDTH){
-      lcolcounter++;
+      lcolcounter2++;
     }
   }
 
@@ -355,6 +374,7 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
   int cycleover = 0;
   // this comparison is made as invaders[0][0] is first to move
   //if(invaders[0][0].pos.x+480==invaders[ROWS-1][COLS-1].pos.x){
+
   if(invaders[firstr][firstc].frame%howfast==0){
     cycleover = 1;
     //freeze=1;
@@ -378,7 +398,7 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
     }
   }
 
-  if(cycleover==1){
+  if(cycleover==1 && freeze==0){
     howfast = howmanyactive;
     //printf("!!!! %d !!!!",howmanyactive);
     howmanyactive--;
@@ -393,27 +413,38 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
     }
   }
 
-
   // changes direction when all rows of leftmost/rightmost are outside
   // respective boundaries when all invaders are alligned (cycleover=1)
-  if(rcolcounter==ROWS && cycleover==1)
+
+  if(rcolcounter==rcolcounter2 && cycleover==1)
     {
     for(int r=0; r<ROWS; ++r)
     {
       for(int c=0; c<COLS; ++c)
       {
-      invaders[r][c].direction=DWNBWD;
-      //freeze=1;
+          if(invaders[r][c].direction==FWD){
+            invaders[r][c].direction=DWNBWD;
+          }
+          else{
+            invaders[r][c].direction=BWD;
+          }
       }
     }
   }
-  else if(lcolcounter==ROWS && cycleover==1)
+  else if(lcolcounter==lcolcounter2 && cycleover==1)
   {
     for(int r=0; r<ROWS; ++r)
     {
       for(int c=0; c<COLS; ++c)
       {
-      invaders[r][c].direction=DWNFWD;
+        // stops invaders keep going down
+          if(invaders[r][c].direction==BWD){
+            invaders[r][c].direction=DWNFWD;
+          }
+          else{
+            invaders[r][c].direction=FWD;
+          }
+
       }
     }
   }
@@ -435,27 +466,34 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
         // the rest of the invaders will be ofset from the others so I use
         // freezelag fix
         freezelagfix = 0;
+        for(int i=0;i<ROWS;i++){
+          if(invaders[i][c].active==1){
+            invaders[r][c].pos.x = invaders[i][c].pos.x;
+            invaders[r][c].pos.y = invaders[i][c].pos.y;
+            break;
+          }
+        }
       }
 
       if(invaders[r][c].frame%howfast==0 && freeze==0){
         // moves the invader depending on direction
         if(invaders[r][c].direction==FWD){
-          invaders[r][c].pos.x+=5;
+          invaders[r][c].pos.x+=10;
         }
         else if(invaders[r][c].direction==BWD){
-          invaders[r][c].pos.x-=5;
+          invaders[r][c].pos.x-=10;
         }
         else if(invaders[r][c].direction==DWNBWD)
         {
           invaders[r][c].pos.y+=GAP;
           invaders[r][c].direction=BWD;
-          invaders[r][c].pos.x-=5;
+          //invaders[r][c].pos.x-=10;
         }
         else if(invaders[r][c].direction==DWNFWD)
         {
           invaders[r][c].pos.y+=GAP;
           invaders[r][c].direction=FWD;
-          invaders[r][c].pos.x+=5;
+          //invaders[r][c].pos.x+=10;
         }
 
         if(invaders[r][c].sprite==0){
@@ -468,7 +506,11 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
       }
     }
   }
+
+
+
   freeze = freezelagfix;
+
   //printf(" %d ",collisioncounter);
 }
 
