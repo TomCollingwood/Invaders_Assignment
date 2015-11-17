@@ -23,6 +23,7 @@ void drawMissiles(SDL_Renderer *ren, Missile missiles[]);
 void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS]);
 
 int freeze=0;
+int freezeframe=0;
 
 int main()
 {
@@ -119,12 +120,10 @@ int main()
     }
 
     if(input == FREEZE){
-      if(freeze==0){
+      if(freeze==0)
         freeze=1;
-      }
-      else{
+      else
         freeze=0;
-      }
     }
 
     // now we clear the screen (will use the clear colour set previously)
@@ -200,7 +199,7 @@ void initializeInvaders(Invader invaders[ROWS][COLS])
     }
     ypos+=(GAP+SPRITEHEIGHT);
   }
-  printf("%d",invaders[ROWS-1][COLS-1].pos.x-invaders[0][0].pos.x);
+  //printf("%d",invaders[ROWS-1][COLS-1].pos.x-invaders[0][0].pos.x);
 }
 
 // Draws the defender texture onto the defender
@@ -307,37 +306,30 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
   int freezelagfix = freeze;
 
   // find leftmost & rightmost column with at least one active invader
+
   int lcol = 0;
   int rcol = COLS-1;
-  int lcolcounter = 0;
-  int rcolcounter = 0;
   for(int c=0; c<COLS; c++){
     int counter = 0;
     for(int r=0; r<ROWS; r++){
-      if(invaders[r][c].active==1) counter++;
+      if(invaders[r][c].active) counter++;
     }
     if (counter==0 && lcol==c){
       lcol=c+1;
-    }
-    else if(lcol==c){
-      lcolcounter=counter;
     }
   }
 
   for(int c=COLS-1; c>-1; --c){
     int counter = 0;
     for(int r=0; r<ROWS; ++r){
-      if(invaders[r][c].active==1) counter++;
+      if(invaders[r][c].active) counter++;
     }
     if (counter==0 && rcol==c){
       rcol=c-1;
     }
-    else if(rcol==c){
-      rcolcounter=counter;
-    }
   }
 
-  ///separate for loop for rcol
+  printf("COL(l:%d,r:%d)",lcol,rcol);
 
   int hasfirstbeenfound=0;
   int firstr;
@@ -352,29 +344,11 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
     }
   }
 
-
-
-  // number of rows on respective column that have crossed x boundaries
-  int rcolcounter2=0;
-  for(int i=0; i<ROWS; ++i){
-    if(invaders[i][rcol].pos.x>=WIDTH-(2*SPRITEWIDTH)){
-      rcolcounter2++;
-    }
-  }
-  int lcolcounter2=0;
-  for(int i=0; i<ROWS; ++i){
-    if(invaders[i][lcol].pos.x<=SPRITEWIDTH){
-      lcolcounter2++;
-    }
-  }
-
   int static howfast = 55;
 
   // cycleover==1 when all invaders are alligned in a square
   int cycleover = 0;
-  // this comparison is made as invaders[0][0] is first to move
-  //if(invaders[0][0].pos.x+480==invaders[ROWS-1][COLS-1].pos.x){
-
+  // this comparison is made as invaders[firstr][firstc] is first to move
   if(invaders[firstr][firstc].frame%howfast==0){
     cycleover = 1;
     //freeze=1;
@@ -398,13 +372,13 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
     }
   }
 
-  if(cycleover==1 && freeze==0){
+  if(cycleover && freeze==0){
     howfast = howmanyactive;
     //printf("!!!! %d !!!!",howmanyactive);
     howmanyactive--;
     for(int r=ROWS-1; r>=0; --r){
       for(int c=COLS-1; c>=0; --c){
-        if(invaders[r][c].active==1){
+        if(invaders[r][c].active){
           invaders[r][c].frame=howmanyactive;
           //printf("%d,",howmanyactive);
           howmanyactive--;
@@ -413,31 +387,60 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
     }
   }
 
+  // the last to reach the boundary is always the highest on lefmost column
+  // (lcol) and rightmost column (rcol)
+  int toprightr;
+  int topleftr;
+
+  for(int i=0;i<ROWS;i++){
+    if(invaders[i][rcol].active){
+      toprightr=i;
+      break;
+    }
+  }
+  for(int i=0;i<ROWS;i++){
+    if(invaders[i][lcol].active){
+      topleftr=i;
+      break;
+    }
+  }
+
+  // so here we check to see if the last to reach the boundary has reached it
+  int moveleft=0;
+  if(invaders[toprightr][rcol].pos.x >= WIDTH-(2*SPRITEWIDTH)) moveleft=1;
+  int moveright=0;
+  if(invaders[topleftr][lcol].pos.x <= SPRITEWIDTH) moveright=1;
+
+
   // changes direction when all rows of leftmost/rightmost are outside
   // respective boundaries when all invaders are alligned (cycleover=1)
-
-  if(rcolcounter==rcolcounter2 && cycleover==1)
+  if(moveleft && cycleover)
     {
     for(int r=0; r<ROWS; ++r)
     {
       for(int c=0; c<COLS; ++c)
       {
           if(invaders[r][c].direction==FWD){
+            // I used DWNBWD to save the info that it will then go BWD after
+            // moving downwards
             invaders[r][c].direction=DWNBWD;
           }
           else{
+            // this else clause happens when direction==BWD
+            // the direction BWD is assigned further below in code
+            // this stops invaders moving downwards indefinately
             invaders[r][c].direction=BWD;
           }
       }
     }
   }
-  else if(lcolcounter==lcolcounter2 && cycleover==1)
+  // below is same for DWNFWD
+  else if(moveright && cycleover)
   {
     for(int r=0; r<ROWS; ++r)
     {
       for(int c=0; c<COLS; ++c)
       {
-        // stops invaders keep going down
           if(invaders[r][c].direction==BWD){
             invaders[r][c].direction=DWNFWD;
           }
@@ -448,31 +451,27 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
       }
     }
   }
-  //static int collisioncounter = 0;
+
   // for each invader
   for(int r=0; r<ROWS; ++r)
   {
     for(int c=0; c<COLS; ++c)
     {
+      // below if statement stops invaders from moving when invader explodes
       if(freeze==0){
         invaders[r][c].frame++;
       }
+      // the explosion frame measures how long the explosion has been active
       if(invaders[r][c].type == EXPLOSION){
         invaders[r][c].explosionframe++;
       }
-      if(invaders[r][c].type == EXPLOSION && invaders[r][c].explosionframe > 1 && invaders[r][c].active==1){
+      // we limit the explosion to 3 frames below
+      if(invaders[r][c].type == EXPLOSION && invaders[r][c].explosionframe > 3 && invaders[r][c].active){
         invaders[r][c].active = 0;
         // If I update freeze directly in middle of iterating through invaders
-        // the rest of the invaders will be ofset from the others so I use
-        // freezelag fix
+        // the rest of the invaders will be ofset from the others so I use freezelag
+        // I assign freeze to freezelagfix at bottom of updateinvaders function
         freezelagfix = 0;
-        for(int i=0;i<ROWS;i++){
-          if(invaders[i][c].active==1){
-            invaders[r][c].pos.x = invaders[i][c].pos.x;
-            invaders[r][c].pos.y = invaders[i][c].pos.y;
-            break;
-          }
-        }
       }
 
       if(invaders[r][c].frame%howfast==0 && freeze==0){
@@ -487,13 +486,11 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
         {
           invaders[r][c].pos.y+=GAP;
           invaders[r][c].direction=BWD;
-          //invaders[r][c].pos.x-=10;
         }
         else if(invaders[r][c].direction==DWNFWD)
         {
           invaders[r][c].pos.y+=GAP;
           invaders[r][c].direction=FWD;
-          //invaders[r][c].pos.x+=10;
         }
 
         if(invaders[r][c].sprite==0){
@@ -506,19 +503,17 @@ void updateInvaders(Invader invaders[ROWS][COLS], enum DIRECTION input)
       }
     }
   }
-
-
-
   freeze = freezelagfix;
-
-  //printf(" %d ",collisioncounter);
 }
 
 // Checks missiles list for an active defender missile
-int activedefmissile(Missile missiles[]){
+int activedefmissile(Missile missiles[])
+{
   int activedefmissile = 0;
-  for(int m=0; m<MISSILESNUMBER; m++){
-    if(missiles[m].active ==1 && missiles[m].type == DEFENDER){
+  for(int m=0; m<MISSILESNUMBER; m++)
+  {
+    if(missiles[m].active && missiles[m].type == DEFENDER)
+    {
       activedefmissile = 1;
     }
   }
@@ -526,7 +521,8 @@ int activedefmissile(Missile missiles[]){
 }
 
 // Updates defender position and creates new defender missiles if SPACE bar hit
-void updateDefender(SDL_Rect *def, enum DIRECTION input, Missile missiles[]) {
+void updateDefender(SDL_Rect *def, enum DIRECTION input, Missile missiles[])
+{
   if(input == RIGHT)
   {
     def->x += 5;
@@ -546,8 +542,10 @@ void updateDefender(SDL_Rect *def, enum DIRECTION input, Missile missiles[]) {
     newmissile.pos.h = 14;
     newmissile.active = 1;
     newmissile.type = DEFENDER;
-    for(int m=0; m<MISSILESNUMBER; m++){
-      if(missiles[m].active ==0){
+    for(int m=0; m<MISSILESNUMBER; m++)
+    {
+      if(missiles[m].active ==0)
+      {
         missiles[m] = newmissile;
         break;
       }
@@ -556,16 +554,22 @@ void updateDefender(SDL_Rect *def, enum DIRECTION input, Missile missiles[]) {
 }
 
 // Updates missile position depending on direction and activity
-void updateMissiles(Missile missiles[]){
-  for(int m=0; m<MISSILESNUMBER; m++){
-    if(missiles[m].pos.y < 0 || missiles[m].pos.y >800){
+void updateMissiles(Missile missiles[])
+{
+  for(int m=0; m<MISSILESNUMBER; m++)
+  {
+    if(missiles[m].pos.y < 0 || missiles[m].pos.y >HEIGHT)
+    {
       missiles[m].active = 0;
     }
-    if(missiles[m].active ==1){
-      if(missiles[m].dir == UP){
+    if(missiles[m].active)
+    {
+      if(missiles[m].dir == UP)
+      {
         missiles[m].pos.y += -15;
       }
-      else if (missiles[m].dir == DOWN){
+      else if (missiles[m].dir == DOWN)
+      {
         missiles[m].pos.y += 15;
       }
     }
@@ -576,28 +580,37 @@ void updateMissiles(Missile missiles[]){
 void drawMissiles(SDL_Renderer *ren, Missile missiles[])
 {
   SDL_SetRenderDrawColor(ren, 255, 255, 255, 255);
-  for(int m=0; m<MISSILESNUMBER; m++){
-    if(missiles[m].active ==1){
+  for(int m=0; m<MISSILESNUMBER; m++)
+  {
+    if(missiles[m].active)
+    {
       SDL_RenderFillRect(ren,&missiles[m].pos);
     }
   }
 }
 
-void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS]){
+void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS])
+{
   int freezelag = freeze;
-  for(int m=0; m<MISSILESNUMBER; m++){
-    if(missiles[m].type == DEFENDER && missiles[m].active ==1){
+  for(int m=0; m<MISSILESNUMBER; m++)
+  {
+    if(missiles[m].type == DEFENDER && missiles[m].active)
+    {
       int hit = 0;
-      for(int r=0; r<ROWS; r++){
-        for(int c=0; c<COLS; c++){
-          if(invaders[r][c].active ==1){
+      for(int r=0; r<ROWS; r++)
+      {
+        for(int c=0; c<COLS; c++)
+        {
+          if(invaders[r][c].active)
+          {
             int misX = missiles[m].pos.x;
             int invX = invaders[r][c].pos.x;
             int invW = invaders[r][c].pos.w;
             int misY = missiles[m].pos.y;
             int invY = invaders[r][c].pos.y;
             int misH = missiles[m].pos.h;
-            if ((misX > invX) && (misX < invX+invW) && (misY-misH < invY) && hit ==0){
+            if ((misX > invX) && (misX < invX+invW) && (misY-misH < invY) && hit ==0)
+            {
               invaders[r][c].type = EXPLOSION;
               freezelag = 1;
               missiles[m].active = 0;
