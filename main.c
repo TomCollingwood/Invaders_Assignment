@@ -331,11 +331,11 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
   }
 
   int hasfirstbeenfound=0;
-  int firstr;
-  int firstc;
+  int firstr = 0;
+  int firstc = 0;
   for(int r=0; r<ROWS;r++){
     for(int c=0; c<COLS; c++){
-      if(hasfirstbeenfound==0){
+      if(hasfirstbeenfound==0 && invaders[r][c].active){
         firstr = r;
         firstc = c;
         hasfirstbeenfound=1;
@@ -348,7 +348,6 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
   // this comparison is made as invaders[firstr][firstc] is first to move
   if(invaders[firstr][firstc].frame%howfast==0){
     cycleover = 1;
-    //freeze=1;
   }
 
   // howfast is how many frames it takes a cycle
@@ -363,26 +362,29 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
   int howmanyactive=0;
   for(int r=0; r<ROWS; ++r){
     for(int c=0; c<COLS; ++c){
-      if(invaders[r][c].active==1){
+      if(invaders[r][c].active){
         howmanyactive++;
       }
     }
   }
 
+
   if(cycleover && freeze==0){
-    //howfast = howmanyactive;
+    howfast = howmanyactive;
     //printf("!!!! %d !!!!",howmanyactive);
     howmanyactive--;
     for(int r=ROWS-1; r>=0; --r){
       for(int c=COLS-1; c>=0; --c){
         if(invaders[r][c].active){
-          //invaders[r][c].frame=howmanyactive;
+          //printf("%d,",invaders[r][c].frame);
+          invaders[r][c].frame=howmanyactive;
           //printf("%d,",howmanyactive);
           howmanyactive--;
         }
       }
     }
   }
+
 
   // the last to reach the boundary is always the highest on lefmost column
   // (lcol) and rightmost column (rcol)
@@ -484,12 +486,12 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
         }
         else if(invaders[r][c].direction==DWNBWD)
         {
-          invaders[r][c].pos.y+=GAP;
+          invaders[r][c].pos.y+=20;
           invaders[r][c].direction=BWD;
         }
         else if(invaders[r][c].direction==DWNFWD)
         {
-          invaders[r][c].pos.y+=GAP;
+          invaders[r][c].pos.y+=20;
           invaders[r][c].direction=FWD;
         }
 
@@ -501,7 +503,7 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
         }
         // fires missile
         int random = rand();
-        if(random%5==0){
+        if(random%20==0){
           for(int m=1; m<MISSILESNUMBER; m++)
           {
             if(missiles[m].active==0){
