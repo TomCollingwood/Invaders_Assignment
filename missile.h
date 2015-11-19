@@ -4,7 +4,6 @@
 #define MISSILESNUMBER 5
 
 enum MissileType{DEFENDER,LETTERT,ZIGZAG,SNAKE};
-enum MISSILEDIR{UP,DOWN};
 
 typedef struct
 {
@@ -12,7 +11,7 @@ typedef struct
   int active;
   int frame;
   enum MissileType type;
-  enum MISSILEDIR dir;
+  enum DIR dir;
   int sprite;
 }Missile;
 
