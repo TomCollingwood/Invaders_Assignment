@@ -2,9 +2,10 @@
 #include <SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "Invader.h"
+#include "invader.h"
 #include "missile.h"
-#include "Defender.h"
+#include "defender.h"
+
 // include the map for the maze.
 // the width of the screen
 #define WIDTH 651
@@ -22,10 +23,11 @@ void drawDefender(SDL_Renderer *ren, SDL_Texture *tex, Defender *defender);
 void updateMissiles(Missile missiles[]);
 void drawMissiles(SDL_Renderer *ren, SDL_Texture *tex, Missile missiles[]);
 void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender *defender);
+void drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y);
 
 int freeze=0;
 int freezeframe=0;
-int howfast=55;
+int howfast = 55;
 
 int main()
 {
@@ -139,7 +141,7 @@ int main()
     updateMissiles(missiles);
     drawMissiles(ren,tex,missiles);
 
-    updateCollisions(missiles,invaders);
+    updateCollisions(missiles,invaders,&defender);
 
     updateInvaders(invaders,missiles,input);
     drawInvaders(ren,tex,invaders);
@@ -162,6 +164,8 @@ void initializeDefender(Defender *defender)
   defender->pos.y=550;
   defender->pos.w=39;
   defender->pos.h=24;
+  defender->sprite=0;
+  defender->active=1;
 }
 
 // Initializes all invader positions
@@ -207,17 +211,33 @@ void initializeInvaders(Invader invaders[ROWS][COLS])
 // Draws the defender texture onto the defender
 void drawDefender(SDL_Renderer *ren, SDL_Texture *tex, Defender *defender)
 {
-  SDL_Rect SrcR;
-  SrcR.x=0;
-  SrcR.y=0;
-  SrcR.w=DEFENDERWIDTH;
-  SrcR.h=DEFENDERHEIGHT;
-  SDL_RenderCopy(ren,tex,&SrcR,&defender->pos);
+  SDL_Rect SrcRS0;
+  SrcRS0.x=0;
+  SrcRS0.y=0;
+  SrcRS0.w=DEFENDERWIDTH;
+  SrcRS0.h=DEFENDERHEIGHT;
+
+  SDL_Rect SrcRS1;
+  SrcRS1.x=111;
+  SrcRS1.y=24;
+  SrcRS1.w=EXPLODEDDEFENDERWIDTH;
+  SrcRS1.h=DEFENDERHEIGHT;
+
+  if(defender->sprite==0)
+    SDL_RenderCopy(ren,tex,&SrcRS0,&defender->pos);
+  else
+  {
+    defender->pos.w=EXPLODEDDEFENDERWIDTH;
+    SDL_RenderCopy(ren,tex,&SrcRS1,&defender->pos);
+  }
 }
 
 // Draws the invaders using RenderCopy and the texture
 void drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][COLS])
 {
+
+
+  //drawText(ren,tex,"HIGHSCORE",200,30);
   SDL_Rect SrcExplode;
   SrcExplode.x=0;
   SrcExplode.y=24;
@@ -748,18 +768,245 @@ void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender
     }
     else if (missiles[m].active){
       int misX = missiles[m].pos.x;
-      int defX = defender.pos.x;
-      int defW = invaders[r][c].pos.w;
       int misY = missiles[m].pos.y;
-      int defY = invaders[r][c].pos.y;
-      if ((misX > defX) && (misX < defX+defW) && (misY == defY) && hit ==0)
+      int defX = defender->pos.x;
+      int defY = defender->pos.y;
+      int defW = defender->pos.w;
+      int defH = defender->pos.h;
+
+      if ((misX > defX) && (misX < defX+defW) && (misY < defY +defH) && (misY > defY) && defender->active)
       {
-        invaders[r][c].sprite = 1;
-        invaders[r][c].active=0;
+        defender->sprite = 1;
+        defender->active=0;
         missiles[m].active = 0;
       }
     }
   }
   freeze=freezelag;
 }
+
+void drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y){
+  int xoffset=0;
+  SDL_Rect SrcR;
+  int nochar=0;
+  for(int i=0; i<(int)strlen(text); i++){
+    switch(text[i])
+    {
+    case 'a':
+    case 'A':
+      SrcR.x=0;
+      SrcR.y=132;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'b':
+    case 'B':
+      SrcR.x=21;
+      SrcR.y=132;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'c':
+    case 'C':
+      SrcR.x=42;
+      SrcR.y=132;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'd':
+    case 'D':
+      SrcR.x=63;
+      SrcR.y=132;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'e':
+    case 'E':
+      SrcR.x=84;
+      SrcR.y=132;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'f':
+    case 'F':
+      SrcR.x=105;
+      SrcR.y=132;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'g':
+    case 'G':
+      SrcR.x=126;
+      SrcR.y=132;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'h':
+    case 'H':
+      SrcR.x=147;
+      SrcR.y=132;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'i':
+    case 'I':
+      SrcR.x=168;
+      SrcR.y=132;
+      SrcR.w=9;
+      SrcR.h=21;
+      break;
+    case 'j':
+    case 'J':
+      SrcR.x=0;
+      SrcR.y=156;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'k':
+    case 'K':
+      SrcR.x=21;
+      SrcR.y=156;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'l':
+    case 'L':
+      SrcR.x=42;
+      SrcR.y=156;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'm':
+    case 'M':
+      SrcR.x=63;
+      SrcR.y=156;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'n':
+    case 'N':
+      SrcR.x=84;
+      SrcR.y=156;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'o':
+    case 'O':
+      SrcR.x=105;
+      SrcR.y=156;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'p':
+    case 'P':
+      SrcR.x=126;
+      SrcR.y=156;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'q':
+    case 'Q':
+      SrcR.x=147;
+      SrcR.y=156;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'r':
+    case 'R':
+      SrcR.x=0;
+      SrcR.y=180;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 's':
+    case 'S':
+      SrcR.x=21;
+      SrcR.y=180;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 't':
+    case 'T':
+      SrcR.x=42;
+      SrcR.y=180;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'u':
+    case 'U':
+      SrcR.x=63;
+      SrcR.y=180;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'v':
+    case 'V':
+      SrcR.x=84;
+      SrcR.y=180;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'w':
+    case 'W':
+      SrcR.x=105;
+      SrcR.y=180;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'x':
+    case 'X':
+      SrcR.x=126;
+      SrcR.y=180;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'y':
+    case 'Y':
+      SrcR.x=147;
+      SrcR.y=180;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case 'z':
+    case 'Z':
+      SrcR.x=168;
+      SrcR.y=180;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case ' ':
+      SrcR.x=168;
+      SrcR.y=156;
+      SrcR.w=6;
+      SrcR.h=21;
+      break;
+    case '-':
+    case '<':
+    case '>':
+    case '*':
+    case '?':
+    case '=':
+    default:
+      nochar = 1;
+      break;
+    }
+
+    if(nochar==0){
+      SDL_Rect letter;
+      letter.x = x + xoffset;
+      letter.y = y;
+      letter.w = SrcR.w;
+      letter.h = SrcR.h;
+      xoffset += SrcR.w + 6;
+      SDL_RenderCopy(ren,tex,&SrcR,&letter);
+    }
+    else{
+      nochar=0;
+    }
+  }
+
+}
+
+
+
 

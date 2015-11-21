@@ -33,4 +33,6 @@ INCLUDEPATH += /usr/local/include
 #qtcAddDeployment()
 
 HEADERS += invader.h \
-    missile.h
+    missile.h \
+    defender.h
+
