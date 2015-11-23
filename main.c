@@ -68,6 +68,8 @@ int main()
 
   // SDL image is an abstraction for all images
   SDL_Surface *image;
+
+
   // we are going to use the extension SDL_image library to load a png, documentation can be found here
   // http://www.libsdl.org/projects/SDL_image/
   image=IMG_Load("SpriteSheet.bmp");
@@ -76,11 +78,12 @@ int main()
     printf("IMG_Load: %s\n", IMG_GetError());
     return EXIT_FAILURE;
   }
+  // below sets black to transparent
+  SDL_SetColorKey(image, SDL_TRUE, SDL_MapRGB(image->format, 0, 0, 0 ) );
+
+
   // SDL texture converts the image to a texture suitable for SDL rendering  / blitting
   // once we have the texture it will be store in hardware and we don't need the image data anymore
-
-  // This makes the black on the surface transparent
-  SDL_SetColorKey(image, SDL_TRUE, SDL_MapRGB(image->format, 0, 0, 0 ) );
 
   SDL_Texture *tex = 0;
   tex = SDL_CreateTextureFromSurface(ren, image);
@@ -90,6 +93,11 @@ int main()
 
   int quit=0;
   enum DIRECTION input = NONE;
+
+  int red = 0;
+  int green = 0;
+  int blue = 0;
+
   // now we are going to loop forever, process the keys then draw
 
   while (quit !=1)
@@ -131,7 +139,25 @@ int main()
     }
 
     // now we clear the screen (will use the clear colour set previously)
-    SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
+
+
+    red=rand()%255;
+    green=rand()%255;
+    blue=rand()%255;
+
+//    if(red>0) red++;
+//    else if (red>255) red=0;
+//    if(green>0) green++;
+//    else if (green>255) green=0;
+//    if(blue>0) blue++;
+//    else if (blue>255) blue=0;
+
+    if(input==RESET){
+    defender.active=1;
+    defender.sprite=0;
+    }
+
+    SDL_SetRenderDrawColor(ren, red, green, blue, 255);
 
     SDL_RenderClear(ren);
 
@@ -201,7 +227,10 @@ void initializeInvaders(Invader invaders[ROWS][COLS])
         invaders[r][c].type=TYPE2;
       else
         invaders[r][c].type=TYPE3;
-
+      if(r!=4)
+        invaders[r][c].bottom=0;
+      else
+        invaders[r][c].bottom=1;
     }
     ypos+=(GAP+SPRITEHEIGHT);
   }
@@ -320,6 +349,7 @@ void drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][CO
 // updates invader's positions
 void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBER], enum DIRECTION input)
 {
+
   if(input == RESET){
     freeze=0;
     initializeInvaders(invaders);
@@ -523,29 +553,31 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
           invaders[r][c].sprite=0;
         }
         // fires missile
-        int random = rand();
-        if(random%20==0){
-          for(int m=1; m<MISSILESNUMBER; m++)
-          {
-            if(missiles[m].active==0){
-              Missile newinvadermissile;
-              newinvadermissile.pos.x = invaders[r][c].pos.x;
-              newinvadermissile.pos.y = invaders[r][c].pos.y;
-              newinvadermissile.pos.w = 9;
-              newinvadermissile.pos.h = 24;
-              newinvadermissile.dir = DOWN;
-              newinvadermissile.sprite=0;
-              if(random%100>66)
-                newinvadermissile.type = LETTERT;
-              else if(random%100>33)
-                newinvadermissile.type = SNAKE;
-              else{
-                newinvadermissile.type = ZIGZAG;
+        if(invaders[r][c].bottom){
+          int random = rand();
+          if(random%10==0){
+            for(int m=1; m<MISSILESNUMBER; m++)
+            {
+              if(missiles[m].active==0){
+                Missile newinvadermissile;
+                newinvadermissile.pos.x = invaders[r][c].pos.x;
+                newinvadermissile.pos.y = invaders[r][c].pos.y;
+                newinvadermissile.pos.w = 9;
+                newinvadermissile.pos.h = 24;
+                newinvadermissile.dir = DOWN;
+                newinvadermissile.sprite=0;
+                if(random%100>66)
+                  newinvadermissile.type = LETTERT;
+                else if(random%100>33)
+                  newinvadermissile.type = SNAKE;
+                else{
+                  newinvadermissile.type = ZIGZAG;
+                }
+                newinvadermissile.frame=0;
+                newinvadermissile.active=1;
+                missiles[m]=newinvadermissile;
+                break;
               }
-              newinvadermissile.frame=0;
-              newinvadermissile.active=1;
-              missiles[m]=newinvadermissile;
-              break;
             }
           }
         }
@@ -761,6 +793,14 @@ void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender
               freezelag = 1;
               missiles[m].active = 0;
               hit = 1;
+              if(r!=0)
+                for(int i=r-1;i>=0;i--){
+                  if(invaders[i][c].active){
+                    invaders[i][c].bottom=1;
+                    break;
+                  }
+                }
+
             }
           }
         }
