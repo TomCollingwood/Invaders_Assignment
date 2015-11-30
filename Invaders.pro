@@ -21,7 +21,10 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
-SOURCES += main.c
+SOURCES += main.c \
+    drawText.c \
+    updateInvaders.c \
+    initializeInvaders.c
 QMAKE_LFLAGS += -F/Library/Frameworks
 LIBS += -framework SDL2
 LIBS += -framework SDL2_image
@@ -35,4 +38,6 @@ INCLUDEPATH += /usr/local/include
 HEADERS += invader.h \
     missile.h \
     defender.h
+
+DISTFILES +=
 

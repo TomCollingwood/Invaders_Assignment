@@ -5,6 +5,8 @@
 #include "invader.h"
 #include "missile.h"
 #include "defender.h"
+#include "drawText.c"
+#include "updateInvaders.c"
 
 // include the map for the maze.
 // the width of the screen
@@ -12,30 +14,26 @@
 // the height of the screen
 #define HEIGHT 744
 // an enumeration for direction to move USE more enums!
-enum DIRECTION{LEFT,RIGHT,FIRE,NONE,RESET,FREEZE};
 
-void initializeInvaders(Invader invaders[ROWS][COLS]);
 void initializeDefender(Defender *defender);
-void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBER], enum DIRECTION input);
 void drawInvaders(SDL_Renderer *ren,SDL_Texture *tex,Invader invaders[ROWS][COLS]);
-void updateDefender(Defender *defender, enum DIRECTION input, Missile missiles[]);
+void updateDefender(Defender *defender, enum DIRECTION input, Missile missiles[], int *freeze);
 void drawDefender(SDL_Renderer *ren, SDL_Texture *tex, Defender *defender);
 void updateMissiles(Missile missiles[]);
 void drawMissiles(SDL_Renderer *ren, SDL_Texture *tex, Missile missiles[]);
-void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender *defender);
-void drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y);
-
-int freeze=0;
-int freezeframe=0;
-int howfast = 55;
+void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender *defender, int *freeze);
 
 int main()
 {
+  int freeze = 0;
+  int howfast = 55;
   Invader invaders[ROWS][COLS];
   Missile missiles[5];
+  Missile startscreenmissiles[40];
   Defender defender;
   initializeInvaders(invaders);
   initializeDefender(&defender);
+
   // initialise SDL and check that it worked otherwise exit
   // see here for details http://wiki.libsdl.org/CategoryAPI
   if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
@@ -92,7 +90,10 @@ int main()
   SDL_FreeSurface(image);
 
   int quit=0;
+  int menu=0;
+  int menuselect=0;
   enum DIRECTION input = NONE;
+  enum DIRECTION startscreeninput = NONE;
 
   int red = 0;
   int green = 0;
@@ -119,8 +120,10 @@ int main()
         case SDLK_RIGHT : input = RIGHT; break;
         case SDLK_LEFT : input = LEFT; break;
         case SDLK_SPACE : input = FIRE; break;
+        case SDLK_RETURN : input = FIRE; break;
+        case SDLK_UP : input = UPS; break;
+        case SDLK_DOWN : input = DOWNS; break;
         case SDLK_r : input = RESET; break;
-        case SDLK_f : input = FREEZE; break;
         default : input = NONE; break;
         }
       }
@@ -131,19 +134,7 @@ int main()
       }
     }
 
-    if(input == FREEZE){
-      if(freeze==0)
-        freeze=1;
-      else
-        freeze=0;
-    }
-
     // now we clear the screen (will use the clear colour set previously)
-
-
-    red=rand()%255;
-    green=rand()%255;
-    blue=rand()%255;
 
 //    if(red>0) red++;
 //    else if (red>255) red=0;
@@ -152,27 +143,67 @@ int main()
 //    if(blue>0) blue++;
 //    else if (blue>255) blue=0;
 
-    if(input==RESET){
-    defender.active=1;
-    defender.sprite=0;
-    }
-
     SDL_SetRenderDrawColor(ren, red, green, blue, 255);
 
     SDL_RenderClear(ren);
 
-    updateDefender(&defender,input,missiles);
-    drawDefender(ren,tex,&defender);
+    if(input==RESET){
+      defender.active=1;
+      defender.sprite=0;
+      freeze=0;
+      initializeInvaders(invaders);
+      menu=0;
+    }
 
-    updateMissiles(missiles);
-    drawMissiles(ren,tex,missiles);
+    if(menu==2){
+      updateDefender(&defender,input,missiles,&freeze);
+      drawDefender(ren,tex,&defender);
 
-    updateCollisions(missiles,invaders,&defender);
+      updateMissiles(missiles);
+      drawMissiles(ren,tex,missiles);
 
-    updateInvaders(invaders,missiles,input);
-    drawInvaders(ren,tex,invaders);
+      updateCollisions(missiles,invaders,&defender,&freeze);
 
-    // printf("%d",freeze);
+      updateInvaders(invaders,&defender,missiles,&freeze,&howfast,0);
+      drawInvaders(ren,tex,invaders);
+    }
+    else if(menu==0){
+      drawText(ren,tex,"SPACE INVADERS",7,50,2.9);
+      drawText(ren,tex,"START GAME",(WIDTH/2)-100,370,1);
+      drawText(ren,tex,"HIGHSCORES",(WIDTH/2)-100,470,1);
+      drawText(ren,tex,"EXIT",WIDTH/2-35,570,1);
+
+      if(input==UPS){
+        SDL_Delay(150);
+        if(menuselect!=0) menuselect--;
+      }
+      else if (input==DOWNS){
+        SDL_Delay(150);
+        if(menuselect!=2) menuselect++;
+      }
+      else if (input==FIRE){
+        if(menuselect==0) menu=2;
+        else if (menuselect==2) quit=1;
+      }
+      if(menuselect==0){
+        drawText(ren,tex,">",(WIDTH/2)-115,370,1);
+      }
+      else if(menuselect==1){
+        drawText(ren,tex,">",(WIDTH/2)-100-15,470,1);
+      }
+      else{
+        drawText(ren,tex,">",(WIDTH/2)-100-15,570,1);
+      }
+
+      updateDefender(&defender,startscreeninput,startscreenmissiles,&freeze);
+      drawDefender(ren,tex,&defender);
+
+      updateMissiles(startscreenmissiles);
+      drawMissiles(ren,tex,startscreenmissiles);
+
+      updateInvaders(invaders,&defender,startscreenmissiles,&freeze,&howfast,1);
+      drawInvaders(ren,tex,invaders);
+    }
 
     // Up until now everything was drawn behind the scenes.
     // This will show the new, red contents of the window.
@@ -186,55 +217,13 @@ int main()
 // Initializes defender starting position and size
 void initializeDefender(Defender *defender)
 {
-  defender->pos.x=400;
-  defender->pos.y=550;
+  defender->pos.x=WIDTH/2 - SPRITEWIDTH/2;
+  defender->pos.y=HEIGHT-80;
   defender->pos.w=39;
   defender->pos.h=24;
   defender->sprite=0;
   defender->active=1;
-}
-
-// Initializes all invader positions
-void initializeInvaders(Invader invaders[ROWS][COLS])
-{
-  SDL_Rect pos;
-  pos.w=SPRITEWIDTH;
-  pos.h=SPRITEHEIGHT;
-  int ypos=36;
-  int frameoffset = COLS*ROWS*3;
-
-  for(int r=0; r<ROWS; r++)
-  {
-    int xpos = GAP;
-    // if(r == 0) xpos = GAP+3;
-    frameoffset = (r)*11;
-    for(int c=0; c<COLS; ++c)
-    {
-      pos.x=xpos+SPRITEWIDTH;
-      pos.y=ypos+SPRITEHEIGHT;
-      xpos+=(GAP+SPRITEWIDTH);
-      invaders[r][c].pos=pos;
-      invaders[r][c].active=1;
-      invaders[r][c].frame=0;
-      invaders[r][c].frame=frameoffset;
-      frameoffset+=1;
-      invaders[r][c].explosionframe=0;
-      invaders[r][c].sprite=0;
-      invaders[r][c].direction=FWD;
-      if(r==0)
-        invaders[r][c].type=TYPE1;
-      else if(r==1 || r==2)
-        invaders[r][c].type=TYPE2;
-      else
-        invaders[r][c].type=TYPE3;
-      if(r!=4)
-        invaders[r][c].bottom=0;
-      else
-        invaders[r][c].bottom=1;
-    }
-    ypos+=(GAP+SPRITEHEIGHT);
-  }
-  //printf("%d",invaders[ROWS-1][COLS-1].pos.x-invaders[0][0].pos.x);
+  defender->frame=0;
 }
 
 // Draws the defender texture onto the defender
@@ -248,25 +237,33 @@ void drawDefender(SDL_Renderer *ren, SDL_Texture *tex, Defender *defender)
 
   SDL_Rect SrcRS1;
   SrcRS1.x=111;
-  SrcRS1.y=24;
+  SrcRS1.y=27;
   SrcRS1.w=EXPLODEDDEFENDERWIDTH;
   SrcRS1.h=DEFENDERHEIGHT;
 
+  SDL_Rect SrcRS2;
+  SrcRS2.x=69;
+  SrcRS2.y=105;
+  SrcRS2.w=EXPLODEDDEFENDERWIDTH;
+  SrcRS2.h=DEFENDERHEIGHT;
+
   if(defender->sprite==0)
     SDL_RenderCopy(ren,tex,&SrcRS0,&defender->pos);
-  else
-  {
+  else{
     defender->pos.w=EXPLODEDDEFENDERWIDTH;
-    SDL_RenderCopy(ren,tex,&SrcRS1,&defender->pos);
+    if(defender->sprite==1)
+    {
+      SDL_RenderCopy(ren,tex,&SrcRS1,&defender->pos);
+    }
+    else{
+      SDL_RenderCopy(ren,tex,&SrcRS2,&defender->pos);
+    }
   }
 }
 
 // Draws the invaders using RenderCopy and the texture
 void drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][COLS])
 {
-
-
-  //drawText(ren,tex,"HIGHSCORE",200,30);
   SDL_Rect SrcExplode;
   SrcExplode.x=0;
   SrcExplode.y=24;
@@ -346,251 +343,8 @@ void drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][CO
   }
 }
 
-// updates invader's positions
-void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBER], enum DIRECTION input)
-{
-
-  if(input == RESET){
-    freeze=0;
-    initializeInvaders(invaders);
-  }
-
-  int freezelagfix = freeze;
-
-  // find leftmost & rightmost column with at least one active invader
-
-  int lcol = 0;
-  int rcol = COLS-1;
-  for(int c=0; c<COLS; c++){
-    int counter = 0;
-    for(int r=0; r<ROWS; r++){
-      if(invaders[r][c].active) counter++;
-    }
-    if (counter==0 && lcol==c){
-      lcol=c+1;
-    }
-  }
-
-  for(int c=COLS-1; c>-1; --c){
-    int counter = 0;
-    for(int r=0; r<ROWS; ++r){
-      if(invaders[r][c].active) counter++;
-    }
-    if (counter==0 && rcol==c){
-      rcol=c-1;
-    }
-  }
-
-  int hasfirstbeenfound=0;
-  int firstr = 0;
-  int firstc = 0;
-  for(int r=0; r<ROWS;r++){
-    for(int c=0; c<COLS; c++){
-      if(hasfirstbeenfound==0 && invaders[r][c].active){
-        firstr = r;
-        firstc = c;
-        hasfirstbeenfound=1;
-      }
-    }
-  }
-
-  // cycleover==1 when all invaders are alligned in a square
-  int cycleover = 0;
-  // this comparison is made as invaders[firstr][firstc] is first to move
-  if(invaders[firstr][firstc].frame%howfast==0){
-    cycleover = 1;
-  }
-
-  // howfast is how many frames it takes a cycle
-  // a cycle is from one frame when all invaders are alligned
-  // to the next when it's all alligned
-
-  // we need howfast to be the range of the first invader to move to
-  // the last invader to move (the frames change after a collision
-  // when cycleover==1). This makes speed gradually quicker as number
-  // of active invaders decreases
-
-  int howmanyactive=0;
-  for(int r=0; r<ROWS; ++r){
-    for(int c=0; c<COLS; ++c){
-      if(invaders[r][c].active){
-        howmanyactive++;
-      }
-    }
-  }
-
-
-  if(cycleover && freeze==0){
-    howfast = howmanyactive;
-    //printf("!!!! %d !!!!",howmanyactive);
-    howmanyactive--;
-    for(int r=ROWS-1; r>=0; --r){
-      for(int c=COLS-1; c>=0; --c){
-        if(invaders[r][c].active){
-          //printf("%d,",invaders[r][c].frame);
-          invaders[r][c].frame=howmanyactive;
-          //printf("%d,",howmanyactive);
-          howmanyactive--;
-        }
-      }
-    }
-  }
-
-
-  // the last to reach the boundary is always the highest on lefmost column
-  // (lcol) and rightmost column (rcol)
-  static int toprightr=0;
-  static int topleftr=0;
-
-  if(cycleover==1){
-    for(int i=0;i<ROWS;i++){
-      if(invaders[i][rcol].active){
-        toprightr=i;
-        break;
-      }
-    }
-    for(int i=0;i<ROWS;i++){
-      if(invaders[i][lcol].active){
-        topleftr=i;
-        break;
-      }
-    }
-  }
-
-  // so here we check to see if the last to reach the boundary has reached it
-  int moveleft=0;
-  int moveright=0;
-  if(cycleover){
-    if(invaders[topleftr][lcol].pos.x <= SPRITEWIDTH) moveright=1;
-    if(invaders[toprightr][rcol].pos.x >= WIDTH-(2*SPRITEWIDTH)) moveleft=1;
-  }
-
-  // changes direction when all rows of leftmost/rightmost are outside
-  // respective boundaries when all invaders are alligned (cycleover=1)
-  if(moveleft && cycleover)
-    {
-    for(int r=0; r<ROWS; ++r)
-    {
-      for(int c=0; c<COLS; ++c)
-      {
-          if(invaders[r][c].direction==FWD){
-            // I used DWNBWD to save the info that it will then go BWD after
-            // moving downwards
-            invaders[r][c].direction=DWNBWD;
-          }
-          else{
-            // this else clause happens when direction==BWD
-            // the direction BWD is assigned further below in code
-            // this stops invaders moving downwards indefinately
-            invaders[r][c].direction=BWD;
-          }
-      }
-    }
-  }
-  // below is same for DWNFWD
-  else if(moveright && cycleover)
-  {
-    for(int r=0; r<ROWS; ++r)
-    {
-      for(int c=0; c<COLS; ++c)
-      {
-          if(invaders[r][c].direction==BWD){
-            invaders[r][c].direction=DWNFWD;
-          }
-          else{
-            invaders[r][c].direction=FWD;
-          }
-
-      }
-    }
-  }
-
-  // for each invader
-  for(int r=0; r<ROWS; ++r)
-  {
-    for(int c=0; c<COLS; ++c)
-    {
-      // below if statement stops invaders from moving when invader explodes
-      if(freeze==0){
-        invaders[r][c].frame++;
-      }
-      // the explosion frame measures how long the explosion has been active
-      if(invaders[r][c].type == EXPLOSION){
-        invaders[r][c].explosionframe++;
-      }
-      // we limit the explosion to 3 frames below
-      if(invaders[r][c].type == EXPLOSION && invaders[r][c].explosionframe > 3 && invaders[r][c].active){
-        invaders[r][c].active = 0;
-        // If I update freeze directly in middle of iterating through invaders
-        // the rest of the invaders will be ofset from the others so I use freezelag
-        // I assign freeze to freezelagfix at bottom of updateinvaders function
-        freezelagfix = 0;
-      }
-
-      if(invaders[r][c].frame%howfast==0 && freeze==0 && invaders[r][c].active){
-        // moves the invader depending on direction
-        if(invaders[r][c].direction==FWD){
-          invaders[r][c].pos.x+=10;
-        }
-        else if(invaders[r][c].direction==BWD){
-          invaders[r][c].pos.x-=10;
-        }
-        else if(invaders[r][c].direction==DWNBWD)
-        {
-          invaders[r][c].pos.y+=20;
-          invaders[r][c].direction=BWD;
-        }
-        else if(invaders[r][c].direction==DWNFWD)
-        {
-          invaders[r][c].pos.y+=20;
-          invaders[r][c].direction=FWD;
-        }
-
-        if(invaders[r][c].sprite==0){
-          invaders[r][c].sprite=1;
-        }
-        else{
-          invaders[r][c].sprite=0;
-        }
-        // fires missile
-        if(invaders[r][c].bottom){
-          int random = rand();
-          if(random%10==0){
-            for(int m=1; m<MISSILESNUMBER; m++)
-            {
-              if(missiles[m].active==0){
-                Missile newinvadermissile;
-                newinvadermissile.pos.x = invaders[r][c].pos.x;
-                newinvadermissile.pos.y = invaders[r][c].pos.y;
-                newinvadermissile.pos.w = 9;
-                newinvadermissile.pos.h = 24;
-                newinvadermissile.dir = DOWN;
-                newinvadermissile.sprite=0;
-                if(random%100>66)
-                  newinvadermissile.type = LETTERT;
-                else if(random%100>33)
-                  newinvadermissile.type = SNAKE;
-                else{
-                  newinvadermissile.type = ZIGZAG;
-                }
-                newinvadermissile.frame=0;
-                newinvadermissile.active=1;
-                missiles[m]=newinvadermissile;
-                break;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-
-  freeze = freezelagfix;
-}
-
 // Updates defender position and creates new defender missiles if SPACE bar hit
-void updateDefender(Defender *defender, enum DIRECTION input, Missile missiles[])
+void updateDefender(Defender *defender, enum DIRECTION input, Missile missiles[], int *freeze)
 {
   if(defender->active){
     if(input == RIGHT)
@@ -602,7 +356,7 @@ void updateDefender(Defender *defender, enum DIRECTION input, Missile missiles[]
       defender->pos.x += -5;
     }
     // Here we create a new missile
-    else if (input == FIRE && missiles[0].active==0 && freeze==0)
+    else if (input == FIRE && missiles[0].active==0 && *freeze==0)
     {
       Missile newmissile;
       newmissile.dir = UP;
@@ -614,6 +368,10 @@ void updateDefender(Defender *defender, enum DIRECTION input, Missile missiles[]
       newmissile.type = DEFENDER;
       missiles[0] = newmissile;
     }
+  }
+  else{
+    defender->frame++;
+    if(defender->frame%5==0) (defender->sprite == 1) ? (defender->sprite=2) : (defender->sprite=1);
   }
 }
 
@@ -767,9 +525,9 @@ void drawMissiles(SDL_Renderer *ren, SDL_Texture *tex, Missile missiles[])
   }
 }
 
-void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender *defender)
+void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender *defender, int *freeze)
 {
-  int freezelag = freeze;
+  int freezelag = *freeze;
   for(int m=0; m<MISSILESNUMBER; m++)
   {
     if(missiles[m].type == DEFENDER && missiles[m].active)
@@ -822,231 +580,5 @@ void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender
       }
     }
   }
-  freeze=freezelag;
+  *freeze=freezelag;
 }
-
-void drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y){
-  int xoffset=0;
-  SDL_Rect SrcR;
-  int nochar=0;
-  for(int i=0; i<(int)strlen(text); i++){
-    switch(text[i])
-    {
-    case 'a':
-    case 'A':
-      SrcR.x=0;
-      SrcR.y=132;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'b':
-    case 'B':
-      SrcR.x=21;
-      SrcR.y=132;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'c':
-    case 'C':
-      SrcR.x=42;
-      SrcR.y=132;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'd':
-    case 'D':
-      SrcR.x=63;
-      SrcR.y=132;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'e':
-    case 'E':
-      SrcR.x=84;
-      SrcR.y=132;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'f':
-    case 'F':
-      SrcR.x=105;
-      SrcR.y=132;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'g':
-    case 'G':
-      SrcR.x=126;
-      SrcR.y=132;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'h':
-    case 'H':
-      SrcR.x=147;
-      SrcR.y=132;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'i':
-    case 'I':
-      SrcR.x=168;
-      SrcR.y=132;
-      SrcR.w=9;
-      SrcR.h=21;
-      break;
-    case 'j':
-    case 'J':
-      SrcR.x=0;
-      SrcR.y=156;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'k':
-    case 'K':
-      SrcR.x=21;
-      SrcR.y=156;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'l':
-    case 'L':
-      SrcR.x=42;
-      SrcR.y=156;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'm':
-    case 'M':
-      SrcR.x=63;
-      SrcR.y=156;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'n':
-    case 'N':
-      SrcR.x=84;
-      SrcR.y=156;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'o':
-    case 'O':
-      SrcR.x=105;
-      SrcR.y=156;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'p':
-    case 'P':
-      SrcR.x=126;
-      SrcR.y=156;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'q':
-    case 'Q':
-      SrcR.x=147;
-      SrcR.y=156;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'r':
-    case 'R':
-      SrcR.x=0;
-      SrcR.y=180;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 's':
-    case 'S':
-      SrcR.x=21;
-      SrcR.y=180;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 't':
-    case 'T':
-      SrcR.x=42;
-      SrcR.y=180;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'u':
-    case 'U':
-      SrcR.x=63;
-      SrcR.y=180;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'v':
-    case 'V':
-      SrcR.x=84;
-      SrcR.y=180;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'w':
-    case 'W':
-      SrcR.x=105;
-      SrcR.y=180;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'x':
-    case 'X':
-      SrcR.x=126;
-      SrcR.y=180;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'y':
-    case 'Y':
-      SrcR.x=147;
-      SrcR.y=180;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case 'z':
-    case 'Z':
-      SrcR.x=168;
-      SrcR.y=180;
-      SrcR.w=15;
-      SrcR.h=21;
-      break;
-    case ' ':
-      SrcR.x=168;
-      SrcR.y=156;
-      SrcR.w=6;
-      SrcR.h=21;
-      break;
-    case '-':
-    case '<':
-    case '>':
-    case '*':
-    case '?':
-    case '=':
-    default:
-      nochar = 1;
-      break;
-    }
-
-    if(nochar==0){
-      SDL_Rect letter;
-      letter.x = x + xoffset;
-      letter.y = y;
-      letter.w = SrcR.w;
-      letter.h = SrcR.h;
-      xoffset += SrcR.w + 6;
-      SDL_RenderCopy(ren,tex,&SrcR,&letter);
-    }
-    else{
-      nochar=0;
-    }
-  }
-
-}
-
-
-
-
