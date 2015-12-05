@@ -8,8 +8,9 @@
 #include "initializeInvaders.h"
 #include "drawHighscore.h"
 #include "initializeHighscores.h"
-
-enum DIRECTION{LEFT,RIGHT,FIRE,NONE,RESET,FREEZE,UPS,DOWNS};
+#include "direction.h"
+#include "selectLetter.h"
+#include "insertHighscore.h"
 
 // include the map for the maze.
 // the width of the screen
@@ -100,6 +101,7 @@ int main()
 
   int quit=0;
   int menu=0;
+  int previousmenu=0;
   int menuselect=0;
   enum DIRECTION input = NONE;
   enum DIRECTION startscreeninput = NONE;
@@ -168,6 +170,7 @@ int main()
 
     if(menu==2){
       if(defender.active==0){
+        previousmenu=2;
         menu=3;
       }
 
@@ -180,12 +183,15 @@ int main()
       updateCollisions(missiles,invaders,&defender,&freeze,&score,frame);
 
       if(numberactive(invaders)>0) updateInvaders(invaders,missiles,&freeze,&howfast,0);
-      else menu=3;
+      else{
+        previousmenu=2;
+        menu=3;
+      }
 
       drawInvaders(ren,tex,invaders);
 
       char scoretext[50];
-      sprintf(scoretext,"Highscore= 0000 Score= %d",score);
+      sprintf(scoretext,"HIGHSCORE= 0000 Score= %d",score);
 
       drawText(ren,tex,scoretext,80,30,1);
 
@@ -217,8 +223,6 @@ int main()
 
 //      drawText(ren,tex,stringtype,60,30,1);
 //      drawText(ren,tex,stringframe,0,30,1);
-
-//      frame++;
     }
     else if(menu==0 || menu==1){
       howfast=55;
@@ -226,32 +230,34 @@ int main()
       drawText(ren,tex,"SPACE INVADERS",7,50,2.9);
       frame = 0;
       if(menu==0){
-      drawText(ren,tex,"START GAME",(WIDTH/2)-100,370,1);
-      drawText(ren,tex,"HIGHSCORES",(WIDTH/2)-100,470,1);
-      drawText(ren,tex,"EXIT",WIDTH/2-35,570,1);
+        drawText(ren,tex,"START GAME",(WIDTH/2)-100,370,1);
+        drawText(ren,tex,"HIGHSCORES",(WIDTH/2)-100,470,1);
+        drawText(ren,tex,"EXIT",WIDTH/2-35,570,1);
 
-      if(input==UPS && previousinput==NONE){
-        //SDL_Delay(150);
-        if(menuselect!=0) menuselect--;
-      }
-      else if (input==DOWNS && previousinput==NONE){
-        //SDL_Delay(150);
-        if(menuselect!=2) menuselect++;
-      }
-      else if (input==FIRE && previousinput==NONE){
-        if(menuselect==0) menu=2;
-        else if (menuselect==1) menu=1;
-        else if (menuselect==2) quit=1;
-      }
-      if(menuselect==0){
-        drawText(ren,tex,">",(WIDTH/2)-115,370,1);
-      }
-      else if(menuselect==1){
-        drawText(ren,tex,">",(WIDTH/2)-100-15,470,1);
-      }
-      else{
-        drawText(ren,tex,">",(WIDTH/2)-100-15,570,1);
-      }
+        if(input==UPS && previousinput==NONE){
+          //SDL_Delay(150);
+          if(menuselect!=0) menuselect--;
+        }
+        else if (input==DOWNS && previousinput==NONE){
+          //SDL_Delay(150);
+          if(menuselect!=2) menuselect++;
+        }
+        else if (input==FIRE && previousinput==NONE){
+          if(menuselect==0){
+            menu=2;
+          }
+          else if (menuselect==1) menu=1;
+          else if (menuselect==2) quit=1;
+        }
+        if(menuselect==0){
+          drawText(ren,tex,">",(WIDTH/2)-115,370,1);
+        }
+        else if(menuselect==1){
+          drawText(ren,tex,">",(WIDTH/2)-100-15,470,1);
+        }
+        else{
+          drawText(ren,tex,">",(WIDTH/2)-100-15,570,1);
+        }
       }
       else {
         drawText(ren,tex,"HIGHSCORES",(WIDTH/2)-100,370,1);
@@ -259,17 +265,15 @@ int main()
         drawText(ren,tex,">",(WIDTH/2)-100-15,570,1);
 
         FILE *file;
-        if( (file=fopen("highscores","r")) ==NULL)
+        if( (file=fopen("highscores","w+")) ==NULL)
         {
-          if( (file=fopen("highscores","w")) ==NULL)
-          {
-              printf("could not create new highscores file\n");
-              exit(EXIT_FAILURE);
-          }
-          fwrite(highscores,sizeof(Highscore),3,file);
+          printf("could not open highscores file\n");
+          exit(EXIT_FAILURE);
         }
+        //fwrite(highscores,sizeof(Highscore),3,file);
         //reads highscores
         fread(highscores,sizeof(Highscore),3,file);
+        fclose(file);
 
         int yvalue = 420;
         for(int i=0; i<3; i++){
@@ -301,33 +305,113 @@ int main()
     else if(menu==3){
       drawDefender(ren,tex,&defender);
       updateDefender(&defender,NONE,missiles,&freeze);
-      drawInvaders(ren,tex,invaders);
-      drawText(ren,tex,"GAME OVER", 0, 400,5);
       FILE *file;
-      if( (file=fopen("highscores","r")) ==NULL)
+      if( (file=fopen("highscores","w+")) ==NULL)
       {
-        if( (file=fopen("highscores","w")) ==NULL)
-        {
-            printf("could not create new highscores file\n");
-            exit(EXIT_FAILURE);
-        }
-        fwrite(highscores,sizeof(Highscore),3,file);
+        printf("could not open highscores file\n");
+        exit(EXIT_FAILURE);
       }
       //reads highscores
       fread(highscores,sizeof(Highscore),3,file);
+      fclose(file);
+
+      int newhighscore = 0;
 
       for(int i=0; i<3; i++){
         if(highscores[i].score<score){
-          drawText(ren,tex,"NEW HIGHSCORE!",0,550,4);
+          drawText(ren,tex,"NEW HIGHSCORE",20,30,3);
+          newhighscore=1;
           break;
         }
       }
+
+      if(newhighscore){
+        static int selectposition=0;
+        int xpivot=50;
+        int ypivot=200;
+        static enum DIRECTION previousinput = NONE;
+        static int letter1int=65;
+        static int letter2int=65;
+        static int letter3int=65;
+
+        if(previousmenu!=3){
+          letter1int=65;
+          letter2int=65;
+          letter3int=65;
+        }
+
+        char letter1char[5];
+        char letter2char[5];
+        char letter3char[5];
+
+        sprintf(letter1char,"%c",(char)letter1int);
+        sprintf(letter2char,"%c",(char)letter2int);
+        sprintf(letter3char,"%c",(char)letter3int);
+
+        if(input==RIGHT && previousinput==NONE) selectposition++;
+        if(input==LEFT && previousinput==NONE) selectposition--;
+
+        if(selectposition<0) selectposition=3;
+        if(selectposition>3) selectposition=0;
+
+        if(selectposition!=3){
+          if(selectposition==0){
+            letter1int=selectLetter(letter1int,input,previousinput);
+          }
+          else if(selectposition==1){
+            letter2int=selectLetter(letter2int,input,previousinput);
+            printf("(2:%d)",letter2int);
+          }
+          else if(selectposition==2){
+            letter3int=selectLetter(letter3int,input,previousinput);
+            printf("(3:%d)",letter3int);
+          }
+          drawText(ren,tex,"u",xpivot+selectposition*100-15,ypivot-75,5);
+          drawText(ren,tex,"d",xpivot+selectposition*100-15,ypivot+125,5);
+        }
+        if(selectposition==3){
+          drawText(ren,tex,"u",xpivot+220,ypivot+290,5);
+        }
+        drawText(ren,tex,letter1char,xpivot,ypivot,5);
+        drawText(ren,tex,letter2char,xpivot+100,ypivot,5);
+        drawText(ren,tex,letter3char,xpivot+200,ypivot,5);
+        drawText(ren,tex,"ENTER",xpivot+150,ypivot+200,3);
+        char scorestring[10];
+        sprintf(scorestring,"%d",score);
+        drawText(ren,tex,"SCORE",xpivot+350,ypivot+30,2);
+        drawText(ren,tex,scorestring,xpivot+350,ypivot+80,1.5);
+        previousinput = input;
+
+        //here we submit the score
+        if(selectposition==3 && input==FIRE){
+          char name1[10];
+          sprintf(name1,"%s%s%s",letter1char,letter2char,letter3char);
+          char name2[3];
+
+          for(int i=0;i<3;i++){
+            name2[i]=name1[i];
+          }
+
+          insertHighscore(highscores,name2,score);
+          FILE *file;
+          if( (file=fopen("highscores","w+")) ==NULL)
+          {
+            printf("could not open highscores file\n");
+            exit(EXIT_FAILURE);
+          }
+          //reads highscores
+          fwrite(highscores,sizeof(Highscore),3,file);
+          fclose(file);
+          menu=0;
+        }
+
+      }
+      previousmenu=3;
     }
     // Up until now everything was drawn behind the scenes.
     // This will show the new, red contents of the window.
     SDL_RenderPresent(ren);
   }
-
   SDL_Quit();
   return 0;
 }
