@@ -24,7 +24,9 @@ CONFIG -= qt
 SOURCES += main.c \
     drawText.c \
     updateInvaders.c \
-    initializeInvaders.c
+    initializeInvaders.c \
+    initializebarrier.c \
+    initializeHighscores.c
 QMAKE_LFLAGS += -F/Library/Frameworks
 LIBS += -framework SDL2
 LIBS += -framework SDL2_image
@@ -37,7 +39,13 @@ INCLUDEPATH += /usr/local/include
 
 HEADERS += invader.h \
     missile.h \
-    defender.h
+    defender.h \
+    drawText.h \
+    updateInvaders.h \
+    initializeInvaders.h \
+    drawHighscore.h \
+    highscore.h \
+    initializeHighscores.h
 
 DISTFILES +=
 

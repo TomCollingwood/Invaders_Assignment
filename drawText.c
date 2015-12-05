@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 void drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y, float multiplier){
   int xoffset=0;
   SDL_Rect SrcR;
@@ -231,6 +232,66 @@ void drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y, fl
     case '=':
       SrcR.x=105;
       SrcR.y=204;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case '0':
+      SrcR.x=126;
+      SrcR.y=204;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case '1':
+      SrcR.x=147;
+      SrcR.y=204;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case '2':
+      SrcR.x=168;
+      SrcR.y=204;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case '3':
+      SrcR.x=0;
+      SrcR.y=228;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case '4':
+      SrcR.x=21;
+      SrcR.y=228;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case '5':
+      SrcR.x=42;
+      SrcR.y=228;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case '6':
+      SrcR.x=63;
+      SrcR.y=228;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case '7':
+      SrcR.x=84;
+      SrcR.y=228;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case '8':
+      SrcR.x=105;
+      SrcR.y=228;
+      SrcR.w=15;
+      SrcR.h=21;
+      break;
+    case '9':
+      SrcR.x=126;
+      SrcR.y=228;
       SrcR.w=15;
       SrcR.h=21;
       break;

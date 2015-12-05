@@ -2,11 +2,14 @@
 #include <SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "invader.h"
-#include "missile.h"
+#include "drawText.h"
+#include "updateInvaders.h"
 #include "defender.h"
-#include "drawText.c"
-#include "updateInvaders.c"
+#include "initializeInvaders.h"
+#include "drawHighscore.h"
+#include "initializeHighscores.h"
+
+enum DIRECTION{LEFT,RIGHT,FIRE,NONE,RESET,FREEZE,UPS,DOWNS};
 
 // include the map for the maze.
 // the width of the screen
@@ -21,16 +24,22 @@ void updateDefender(Defender *defender, enum DIRECTION input, Missile missiles[]
 void drawDefender(SDL_Renderer *ren, SDL_Texture *tex, Defender *defender);
 void updateMissiles(Missile missiles[]);
 void drawMissiles(SDL_Renderer *ren, SDL_Texture *tex, Missile missiles[]);
-void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender *defender, int *freeze);
+void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender *defender, \
+                      int *freeze, int *score, int frame);
 
 int main()
 {
   int freeze = 0;
   int howfast = 55;
+  int frame=0;
   Invader invaders[ROWS][COLS];
   Missile missiles[5];
   Missile startscreenmissiles[40];
   Defender defender;
+  Highscore highscores[3];
+  int score = 0;
+
+  initializeHighscores(highscores);
   initializeInvaders(invaders);
   initializeDefender(&defender);
 
@@ -147,6 +156,8 @@ int main()
 
     SDL_RenderClear(ren);
 
+    static enum DIRECTION previousinput = NONE;
+
     if(input==RESET){
       defender.active=1;
       defender.sprite=0;
@@ -156,33 +167,80 @@ int main()
     }
 
     if(menu==2){
+      if(defender.active==0){
+        menu=3;
+      }
+
       updateDefender(&defender,input,missiles,&freeze);
       drawDefender(ren,tex,&defender);
 
       updateMissiles(missiles);
       drawMissiles(ren,tex,missiles);
 
-      updateCollisions(missiles,invaders,&defender,&freeze);
+      updateCollisions(missiles,invaders,&defender,&freeze,&score,frame);
 
-      updateInvaders(invaders,&defender,missiles,&freeze,&howfast,0);
+      if(numberactive(invaders)>0) updateInvaders(invaders,missiles,&freeze,&howfast,0);
+      else menu=3;
+
       drawInvaders(ren,tex,invaders);
+
+      char scoretext[50];
+      sprintf(scoretext,"Highscore= 0000 Score= %d",score);
+
+      drawText(ren,tex,scoretext,80,30,1);
+
+      frame++;
+
+//      char stringframe[10];
+//      sprintf(stringframe,"%d",frame);
+//      drawText(ren,tex,stringframe,0,30,1);
+
+//      printf("%d",frame);
+
+//      int inttype0, inttype1, inttype2;
+
+//      if(frame<3000){
+//        inttype0 = (-0.025)*frame+100;
+//        inttype1 = (-0.05)*frame+200;
+//        inttype2 = (-0.1)*frame+400;
+//      }
+//      else{
+//        inttype0 = 25;
+//        inttype1 = 50;
+//        inttype2 = 100;
+//      }
+
+
+//      char stringtype[100];
+
+//      sprintf(stringtype,"%d   %d   %d",inttype0,inttype1,inttype2);
+
+//      drawText(ren,tex,stringtype,60,30,1);
+//      drawText(ren,tex,stringframe,0,30,1);
+
+//      frame++;
     }
-    else if(menu==0){
+    else if(menu==0 || menu==1){
+      howfast=55;
+      //initializedefender(&defender);
       drawText(ren,tex,"SPACE INVADERS",7,50,2.9);
+      frame = 0;
+      if(menu==0){
       drawText(ren,tex,"START GAME",(WIDTH/2)-100,370,1);
       drawText(ren,tex,"HIGHSCORES",(WIDTH/2)-100,470,1);
       drawText(ren,tex,"EXIT",WIDTH/2-35,570,1);
 
-      if(input==UPS){
-        SDL_Delay(150);
+      if(input==UPS && previousinput==NONE){
+        //SDL_Delay(150);
         if(menuselect!=0) menuselect--;
       }
-      else if (input==DOWNS){
-        SDL_Delay(150);
+      else if (input==DOWNS && previousinput==NONE){
+        //SDL_Delay(150);
         if(menuselect!=2) menuselect++;
       }
-      else if (input==FIRE){
+      else if (input==FIRE && previousinput==NONE){
         if(menuselect==0) menu=2;
+        else if (menuselect==1) menu=1;
         else if (menuselect==2) quit=1;
       }
       if(menuselect==0){
@@ -194,6 +252,39 @@ int main()
       else{
         drawText(ren,tex,">",(WIDTH/2)-100-15,570,1);
       }
+      }
+      else {
+        drawText(ren,tex,"HIGHSCORES",(WIDTH/2)-100,370,1);
+        drawText(ren,tex,"EXIT",WIDTH/2-35,570,1);
+        drawText(ren,tex,">",(WIDTH/2)-100-15,570,1);
+
+        FILE *file;
+        if( (file=fopen("highscores","r")) ==NULL)
+        {
+          if( (file=fopen("highscores","w")) ==NULL)
+          {
+              printf("could not create new highscores file\n");
+              exit(EXIT_FAILURE);
+          }
+          fwrite(highscores,sizeof(Highscore),3,file);
+        }
+        //reads highscores
+        fread(highscores,sizeof(Highscore),3,file);
+
+        int yvalue = 420;
+        for(int i=0; i<3; i++){
+          char highscore[10];
+          sprintf(highscore,"%s - %d",highscores[i].name,highscores[i].score);
+          drawText(ren,tex,highscore,270,yvalue,1);
+          yvalue+=50;
+        }
+
+        if(input==FIRE && previousinput==NONE){
+          menu=0;
+        }
+      }
+
+
 
       updateDefender(&defender,startscreeninput,startscreenmissiles,&freeze);
       drawDefender(ren,tex,&defender);
@@ -201,10 +292,37 @@ int main()
       updateMissiles(startscreenmissiles);
       drawMissiles(ren,tex,startscreenmissiles);
 
-      updateInvaders(invaders,&defender,startscreenmissiles,&freeze,&howfast,1);
+      updateInvaders(invaders,startscreenmissiles,&freeze,&howfast,1);
       drawInvaders(ren,tex,invaders);
+
+      previousinput = input;
     }
 
+    else if(menu==3){
+      drawDefender(ren,tex,&defender);
+      updateDefender(&defender,NONE,missiles,&freeze);
+      drawInvaders(ren,tex,invaders);
+      drawText(ren,tex,"GAME OVER", 0, 400,5);
+      FILE *file;
+      if( (file=fopen("highscores","r")) ==NULL)
+      {
+        if( (file=fopen("highscores","w")) ==NULL)
+        {
+            printf("could not create new highscores file\n");
+            exit(EXIT_FAILURE);
+        }
+        fwrite(highscores,sizeof(Highscore),3,file);
+      }
+      //reads highscores
+      fread(highscores,sizeof(Highscore),3,file);
+
+      for(int i=0; i<3; i++){
+        if(highscores[i].score<score){
+          drawText(ren,tex,"NEW HIGHSCORE!",0,550,4);
+          break;
+        }
+      }
+    }
     // Up until now everything was drawn behind the scenes.
     // This will show the new, red contents of the window.
     SDL_RenderPresent(ren);
@@ -212,6 +330,16 @@ int main()
 
   SDL_Quit();
   return 0;
+}
+
+int numberactive(Invader invaders[ROWS][COLS]){
+  int numberactive=0;
+  for(int r=0; r<ROWS;r++){
+    for(int c=0; c<COLS; c++){
+      if(invaders[r][c].active) numberactive++;
+    }
+  }
+  return numberactive;
 }
 
 // Initializes defender starting position and size
@@ -525,7 +653,7 @@ void drawMissiles(SDL_Renderer *ren, SDL_Texture *tex, Missile missiles[])
   }
 }
 
-void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender *defender, int *freeze)
+void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender *defender, int *freeze, int *score, int frame)
 {
   int freezelag = *freeze;
   for(int m=0; m<MISSILESNUMBER; m++)
@@ -547,6 +675,17 @@ void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender
             int misH = missiles[m].pos.h;
             if ((misX > invX) && (misX < invX+invW) && (misY-misH < invY) && hit ==0)
             {
+              // add to score here
+              if(invaders[r][c].type==TYPE1){
+                (frame<3000) ? (*score)+=((-0.1)*frame+400) : (*score+=100);
+              }
+              else if(invaders[r][c].type==TYPE2){
+                (frame<3000) ? (*score)+=((-0.05)*frame+200) : (*score+=50);
+              }
+              else{
+                (frame<3000) ? (*score)+=((-0.025)*frame+100) : (*score+=25);
+              }
+
               invaders[r][c].type = EXPLOSION;
               freezelag = 1;
               missiles[m].active = 0;

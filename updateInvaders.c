@@ -2,7 +2,6 @@
 #include <SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "initializeInvaders.c"
 #include "invader.h"
 #include "missile.h"
 #include "defender.h"
@@ -12,7 +11,7 @@
 
 enum DIRECTION{LEFT,RIGHT,FIRE,NONE,RESET,FREEZE,UPS,DOWNS};
 
-void updateInvaders(Invader invaders[ROWS][COLS], Defender *defender, Missile missiles[MISSILESNUMBER], \
+void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBER], \
                     int *freeze, int *howfast, int startscreen)
 {
   int freezelagfix = *freeze;
@@ -185,9 +184,9 @@ void updateInvaders(Invader invaders[ROWS][COLS], Defender *defender, Missile mi
         // I assign freeze to freezelagfix at bottom of updateinvaders function
         freezelagfix = 0;
       }
-      printf("(%d,%d)",r,c);
-      printf("%d,%d",*howfast,howmanyactive);
-      printf("(%d)",invaders[r][c].active);
+      //printf("(%d,%d)",r,c);
+      //printf("%d,%d",*howfast,howmanyactive);
+      //printf("(%d)",invaders[r][c].active);
 
       if(invaders[r][c].frame%*howfast==0 && *freeze==0 && invaders[r][c].active){
         // moves the invader depending on direction
