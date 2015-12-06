@@ -3,7 +3,7 @@
 
 typedef struct
 {
-  char name[3];
+  char name[4];
   int score;
 }Highscore;
 

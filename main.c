@@ -174,6 +174,10 @@ int main()
         menu=3;
       }
 
+      //leftover missiles from startscreen
+      updateMissiles(startscreenmissiles);
+      drawMissiles(ren,tex,startscreenmissiles);
+
       updateDefender(&defender,input,missiles,&freeze);
       drawDefender(ren,tex,&defender);
 
@@ -277,9 +281,9 @@ int main()
 
         int yvalue = 420;
         for(int i=0; i<3; i++){
-          char highscore[10];
+          char highscore[100];
           sprintf(highscore,"%s - %d",highscores[i].name,highscores[i].score);
-          drawText(ren,tex,highscore,270,yvalue,1);
+          drawText(ren,tex,highscore,260,yvalue,1);
           yvalue+=50;
         }
 
@@ -288,7 +292,10 @@ int main()
         }
       }
 
-
+      if(previousmenu!=0){
+        initializeDefender(&defender);
+        initializeInvaders(invaders);
+      }
 
       updateDefender(&defender,startscreeninput,startscreenmissiles,&freeze);
       drawDefender(ren,tex,&defender);
@@ -300,6 +307,7 @@ int main()
       drawInvaders(ren,tex,invaders);
 
       previousinput = input;
+      previousmenu=0;
     }
 
     else if(menu==3){
@@ -360,11 +368,9 @@ int main()
           }
           else if(selectposition==1){
             letter2int=selectLetter(letter2int,input,previousinput);
-            printf("(2:%d)",letter2int);
           }
           else if(selectposition==2){
             letter3int=selectLetter(letter3int,input,previousinput);
-            printf("(3:%d)",letter3int);
           }
           drawText(ren,tex,"u",xpivot+selectposition*100-15,ypivot-75,5);
           drawText(ren,tex,"d",xpivot+selectposition*100-15,ypivot+125,5);
@@ -384,15 +390,9 @@ int main()
 
         //here we submit the score
         if(selectposition==3 && input==FIRE){
-          char name1[10];
-          sprintf(name1,"%s%s%s",letter1char,letter2char,letter3char);
-          char name2[3];
-
-          for(int i=0;i<3;i++){
-            name2[i]=name1[i];
-          }
-
-          insertHighscore(highscores,name2,score);
+          char name[4];
+          sprintf(name,"%c%c%c",letter1char[0],letter2char[0],letter3char[0]);
+          insertHighscore(highscores,name,score);
           FILE *file;
           if( (file=fopen("highscores","w+")) ==NULL)
           {
@@ -402,6 +402,11 @@ int main()
           //reads highscores
           fwrite(highscores,sizeof(Highscore),3,file);
           fclose(file);
+
+          printf("(1)'%s'-'%d'\n",highscores[0].name,highscores[0].score);
+          printf("(2)'%s'-'%d'\n",highscores[1].name,highscores[1].score);
+          printf("(3)'%s'-'%d'\n",highscores[2].name,highscores[2].score);
+
           menu=0;
         }
 

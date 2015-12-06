@@ -3,7 +3,7 @@
 #include <string.h>
 #include "highscore.h"
 
-void insertHighscore(Highscore highscores[3],char name[3], int score){
+void insertHighscore(Highscore highscores[3],char name[4], int score){
   if(score>highscores[0].score){
     Highscore tmp = highscores[1];
     highscores[1]=highscores[0];
