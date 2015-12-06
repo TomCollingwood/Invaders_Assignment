@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "highscore.h"
+#include "insertHighscore.h"
 
 void insertHighscore(Highscore highscores[3],char name[4], int score){
   if(score>highscores[0].score){

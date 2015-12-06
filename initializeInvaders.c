@@ -1,10 +1,4 @@
-#include <SDL.h>
-#include <SDL_image.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "invader.h"
-#include "missile.h"
-#include "defender.h"
+#include "initializeInvaders.h"
 
 // Initializes all invader positions
 void initializeInvaders(Invader invaders[ROWS][COLS])

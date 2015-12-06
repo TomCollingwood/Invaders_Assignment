@@ -1,10 +1,4 @@
-#include <SDL.h>
-#include <SDL_image.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#define BARRIERWIDTH 22
-#define BARRIERHEIGHT 16
+#include "initializeBarriers.h"
 
 void initializeBarriers(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH]){
   for(int i=0; i<4; i++){
@@ -27,8 +21,8 @@ void initializeBarriers(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH]){
       {1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1},
       {1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1}
     };
-    for(int j =0; i<BARRIERHEIGHT;i++){
-      for(int k =0; j<BARRIERWIDTH; j++){
+    for(int j =0; j<BARRIERHEIGHT;j++){
+      for(int k =0; k<BARRIERWIDTH; k++){
         barriers[i][j][k]=barrier[j][k];
       }
     }

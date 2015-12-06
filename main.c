@@ -11,6 +11,8 @@
 #include "direction.h"
 #include "selectLetter.h"
 #include "insertHighscore.h"
+#include "initializeBarriers.h"
+#include "drawBarriers.h"
 
 // include the map for the maze.
 // the width of the screen
@@ -37,12 +39,14 @@ int main()
   Missile missiles[5];
   Missile startscreenmissiles[40];
   Defender defender;
+  int barriers[4][BARRIERHEIGHT][BARRIERWIDTH];
   Highscore highscores[3];
   int score = 0;
 
   initializeHighscores(highscores);
   initializeInvaders(invaders);
   initializeDefender(&defender);
+  initializeBarriers(barriers);
 
   // initialise SDL and check that it worked otherwise exit
   // see here for details http://wiki.libsdl.org/CategoryAPI
@@ -178,6 +182,8 @@ int main()
       updateMissiles(startscreenmissiles);
       drawMissiles(ren,tex,startscreenmissiles);
 
+      drawBarriers(ren,barriers);
+
       updateDefender(&defender,input,missiles,&freeze);
       drawDefender(ren,tex,&defender);
 
@@ -186,7 +192,9 @@ int main()
 
       updateCollisions(missiles,invaders,&defender,&freeze,&score,frame);
 
-      if(numberactive(invaders)>0) updateInvaders(invaders,missiles,&freeze,&howfast,0);
+      int numactive = numberactive(invaders);
+
+      if(numactive>0) updateInvaders(invaders,missiles,&freeze,&howfast,0);
       else{
         previousmenu=2;
         menu=3;

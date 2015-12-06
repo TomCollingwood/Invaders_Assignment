@@ -25,10 +25,11 @@ SOURCES += main.c \
     drawText.c \
     updateInvaders.c \
     initializeInvaders.c \
-    initializebarrier.c \
     initializeHighscores.c \
     selectLetter.c \
-    insertHighscore.c
+    insertHighscore.c \
+    initializeBarriers.c \
+    drawBarriers.c
 QMAKE_LFLAGS += -F/Library/Frameworks
 LIBS += -framework SDL2
 LIBS += -framework SDL2_image
@@ -50,7 +51,9 @@ HEADERS += invader.h \
     initializeHighscores.h \
     direction.h \
     selectLetter.h \
-    insertHighscore.h
+    insertHighscore.h \
+    initializeBarriers.h \
+    drawBarriers.h
 
 DISTFILES +=
 

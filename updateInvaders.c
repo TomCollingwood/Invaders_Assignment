@@ -1,15 +1,4 @@
-#include <SDL.h>
-#include <SDL_image.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "invader.h"
-#include "missile.h"
-#include "defender.h"
-
-#define WIDTH 651
-#define HEIGHT 744
-
-enum DIRECTION{LEFT,RIGHT,FIRE,NONE,RESET,FREEZE,UPS,DOWNS};
+#include "updateInvaders.h"
 
 void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBER], \
                     int *freeze, int *howfast, int startscreen)
