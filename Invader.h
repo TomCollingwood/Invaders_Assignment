@@ -19,6 +19,7 @@ typedef struct
   enum DIR direction;
   enum InvaderType type;
   int explosionframe;
+  int bottom;
 }Invader;
 
 #endif
