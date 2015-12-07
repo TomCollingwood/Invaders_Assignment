@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "drawText.h"
 #include "updateInvaders.h"
-#include "defender.h"
+#include "Defender.h"
 #include "initializeInvaders.h"
 #include "drawHighscore.h"
 #include "initializeHighscores.h"

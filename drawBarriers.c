@@ -3,7 +3,7 @@
 void drawBarriers(SDL_Renderer *ren, int barriers[4][BARRIERHEIGHT][BARRIERWIDTH]){
   SDL_SetRenderDrawColor(ren, 72, 252, 0, 255);
   for(int i=0;i<4;i++){
-    int initialX=100+3*BARRIERWIDTH*i+60*i;
+    int initialX=BARRIERSTARTX+3*BARRIERWIDTH*i+BARRIERGAP*i;
     int initialY=550;
     int x = initialX;
     int y = initialY;

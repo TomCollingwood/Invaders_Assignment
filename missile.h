@@ -3,6 +3,8 @@
 
 #define MISSILESNUMBER 5
 
+#include "invader.h"
+
 enum MissileType{DEFENDER,LETTERT,ZIGZAG,SNAKE};
 
 typedef struct

@@ -29,7 +29,8 @@ SOURCES += main.c \
     selectLetter.c \
     insertHighscore.c \
     initializeBarriers.c \
-    drawBarriers.c
+    drawBarriers.c \
+    updateBarriers.c
 QMAKE_LFLAGS += -F/Library/Frameworks
 LIBS += -framework SDL2
 LIBS += -framework SDL2_image
@@ -40,9 +41,9 @@ INCLUDEPATH += /usr/local/include
 #include(deployment.pri)
 #qtcAddDeployment()
 
-HEADERS += invader.h \
+HEADERS += Invader.h \
     missile.h \
-    defender.h \
+    Defender.h \
     drawText.h \
     updateInvaders.h \
     initializeInvaders.h \
@@ -53,7 +54,8 @@ HEADERS += invader.h \
     selectLetter.h \
     insertHighscore.h \
     initializeBarriers.h \
-    drawBarriers.h
+    drawBarriers.h \
+    updateBarriers.h
 
 DISTFILES +=
 
