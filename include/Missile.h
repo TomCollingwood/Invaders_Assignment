@@ -1,9 +1,13 @@
+///
+///  @file Missile.h
+///  @brief Contains the structure for Missile
+
 #ifndef MISSILE_H__
 #define MISSILE_H__
 
-#define MISSILESNUMBER 5
-
 #include "Invader.h"
+
+#define MISSILESNUMBER 5
 
 enum MissileType{DEFENDER,LETTERT,ZIGZAG,SNAKE};
 

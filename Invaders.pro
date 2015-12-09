@@ -21,26 +21,27 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
-SOURCES += main.c \
-    drawText.c \
-    updateInvaders.c \
-    initializeInvaders.c \
-    initializeHighscores.c \
-    selectLetter.c \
-    insertHighscore.c \
-    initializeBarriers.c \
-    drawBarriers.c \
-    updateBarriers.c \
-    blastBarrier.c \
-    readHighscores.c \
-    writeHighscores.c \
-    updateCollisions.c \
-    initializeDefender.c \
-    drawMissiles.c \
-    updateMissiles.c \
-    updateDefender.c \
-    drawInvaders.c \
-    drawDefender.c
+SOURCES += \
+    src/BlastBarrier.c \
+    src/DrawBarriers.c \
+    src/DrawDefender.c \
+    src/DrawInvaders.c \
+    src/DrawMissiles.c \
+    src/DrawText.c \
+    src/InitializeBarriers.c \
+    src/InitializeDefender.c \
+    src/InitializeHighscores.c \
+    src/InitializeInvaders.c \
+    src/InsertHighscore.c \
+    src/Main.c \
+    src/ReadHighscores.c \
+    src/SelectLetter.c \
+    src/UpdateBarriers.c \
+    src/UpdateCollisions.c \
+    src/UpdateDefender.c \
+    src/UpdateInvaders.c \
+    src/UpdateMissiles.c \
+    src/WriteHighscores.c
 QMAKE_LFLAGS += -F/Library/Frameworks
 LIBS += -framework SDL2
 LIBS += -framework SDL2_image
@@ -51,34 +52,34 @@ INCLUDEPATH += /Library/Frameworks/SDL2.framework/Headers
 INCLUDEPATH += /usr/local/include
 
 HEADERS += \
-    Defender.h \
-    drawText.h \
-    updateInvaders.h \
-    initializeInvaders.h \
-    drawHighscore.h \
-    highscore.h \
-    initializeHighscores.h \
-    direction.h \
-    selectLetter.h \
-    insertHighscore.h \
-    initializeBarriers.h \
-    drawBarriers.h \
-    updateBarriers.h \
-    blastBarrier.h \
-    readHighscores.h \
-    writeHighscores.h \
-    Missile.h \
-    updateCollisions.h \
-    initializeDefender.h \
-    headers.h \
-    drawMissiles.h \
-    updateMissiles.h \
-    dir.h \
-    Invader.h \
-    dimensions.h \
-    updateDefender.h \
-    drawInvaders.h \
-    drawDefender.h
+    include/Defender.h \
+    include/Missile.h \
+    include/Invader.h \
+    include/BlastBarrier.h \
+    include/Dimensions.h \
+    include/Dir.h \
+    include/Direction.h \
+    include/DrawBarriers.h \
+    include/DrawDefender.h \
+    include/DrawHighscore.h \
+    include/DrawInvaders.h \
+    include/DrawMissiles.h \
+    include/DrawText.h \
+    include/Headers.h \
+    include/Highscore.h \
+    include/InitializeBarriers.h \
+    include/InitializeDefender.h \
+    include/InitializeHighscores.h \
+    include/InitializeInvaders.h \
+    include/InsertHighscore.h \
+    include/ReadHighscores.h \
+    include/UpdateBarriers.h \
+    include/SelectLetter.h \
+    include/UpdateCollisions.h \
+    include/UpdateDefender.h \
+    include/UpdateInvaders.h \
+    include/UpdateMissiles.h \
+    include/WriteHighscores.h
 
 DISTFILES +=
 
