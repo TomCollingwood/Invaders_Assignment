@@ -5,6 +5,10 @@
 #define DEFENDERHEIGHT 24
 #define EXPLODEDDEFENDERWIDTH 48
 
+#include <SDL.h>
+#include <SDL_image.h>
+#include "Invader.h"
+
 typedef struct
 {
   SDL_Rect pos;

@@ -147,7 +147,6 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
           else{
             invaders[r][c].direction=FWD;
           }
-
       }
     }
   }
@@ -205,7 +204,7 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
         // fires missile
         if(invaders[r][c].bottom){
           int random = rand();
-          if((!startscreen && random%10==0) || (random%2==0 && startscreen && (invaders[r][c].pos.x>410 || \
+          if((!startscreen && random%2==0) || (random%2==0 && startscreen && (invaders[r][c].pos.x>410 || \
                                                invaders[r][c].pos.x<(WIDTH/2)-115))){
             for(int m=1; m<MISSILESNUMBER; m++)
             {

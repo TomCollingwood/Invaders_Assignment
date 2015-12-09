@@ -288,7 +288,8 @@ void drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y, fl
       break;
     }
 
-    if(nochar==0){
+    if(nochar==0)
+    {
       SDL_Rect letter;
       letter.x = x + xoffset;
       letter.y = y;
@@ -297,7 +298,8 @@ void drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y, fl
       xoffset += SrcR.w*multiplier + 6;
       SDL_RenderCopy(ren,tex,&SrcR,&letter);
     }
-    else{
+    else
+    {
       nochar=0;
     }
   }

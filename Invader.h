@@ -10,6 +10,10 @@ enum DIR{FWD,BWD,DWNFWD,DWNBWD,UP,DOWN};
 #define ROWS 5
 #define GAP 12
 
+#include <SDL.h>
+#include <SDL_image.h>
+#include "dir.h"
+
 typedef struct
 {
   SDL_Rect pos;
