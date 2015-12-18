@@ -1,6 +1,9 @@
+///
+///  @file InitializeDefender.c
+///  @brief initializes the input defender to active state and original position
+
 #include "include/InitializeDefender.h"
 
-// Initializes defender starting position and size
 void initializeDefender(Defender *defender)
 {
   defender->pos.x=WIDTH/2 - SPRITEWIDTH/2;

@@ -1,0 +1,60 @@
+\hypertarget{SelectLetter_8h}{}\section{include/\+Select\+Letter.h File Reference}
+\label{SelectLetter_8h}\index{include/\+Select\+Letter.\+h@{include/\+Select\+Letter.\+h}}
+
+
+deals with character switching when inputting your name for new highscore  
+
+
+{\ttfamily \#include $<$S\+D\+L.\+h$>$}\\*
+{\ttfamily \#include $<$S\+D\+L\+\_\+image.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Direction.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Draw\+Text.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{SelectLetter_8h_afe8c5faefe993b8b70b9242db39d1ac7}{select\+Letter} (int $\ast$asciinumber, enum D\+I\+R\+E\+C\+T\+I\+O\+N input, enum D\+I\+R\+E\+C\+T\+I\+O\+N previousinput)
+\begin{DoxyCompactList}\small\item\em select\+Letter \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+deals with character switching when inputting your name for new highscore 
+
+\begin{DoxyAuthor}{Author}
+Thomas Collingwood 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+9/12/15 Updated to N\+C\+C\+A Coding standard 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{SelectLetter_8h_afe8c5faefe993b8b70b9242db39d1ac7}{}\index{Select\+Letter.\+h@{Select\+Letter.\+h}!select\+Letter@{select\+Letter}}
+\index{select\+Letter@{select\+Letter}!Select\+Letter.\+h@{Select\+Letter.\+h}}
+\subsubsection[{select\+Letter(int $\ast$asciinumber, enum D\+I\+R\+E\+C\+T\+I\+O\+N input, enum D\+I\+R\+E\+C\+T\+I\+O\+N previousinput)}]{\setlength{\rightskip}{0pt plus 5cm}void select\+Letter (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{asciinumber, }
+\item[{enum D\+I\+R\+E\+C\+T\+I\+O\+N}]{input, }
+\item[{enum D\+I\+R\+E\+C\+T\+I\+O\+N}]{previousinput}
+\end{DoxyParamCaption}
+)}\label{SelectLetter_8h_afe8c5faefe993b8b70b9242db39d1ac7}
+
+
+select\+Letter 
+
+
+\begin{DoxyParams}{Parameters}
+{\em asciinumber} & the current asciinumber to be incremented/decremented/left alone \\
+\hline
+{\em input} & this is the \\
+\hline
+{\em previousinput} & This is the input prior to the current input. having this means that the asciinumber is only incremented once for one keydown for example\+: when input==U\+P\+S and previousinput==N\+O\+N\+E \+: increment asciinumber and return it \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the incremented/decremented/same asciinumber 
+\end{DoxyReturn}

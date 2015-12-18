@@ -1,5 +1,9 @@
+///
+///  @file DrawInvaders.c
+///  @brief draws the invaders
+
 #include "include/DrawInvaders.h"
-// Draws the invaders using RenderCopy and the texture
+
 void drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][COLS])
 {
   SDL_Rect SrcExplode;

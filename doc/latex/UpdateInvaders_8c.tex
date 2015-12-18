@@ -1,0 +1,49 @@
+\hypertarget{UpdateInvaders_8c}{}\section{src/\+Update\+Invaders.c File Reference}
+\label{UpdateInvaders_8c}\index{src/\+Update\+Invaders.\+c@{src/\+Update\+Invaders.\+c}}
+
+
+updates invaders\textquotesingle{} position and sprite  
+
+
+{\ttfamily \#include \char`\"{}include/\+Update\+Invaders.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{UpdateInvaders_8c_a0a37f4b7c94d6c1ce1fccd1768e5ab32}{update\+Invaders} (\hyperlink{structInvader}{Invader} invaders\mbox{[}R\+O\+W\+S\mbox{]}\mbox{[}C\+O\+L\+S\mbox{]}, \hyperlink{structMissile}{Missile} missiles\mbox{[}M\+I\+S\+S\+I\+L\+E\+S\+N\+U\+M\+B\+E\+R\mbox{]}, int $\ast$freeze, int $\ast$howfast, int startscreen)
+\begin{DoxyCompactList}\small\item\em update\+Invaders \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+updates invaders\textquotesingle{} position and sprite 
+
+
+
+\subsection{Function Documentation}
+\hypertarget{UpdateInvaders_8c_a0a37f4b7c94d6c1ce1fccd1768e5ab32}{}\index{Update\+Invaders.\+c@{Update\+Invaders.\+c}!update\+Invaders@{update\+Invaders}}
+\index{update\+Invaders@{update\+Invaders}!Update\+Invaders.\+c@{Update\+Invaders.\+c}}
+\subsubsection[{update\+Invaders(\+Invader invaders[R\+O\+W\+S][C\+O\+L\+S], Missile missiles[M\+I\+S\+S\+I\+L\+E\+S\+N\+U\+M\+B\+E\+R], int $\ast$freeze, int $\ast$howfast, int startscreen)}]{\setlength{\rightskip}{0pt plus 5cm}void update\+Invaders (
+\begin{DoxyParamCaption}
+\item[{{\bf Invader}}]{invaders\mbox{[}\+R\+O\+W\+S\mbox{]}\mbox{[}\+C\+O\+L\+S\mbox{]}, }
+\item[{{\bf Missile}}]{missiles\mbox{[}\+M\+I\+S\+S\+I\+L\+E\+S\+N\+U\+M\+B\+E\+R\mbox{]}, }
+\item[{int $\ast$}]{freeze, }
+\item[{int $\ast$}]{howfast, }
+\item[{int}]{startscreen}
+\end{DoxyParamCaption}
+)}\label{UpdateInvaders_8c_a0a37f4b7c94d6c1ce1fccd1768e5ab32}
+
+
+update\+Invaders 
+
+
+\begin{DoxyParams}{Parameters}
+{\em invaders} & the 2d array of \hyperlink{structInvader}{Invader} struct objects \\
+\hline
+{\em missiles} & the array of \hyperlink{structMissile}{Missile} structs (each can be of four different types) \\
+\hline
+{\em freeze} & if freeze==1 the invaders do no move their position \\
+\hline
+{\em howfast} & the lower howfast is, the faster the invaders move \\
+\hline
+{\em startscreen} & if startscreen==1 then the invader\textquotesingle{}s y position is not incremented \\
+\hline
+\end{DoxyParams}

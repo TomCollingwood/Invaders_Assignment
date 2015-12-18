@@ -1,13 +1,9 @@
+///
+///  @file main.c
+///  @brief contains the main method - creates window and runs the game
+
 #include "include/Headers.h"
 
-// include the map for the maze.
-// the width of the screen
-
-// an enumeration for direction to move USE more enums!
-
-void drawInvaders(SDL_Renderer *ren,SDL_Texture *tex,Invader invaders[ROWS][COLS]);
-void updateDefender(Defender *defender, enum DIRECTION input, Missile missiles[], int *freeze);
-void drawDefender(SDL_Renderer *ren, SDL_Texture *tex, Defender *defender);
 int numberactive(Invader invaders[ROWS][COLS]);
 
 int main()
@@ -23,6 +19,8 @@ int main()
   Highscore highscores[3];
   int score = 0;
 
+  initializeHighscores(highscores);
+  writeHighscores(highscores);
   readHighscores(highscores);
   initializeInvaders(invaders);
   initializeDefender(&defender);
@@ -35,8 +33,8 @@ int main()
     printf("%s\n",SDL_GetError());
     return EXIT_FAILURE;
   }
-  // we are now going to create an SDL window
 
+  // we are now going to create an SDL window
   SDL_Window *win = 0;
   win = SDL_CreateWindow("Invaders", 100, 100, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
   if (win == 0)
@@ -44,6 +42,7 @@ int main()
     printf("%s\n",SDL_GetError());
     return EXIT_FAILURE;
   }
+
   // the renderer is the core element we need to draw, each call to SDL for drawing will need the
   // renderer pointer
   SDL_Renderer *ren = 0;
@@ -54,6 +53,7 @@ int main()
     printf("%s\n",SDL_GetError() );
     return EXIT_FAILURE;
   }
+
   // this will set the background colour to white.
   // however we will overdraw all of this so only for reference
   SDL_SetRenderDrawColor(ren, 255, 255, 255, 255);
@@ -61,8 +61,7 @@ int main()
   // SDL image is an abstraction for all images
   SDL_Surface *image;
 
-
-  // we are going to use the extension SDL_image library to load a png, documentation can be found here
+  // we are going to use the extension SDL_image library to load a bmp, documentation can be found here
   // http://www.libsdl.org/projects/SDL_image/
   image=IMG_Load("SpriteSheet.bmp");
   if(!image)
@@ -70,13 +69,12 @@ int main()
     printf("IMG_Load: %s\n", IMG_GetError());
     return EXIT_FAILURE;
   }
+
   // below sets black to transparent
   SDL_SetColorKey(image, SDL_TRUE, SDL_MapRGB(image->format, 0, 0, 0 ) );
 
-
   // SDL texture converts the image to a texture suitable for SDL rendering  / blitting
   // once we have the texture it will be store in hardware and we don't need the image data anymore
-
   SDL_Texture *tex = 0;
   tex = SDL_CreateTextureFromSurface(ren, image);
 
@@ -85,6 +83,12 @@ int main()
 
   int quit=0;
   int menu=0;
+
+  // menu==0 MAIN MENU
+  // menu==1 HIGHSCORES
+  // menu==2 GAME
+  // menu==3 GAMEOVER / NEW HIGHSCORE
+
   int previousmenu=0;
   int menuselect=0;
   enum DIRECTION input = NONE;
@@ -94,8 +98,7 @@ int main()
   int green = 0;
   int blue = 0;
 
-  // now we are going to loop forever, process the keys then draw
-
+  // now we are going to loop until quit, process the keys then draw
   while (quit !=1)
   {
     SDL_Event event;
@@ -131,11 +134,11 @@ int main()
 
     // now we clear the screen (will use the clear colour set previously)
 
-//    if(red>0) red++;
+//    if(red>=0) red++;
 //    else if (red>255) red=0;
-//    if(green>0) green++;
+//    if(green>=0) green+=2;
 //    else if (green>255) green=0;
-//    if(blue>0) blue++;
+//    if(blue>=0) blue+=5;
 //    else if (blue>255) blue=0;
 
     SDL_SetRenderDrawColor(ren, red, green, blue, 255);
@@ -146,23 +149,29 @@ int main()
 
     if(input==RESET)
     {
-      defender.active=1;
-      defender.sprite=0;
-      freeze=0;
+      initializeDefender(&defender);
       initializeInvaders(invaders);
+      freeze=0;
       menu=0;
     }
 
+    // INGAME MODE
     if(menu==2)
     {
-      if(defender.active==0)
-        menu=3;
-      if(previousmenu!=2)
+      // if invader dead go to GAMEOVER SCREEN
+      if(defender.active==0) {menu=3;}
+
+      // if first frame of INGAME MODE
+      if(previousmenu==0)
       {
         score = 0;
-        initializeDefender(&defender);
         initializeBarriers(barriers);
+      }
+      // this allows movement from main menu to game
+      // to be smooth (invaders are same position)
+      else if(previousmenu!=2){
         initializeInvaders(invaders);
+        initializeDefender(&defender);
       }
 
       //leftover missiles from startscreen
@@ -180,31 +189,51 @@ int main()
 
       updateCollisions(missiles,invaders,&defender,&freeze,&score,frame);
 
-      int numactive = numberactive(invaders);
-
-      if(numactive>0) {updateInvaders(invaders,missiles,&freeze,&howfast,0);}
+      // only update invaders if there are any invaders otherwise quit to gameover
+      if(numberactive(invaders)>0) {updateInvaders(invaders,missiles,&freeze,&howfast,0);}
       else {menu=3;}
 
       drawInvaders(ren,tex,invaders);
 
+      // create a function for these three lines
       char scoretext[50];
       sprintf(scoretext,"HIGHSCORE= %d Score= %d",highscores[0].score,score);
-
       drawText(ren,tex,scoretext,80,30,1);
 
       frame++;
 
       previousmenu=2;
     }
+    // MAIN MENU OR HIGHSCORE
     else if(menu==0 || menu==1){
       howfast=55;
       drawText(ren,tex,"SPACE INVADERS",7,50,2.9);
       frame = 0;
+
+      // the code below makes invaders move in background
+      if(previousmenu!=0)
+      {
+        initializeDefender(&defender);
+        initializeInvaders(invaders);
+      }
+
+      updateDefender(&defender,startscreeninput,startscreenmissiles,&freeze);
+      drawDefender(ren,tex,&defender);
+
+      updateMissiles(startscreenmissiles);
+      drawMissiles(ren,tex,startscreenmissiles);
+
+      updateInvaders(invaders,startscreenmissiles,&freeze,&howfast,1);
+      drawInvaders(ren,tex,invaders);
+
       if(menu==0){
         drawText(ren,tex,"START GAME",(WIDTH/2)-100,370,1);
         drawText(ren,tex,"HIGHSCORES",(WIDTH/2)-100,470,1);
         drawText(ren,tex,"EXIT",WIDTH/2-35,570,1);
 
+        // without previousinput the menuselect would
+        // cycle very very quickly on keypress
+        // this way it moves once per keypress
         if(input==UPS && previousinput==NONE)
         {
           if(menuselect!=0) menuselect--;
@@ -248,22 +277,6 @@ int main()
         if(input==FIRE && previousinput==NONE) menu=0;
 
       }
-
-      if(previousmenu!=0)
-      {
-        initializeDefender(&defender);
-        initializeInvaders(invaders);
-      }
-
-      updateDefender(&defender,startscreeninput,startscreenmissiles,&freeze);
-      drawDefender(ren,tex,&defender);
-
-      updateMissiles(startscreenmissiles);
-      drawMissiles(ren,tex,startscreenmissiles);
-
-      updateInvaders(invaders,startscreenmissiles,&freeze,&howfast,1);
-      drawInvaders(ren,tex,invaders);
-
       previousinput = input;
       previousmenu=0;
     }
@@ -273,11 +286,11 @@ int main()
       drawDefender(ren,tex,&defender);
       updateDefender(&defender,NONE,missiles,&freeze);
 
-      //reads highscores
       readHighscores(highscores);
 
       int newhighscore = 0;
 
+      // checks if score is a new highscore
       for(int i=0; i<3; ++i){
         if(highscores[i].score<score)
         {
@@ -288,7 +301,6 @@ int main()
 
       if(newhighscore){
         drawText(ren,tex,"NEW HIGHSCORE",20,30,3);
-
         static int selectposition=0;
         int xpivot=50;
         int ypivot=200;
@@ -297,6 +309,7 @@ int main()
         static int letter2int=65;
         static int letter3int=65;
 
+        // the code below allows user to input 3 letter name
         if(previousmenu!=3)
         {
           letter1int=65;
@@ -322,16 +335,18 @@ int main()
         {
           if(selectposition==0)
           {
-            letter1int=selectLetter(letter1int,input,previousinput);
+            selectLetter(&letter1int,input,previousinput);
           }
           else if(selectposition==1)
           {
-            letter2int=selectLetter(letter2int,input,previousinput);
+            selectLetter(&letter2int,input,previousinput);
           }
           else if(selectposition==2)
           {
-            letter3int=selectLetter(letter3int,input,previousinput);
+            selectLetter(&letter3int,input,previousinput);
           }
+          // "u" and "d" are up and down arrow heads
+          // they are positioned above/below the selected letter
           drawText(ren,tex,"u",xpivot+selectposition*100-15,ypivot-75,5);
           drawText(ren,tex,"d",xpivot+selectposition*100-15,ypivot+125,5);
         }
@@ -351,19 +366,13 @@ int main()
         drawText(ren,tex,scorestring,xpivot+350,ypivot+80,1.5);
         previousinput = input;
 
-        //here we submit the score
+        //here we submit and write the score
         if(selectposition==3 && input==FIRE)
         {
           char name[4];
           sprintf(name,"%c%c%c",letter1char[0],letter2char[0],letter3char[0]);
           insertHighscore(highscores,name,score);
-          //reads highscores
           writeHighscores(highscores);
-
-          printf("(1)'%s'-'%d'\n",highscores[0].name,highscores[0].score);
-          printf("(2)'%s'-'%d'\n",highscores[1].name,highscores[1].score);
-          printf("(3)'%s'-'%d'\n",highscores[2].name,highscores[2].score);
-
           menu=0;
         }
 
@@ -380,7 +389,11 @@ int main()
         {
           selectpositionGameover++;
         }
-        if(selectpositionGameover%2==0 && input==FIRE) {menu=2;}
+
+        if(selectpositionGameover%2==0 && input==FIRE) {
+          selectpositionGameover=0;
+          menu=2;
+        }
         else if (input==FIRE)
         {
           selectpositionGameover=0;

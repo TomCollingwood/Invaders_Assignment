@@ -1,5 +1,9 @@
+///
+///  @file DrawDefender.c
+///  @brief draws the defender
+
 #include "include/DrawDefender.h"
-// Draws the defender texture onto the defender
+
 void drawDefender(SDL_Renderer *ren, SDL_Texture *tex, Defender *defender)
 {
   SDL_Rect SrcRS0;
@@ -26,7 +30,6 @@ void drawDefender(SDL_Renderer *ren, SDL_Texture *tex, Defender *defender)
   }
   else
   {
-    defender->pos.w=EXPLODEDDEFENDERWIDTH;
     if(defender->sprite==1)
     {
       SDL_RenderCopy(ren,tex,&SrcRS1,&defender->pos);

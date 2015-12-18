@@ -3,9 +3,6 @@
 /// \author Thomas Collingwood
 /// \version 1.0
 /// \date 9/12/15 Updated to NCCA Coding standard
-/// Revision History :
-/// Initial Version 19/11/15
-/// \todo
 
 #ifndef DEFENDER_H__
 #define DEFENDER_H__
@@ -21,11 +18,10 @@
 
 typedef struct
 {
-  SDL_Rect pos;
-  int active;
-  int sprite;
-  enum DIR direction;
-  int frame;
+  SDL_Rect pos;   /**< SDL_Rect containing defender's position and dimensions 1 */
+  int active;     /**< if 1 then defender can move and has undestroyed sprite */
+  int sprite;     /**< determines which sprite to display for drawDefender */
+  int frame;      /**< is used for alternating between destroyed sprites */
 }Defender;
 
 #endif

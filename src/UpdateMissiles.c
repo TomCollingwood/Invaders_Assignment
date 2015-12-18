@@ -1,3 +1,7 @@
+///
+///  @file UpdateMissiles.c
+///  @brief updates all the active missiles' position
+
 #include "include/UpdateMissiles.h"
 // Updates missile position depending on direction and activity
 void updateMissiles(Missile missiles[])
@@ -19,6 +23,8 @@ void updateMissiles(Missile missiles[])
       {
         missiles[m].pos.y += 5;
       }
+
+      // animate sprites
       if(missiles[m].frame%3==0)
       {
         if(missiles[m].sprite==3)

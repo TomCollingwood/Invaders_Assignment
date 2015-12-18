@@ -1,0 +1,46 @@
+\hypertarget{SelectLetter_8c}{}\section{src/\+Select\+Letter.c File Reference}
+\label{SelectLetter_8c}\index{src/\+Select\+Letter.\+c@{src/\+Select\+Letter.\+c}}
+
+
+deals with character switching when inputting your name for new highscore  
+
+
+{\ttfamily \#include \char`\"{}include/\+Select\+Letter.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{SelectLetter_8c_afe8c5faefe993b8b70b9242db39d1ac7}{select\+Letter} (int $\ast$asciinumber, enum D\+I\+R\+E\+C\+T\+I\+O\+N input, enum D\+I\+R\+E\+C\+T\+I\+O\+N previousinput)
+\begin{DoxyCompactList}\small\item\em select\+Letter \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+deals with character switching when inputting your name for new highscore 
+
+
+
+\subsection{Function Documentation}
+\hypertarget{SelectLetter_8c_afe8c5faefe993b8b70b9242db39d1ac7}{}\index{Select\+Letter.\+c@{Select\+Letter.\+c}!select\+Letter@{select\+Letter}}
+\index{select\+Letter@{select\+Letter}!Select\+Letter.\+c@{Select\+Letter.\+c}}
+\subsubsection[{select\+Letter(int $\ast$asciinumber, enum D\+I\+R\+E\+C\+T\+I\+O\+N input, enum D\+I\+R\+E\+C\+T\+I\+O\+N previousinput)}]{\setlength{\rightskip}{0pt plus 5cm}void select\+Letter (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{asciinumber, }
+\item[{enum D\+I\+R\+E\+C\+T\+I\+O\+N}]{input, }
+\item[{enum D\+I\+R\+E\+C\+T\+I\+O\+N}]{previousinput}
+\end{DoxyParamCaption}
+)}\label{SelectLetter_8c_afe8c5faefe993b8b70b9242db39d1ac7}
+
+
+select\+Letter 
+
+
+\begin{DoxyParams}{Parameters}
+{\em asciinumber} & the current asciinumber to be incremented/decremented/left alone \\
+\hline
+{\em input} & this is the \\
+\hline
+{\em previousinput} & This is the input prior to the current input. having this means that the asciinumber is only incremented once for one keydown for example\+: when input==U\+P\+S and previousinput==N\+O\+N\+E \+: increment asciinumber and return it \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the incremented/decremented/same asciinumber 
+\end{DoxyReturn}

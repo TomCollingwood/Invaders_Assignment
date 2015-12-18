@@ -1,3 +1,7 @@
+///
+///  @file ReadHighscores.c
+///  @brief reads highscore from highscores file and updates highscores array
+
 #include "include/ReadHighscores.h"
 
 void readHighscores(Highscore highscores[3])

@@ -1,6 +1,9 @@
-///
-///  @file Highscore.h
-///  @brief Contains structure for Highscore
+/// \file Highscore.h
+/// \brief struct for highscore
+/// \author Thomas Collingwood
+/// \version 1.0
+/// \date 9/12/15 Updated to NCCA Coding standard
+
 
 #ifndef HIGHSCORE_H__
 #define HIGHSCORE_H__

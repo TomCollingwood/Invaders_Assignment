@@ -1,9 +1,12 @@
+///
+///  @file UpdateCollisions.c
+///  @brief updates invader's / defender's active variable when missile collides with it
+
 #include "include/UpdateCollisions.h"
 
 void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender *defender, \
                       int *freeze, int *score, int frame)
 {
-  int freezelag = *freeze;
   for(int m=0; m<MISSILESNUMBER; ++m)
   {
     if(missiles[m].type == DEFENDER && missiles[m].active)
@@ -21,6 +24,9 @@ void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender
             int misY = missiles[m].pos.y;
             int invY = invaders[r][c].pos.y;
             int misH = missiles[m].pos.h;
+
+            // we check the hit variable below as this makes sure only one invader is
+            // destroyed per missile
             if ((misX > invX) && (misX < invX+invW) && (misY-misH < invY) && hit ==0)
             {
               // add to score here
@@ -38,9 +44,12 @@ void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender
               }
 
               invaders[r][c].type = EXPLOSION;
-              freezelag = 1;
+              (*freeze) = 1;
               missiles[m].active = 0;
               hit = 1;
+
+              // below updates the bottom variable for the invader
+              // above the one destroyed
               if(r!=0)
               {
                 for(int i=r-1; i>=0; --i)
@@ -57,6 +66,8 @@ void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender
         }
       }
     }
+    // else missile's direction is DOWN
+    // we check defender collision
     else if (missiles[m].active)
     {
       int misX = missiles[m].pos.x;
@@ -70,10 +81,12 @@ void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender
       {
         defender->sprite = 1;
         defender->active=0;
+        // exploded sprite is slightly wider than normal sprite
+        defender->pos.w=EXPLODEDDEFENDERWIDTH;
         missiles[m].active = 0;
+
       }
     }
   }
-  *freeze=freezelag;
 }
 

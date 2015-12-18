@@ -1,0 +1,46 @@
+\hypertarget{UpdateDefender_8c}{}\section{src/\+Update\+Defender.c File Reference}
+\label{UpdateDefender_8c}\index{src/\+Update\+Defender.\+c@{src/\+Update\+Defender.\+c}}
+
+
+updates defender position depending on input -\/ also updates sprite when exploded  
+
+
+{\ttfamily \#include \char`\"{}include/\+Update\+Defender.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{UpdateDefender_8c_a9c9a4b4e694ac86d546635ffb3f2efc0}{update\+Defender} (\hyperlink{structDefender}{Defender} $\ast$defender, enum D\+I\+R\+E\+C\+T\+I\+O\+N input, \hyperlink{structMissile}{Missile} missiles\mbox{[}$\,$\mbox{]}, int $\ast$freeze)
+\begin{DoxyCompactList}\small\item\em update\+Defender \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+updates defender position depending on input -\/ also updates sprite when exploded 
+
+
+
+\subsection{Function Documentation}
+\hypertarget{UpdateDefender_8c_a9c9a4b4e694ac86d546635ffb3f2efc0}{}\index{Update\+Defender.\+c@{Update\+Defender.\+c}!update\+Defender@{update\+Defender}}
+\index{update\+Defender@{update\+Defender}!Update\+Defender.\+c@{Update\+Defender.\+c}}
+\subsubsection[{update\+Defender(\+Defender $\ast$defender, enum D\+I\+R\+E\+C\+T\+I\+O\+N input, Missile missiles[], int $\ast$freeze)}]{\setlength{\rightskip}{0pt plus 5cm}void update\+Defender (
+\begin{DoxyParamCaption}
+\item[{{\bf Defender} $\ast$}]{defender, }
+\item[{enum D\+I\+R\+E\+C\+T\+I\+O\+N}]{input, }
+\item[{{\bf Missile}}]{missiles\mbox{[}$\,$\mbox{]}, }
+\item[{int $\ast$}]{freeze}
+\end{DoxyParamCaption}
+)}\label{UpdateDefender_8c_a9c9a4b4e694ac86d546635ffb3f2efc0}
+
+
+update\+Defender 
+
+
+\begin{DoxyParams}{Parameters}
+{\em defender} & the player controlled object that fires at space invaders \\
+\hline
+{\em input} & the input from the player \\
+\hline
+{\em missiles} & the array of \hyperlink{structMissile}{Missile} structs (each can be of four different types) \\
+\hline
+{\em freeze} & if freeze==1 a new missile cannot be fired from defender \\
+\hline
+\end{DoxyParams}

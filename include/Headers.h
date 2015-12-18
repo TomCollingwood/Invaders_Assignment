@@ -1,6 +1,9 @@
-///
-///  @file Headers.h
-///  @brief #include for all headers needed for Main.c
+/// \file Headers.h
+/// \brief has all #include s for main.c
+/// \author Thomas Collingwood
+/// \version 1.0
+/// \date 9/12/15 Updated to NCCA Coding standard
+
 
 #ifndef _HEADERS_H_
 #define _HEADERS_H_
@@ -13,7 +16,8 @@
 #include "Defender.h"
 #include "Direction.h"
 #include "DrawBarriers.h"
-#include "DrawHighscore.h"
+#include "DrawDefender.h"
+#include "DrawScore.h"
 #include "DrawInvaders.h"
 #include "DrawMissiles.h"
 #include "DrawText.h"

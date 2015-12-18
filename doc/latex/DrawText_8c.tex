@@ -1,0 +1,52 @@
+\hypertarget{DrawText_8c}{}\section{src/\+Draw\+Text.c File Reference}
+\label{DrawText_8c}\index{src/\+Draw\+Text.\+c@{src/\+Draw\+Text.\+c}}
+
+
+draws the input string onto screen at (x,y) position  
+
+
+{\ttfamily \#include \char`\"{}include/\+Draw\+Text.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{DrawText_8c_aeca1d16fe8cfa7ddbdf41c84e2f4223c}{draw\+Text} (S\+D\+L\+\_\+\+Renderer $\ast$ren, S\+D\+L\+\_\+\+Texture $\ast$tex, char text\mbox{[}$\,$\mbox{]}, int x, int y, float multiplier)
+\begin{DoxyCompactList}\small\item\em draw\+Text \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+draws the input string onto screen at (x,y) position 
+
+
+
+\subsection{Function Documentation}
+\hypertarget{DrawText_8c_aeca1d16fe8cfa7ddbdf41c84e2f4223c}{}\index{Draw\+Text.\+c@{Draw\+Text.\+c}!draw\+Text@{draw\+Text}}
+\index{draw\+Text@{draw\+Text}!Draw\+Text.\+c@{Draw\+Text.\+c}}
+\subsubsection[{draw\+Text(\+S\+D\+L\+\_\+\+Renderer $\ast$ren, S\+D\+L\+\_\+\+Texture $\ast$tex, char text[], int x, int y, float multiplier)}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Text (
+\begin{DoxyParamCaption}
+\item[{S\+D\+L\+\_\+\+Renderer $\ast$}]{ren, }
+\item[{S\+D\+L\+\_\+\+Texture $\ast$}]{tex, }
+\item[{char}]{text\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{float}]{multiplier}
+\end{DoxyParamCaption}
+)}\label{DrawText_8c_aeca1d16fe8cfa7ddbdf41c84e2f4223c}
+
+
+draw\+Text 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ren} & the S\+D\+L\+\_\+\+Renderer responsible for rendering images inside the window \\
+\hline
+{\em tex} & the S\+D\+L\+\_\+\+Texture texture image that contains the game\textquotesingle{}s sprites \\
+\hline
+{\em text} & the char array that you want printed/drawn on screen \\
+\hline
+{\em x} & coordinate of text on screen \\
+\hline
+{\em y} & coordinate of text on screen \\
+\hline
+{\em multiplier} & determines how big the text is (1 being normal size where a pixel is actually 3x3 pixel) \\
+\hline
+\end{DoxyParams}

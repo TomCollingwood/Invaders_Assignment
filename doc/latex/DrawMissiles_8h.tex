@@ -1,0 +1,56 @@
+\hypertarget{DrawMissiles_8h}{}\section{include/\+Draw\+Missiles.h File Reference}
+\label{DrawMissiles_8h}\index{include/\+Draw\+Missiles.\+h@{include/\+Draw\+Missiles.\+h}}
+
+
+draws the missiles  
+
+
+{\ttfamily \#include $<$S\+D\+L.\+h$>$}\\*
+{\ttfamily \#include $<$S\+D\+L\+\_\+image.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Missile.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{DrawMissiles_8h_a18a9d33b808daeaed85e25ecee71e64d}{draw\+Missiles} (S\+D\+L\+\_\+\+Renderer $\ast$ren, S\+D\+L\+\_\+\+Texture $\ast$tex, \hyperlink{structMissile}{Missile} missiles\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em draw\+Missiles \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+draws the missiles 
+
+\begin{DoxyAuthor}{Author}
+Thomas Collingwood 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+9/12/15 Updated to N\+C\+C\+A Coding standard 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{DrawMissiles_8h_a18a9d33b808daeaed85e25ecee71e64d}{}\index{Draw\+Missiles.\+h@{Draw\+Missiles.\+h}!draw\+Missiles@{draw\+Missiles}}
+\index{draw\+Missiles@{draw\+Missiles}!Draw\+Missiles.\+h@{Draw\+Missiles.\+h}}
+\subsubsection[{draw\+Missiles(\+S\+D\+L\+\_\+\+Renderer $\ast$ren, S\+D\+L\+\_\+\+Texture $\ast$tex, Missile missiles[])}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Missiles (
+\begin{DoxyParamCaption}
+\item[{S\+D\+L\+\_\+\+Renderer $\ast$}]{ren, }
+\item[{S\+D\+L\+\_\+\+Texture $\ast$}]{tex, }
+\item[{{\bf Missile}}]{missiles\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{DrawMissiles_8h_a18a9d33b808daeaed85e25ecee71e64d}
+
+
+draw\+Missiles 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ren} & the S\+D\+L\+\_\+\+Renderer responsible for rendering images inside the window \\
+\hline
+{\em tex} & the S\+D\+L\+\_\+\+Texture texture image that contains the game\textquotesingle{}s sprites \\
+\hline
+{\em missiles} & the array of \hyperlink{structMissile}{Missile} structs (each can be of four different types) \\
+\hline
+\end{DoxyParams}

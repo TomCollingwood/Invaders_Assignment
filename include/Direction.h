@@ -3,9 +3,6 @@
 /// \author Thomas Collingwood
 /// \version 1.0
 /// \date 9/12/15 Updated to NCCA Coding standard
-/// Revision History :
-/// Initial Version 5/12/15
-/// \todo
 
 #ifndef DIRECTION_H__
 #define DIRECTION_H__

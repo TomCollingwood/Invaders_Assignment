@@ -1,0 +1,49 @@
+\hypertarget{BlastBarrier_8c}{}\section{src/\+Blast\+Barrier.c File Reference}
+\label{BlastBarrier_8c}\index{src/\+Blast\+Barrier.\+c@{src/\+Blast\+Barrier.\+c}}
+
+
+updates a barriers to have a crater spreading outwards from (x,y)  
+
+
+{\ttfamily \#include \char`\"{}include/\+Blast\+Barrier.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{BlastBarrier_8c_aec0c2b07a305cdae33cd178862020753}{blast\+Barrier} (int barriers\mbox{[}4\mbox{]}\mbox{[}B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T\mbox{]}\mbox{[}B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H\mbox{]}, int barrier, int x, int y, int type)
+\begin{DoxyCompactList}\small\item\em blast\+Barrier blast\+Barrier creates a blast centered around barriers\mbox{[}barrier\mbox{]}\mbox{[}y\mbox{]}\mbox{[}x\mbox{]}. A blast is undrawn barrier pixels in a blast shape. The type of blast (invader or defender) depends on type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+updates a barriers to have a crater spreading outwards from (x,y) 
+
+
+
+\subsection{Function Documentation}
+\hypertarget{BlastBarrier_8c_aec0c2b07a305cdae33cd178862020753}{}\index{Blast\+Barrier.\+c@{Blast\+Barrier.\+c}!blast\+Barrier@{blast\+Barrier}}
+\index{blast\+Barrier@{blast\+Barrier}!Blast\+Barrier.\+c@{Blast\+Barrier.\+c}}
+\subsubsection[{blast\+Barrier(int barriers[4][B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T][B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H], int barrier, int x, int y, int type)}]{\setlength{\rightskip}{0pt plus 5cm}void blast\+Barrier (
+\begin{DoxyParamCaption}
+\item[{int}]{barriers\mbox{[}4\mbox{]}\mbox{[}\+B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T\mbox{]}\mbox{[}\+B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H\mbox{]}, }
+\item[{int}]{barrier, }
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{int}]{type}
+\end{DoxyParamCaption}
+)}\label{BlastBarrier_8c_aec0c2b07a305cdae33cd178862020753}
+
+
+blast\+Barrier blast\+Barrier creates a blast centered around barriers\mbox{[}barrier\mbox{]}\mbox{[}y\mbox{]}\mbox{[}x\mbox{]}. A blast is undrawn barrier pixels in a blast shape. The type of blast (invader or defender) depends on type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em barriers} & the array of barriers (3d array representation of 3x3 pixel blocks) \\
+\hline
+{\em barrier} & which barrier to blast \\
+\hline
+{\em x} & coordinate of blast of barrier \\
+\hline
+{\em y} & coordinate of blast of barrier \\
+\hline
+{\em type} & if type is 0 then it\textquotesingle{}s an invader blast, if 1 then a defender blast \\
+\hline
+\end{DoxyParams}

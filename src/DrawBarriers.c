@@ -1,3 +1,7 @@
+///
+///  @file DrawBarriers.c
+///  @brief draws the four barriers from an 3d int array
+
 #include "include/DrawBarriers.h"
 
 void drawBarriers(SDL_Renderer *ren, int barriers[4][BARRIERHEIGHT][BARRIERWIDTH]){
@@ -14,6 +18,7 @@ void drawBarriers(SDL_Renderer *ren, int barriers[4][BARRIERHEIGHT][BARRIERWIDTH
       {
         if(barriers[i][h][w])
         {
+          // each 'pixel' in barrier array is actually 3x3 pixels
           SDL_Rect pixel = {x,y,3,3};
           SDL_RenderFillRect(ren,&pixel);
         }

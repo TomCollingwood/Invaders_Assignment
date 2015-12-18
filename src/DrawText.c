@@ -1,3 +1,7 @@
+///
+///  @file DrawText.c
+///  @brief draws the input string onto screen at (x,y) position
+
 #include "include/DrawText.h"
 
 void drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y, float multiplier){
@@ -422,6 +426,7 @@ void drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y, fl
       break;
     }
 
+    // if character is not recognised: skip it
     default:
     {
       nochar = 1;

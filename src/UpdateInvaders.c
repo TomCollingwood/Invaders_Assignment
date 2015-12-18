@@ -1,3 +1,7 @@
+///
+///  @file UpdateInvaders.c
+///  @brief updates invaders' position and sprite
+
 #include "include/UpdateInvaders.h"
 
 void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBER], \
@@ -6,7 +10,6 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
   int freezelagfix = *freeze;
 
   // find leftmost & rightmost column with at least one active invader
-
   int lcol = 0;
   int rcol = COLS-1;
   for(int c=0; c<COLS; ++c)
@@ -35,6 +38,7 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
     }
   }
 
+  // to find the first space invader that moves
   int hasfirstbeenfound=0;
   int firstr = 0;
   int firstc = 0;
@@ -48,10 +52,12 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
         firstc = c;
         hasfirstbeenfound=1;
       }
+      if(hasfirstbeenfound) {break;}
     }
+    if(hasfirstbeenfound) {break;}
   }
 
-  // cycleover==1 when all invaders are alligned in a square
+  // cycleover==1 when all invaders are alligned in a rectangle
   int cycleover = 0;
   // this comparison is made as invaders[firstr][firstc] is first to move
   if(invaders[firstr][firstc].frame%*howfast==0)
@@ -63,25 +69,24 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
   // a cycle is from one frame when all invaders are alligned
   // to the next when it's all alligned
 
-  // we need howfast to be the range of the first invader to move to
-  // the last invader to move (the frames change after a collision
-  // when cycleover==1). This makes speed gradually quicker as number
-  // of active invaders decreases
+  // we need howfast to be the number of frames between the first invader
+  // to move to the last invader to move
 
-  int howmanyactive=0;
-  for(int r=0; r<ROWS; ++r)
-  {
-    for(int c=0; c<COLS; ++c)
-    {
-      if(invaders[r][c].active)
-      {
-        howmanyactive++;
-      }
-    }
-  }
+  // howfast is the number of invaders active as we update the position of
+  // one invader per frame
 
+  // we want the invaders to go quicker, the fewer there are
+
+  // we cannot update howfast in the middle of a cycle, this would make
+  // the movement of invaders to be out of sync - or march so to speak
+
+  // so we decrease howfast to how many invaders there are when
+  // cycleover==1
+
+  // here we redistribute the frames and update howfast
   if(cycleover && *freeze==0 && !startscreen)
   {
+    int howmanyactive = howManyActive(invaders);
     *howfast = howmanyactive;
     howmanyactive--;
     for(int r=ROWS-1; r>=0; --r)
@@ -96,7 +101,6 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
       }
     }
   }
-
 
   // the last to reach the boundary is always the highest on lefmost column
   // (lcol) and rightmost column (rcol)
@@ -163,10 +167,12 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
     {
       for(int c=0; c<COLS; ++c)
       {
-          if(invaders[r][c].direction==BWD && !startscreen){
+          if(invaders[r][c].direction==BWD && !startscreen)
+          {
             invaders[r][c].direction=DWNFWD;
           }
-          else{
+          else
+          {
             invaders[r][c].direction=FWD;
           }
       }
@@ -197,9 +203,6 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
         // I assign freeze to freezelagfix at bottom of updateinvaders function
         freezelagfix = 0;
       }
-      //printf("(%d,%d)",r,c);
-      //printf("%d,%d",*howfast,howmanyactive);
-      //printf("(%d)",invaders[r][c].active);
 
       if(invaders[r][c].frame%*howfast==0 && *freeze==0 && invaders[r][c].active)
       {
@@ -233,6 +236,7 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
         if(invaders[r][c].bottom)
         {
           int random = rand();
+          // if startscreen then the missiles must not fire in front of the text
           if((!startscreen && random%2==0) || (random%2==0 && startscreen && (invaders[r][c].pos.x>410 || \
                                                invaders[r][c].pos.x<(WIDTH/2)-115))){
             for(int m=1; m<MISSILESNUMBER; ++m)

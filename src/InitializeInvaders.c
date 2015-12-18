@@ -1,3 +1,7 @@
+///
+///  @file InitializeInvaders.c
+///  @brief initializes all invaders to starting position and active state
+
 #include "include/InitializeInvaders.h"
 
 // Initializes all invader positions
@@ -12,7 +16,6 @@ void initializeInvaders(Invader invaders[ROWS][COLS])
   for(int r=0; r<ROWS; ++r)
   {
     int xpos = GAP;
-    // if(r == 0) xpos = GAP+3;
     frameoffset = (r)*11;
     for(int c=0; c<COLS; ++c)
     {

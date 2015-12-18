@@ -1,3 +1,7 @@
+///
+///  @file InitializeBarriers.c
+///  @brief initializes barriers to unblasted state
+
 #include "include/InitializeBarriers.h"
 
 void initializeBarriers(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH])

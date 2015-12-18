@@ -1,6 +1,8 @@
-///
-///  @file Invader.h
-///  @brief Contains the structure for Invader
+/// \file Invader.h
+/// \brief struct for Invader
+/// \author Thomas Collingwood
+/// \version 1.0
+/// \date 9/12/15 Updated to NCCA Coding standard
 
 #ifndef INVADER_H__
 #define INVADER_H__
@@ -21,14 +23,14 @@ enum DIR{FWD,BWD,DWNFWD,DWNBWD,UP,DOWN};
 
 typedef struct
 {
-  SDL_Rect pos;
+  SDL_Rect pos; /**< if 1 then invader is exploding */
   int active;
   int frame;
   int sprite;
   enum DIR direction;
   enum InvaderType type;
-  int explosionframe;
-  int bottom;
+  int explosionframe; /**< if 1 then invader is exploding */
+  int bottom; /**< if 1 then invader is at bottom of column and can shoot */
 }Invader;
 
 #endif

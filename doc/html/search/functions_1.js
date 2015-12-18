@@ -1,0 +1,9 @@
+var searchData=
+[
+  ['drawbarriers',['drawBarriers',['../DrawBarriers_8h.html#a2fd8c3e88c02cff2230f80cfcecd122f',1,'drawBarriers(SDL_Renderer *ren, int barriers[4][BARRIERHEIGHT][BARRIERWIDTH]):&#160;DrawBarriers.c'],['../DrawBarriers_8c.html#a2fd8c3e88c02cff2230f80cfcecd122f',1,'drawBarriers(SDL_Renderer *ren, int barriers[4][BARRIERHEIGHT][BARRIERWIDTH]):&#160;DrawBarriers.c']]],
+  ['drawdefender',['drawDefender',['../DrawDefender_8h.html#aa119eb82176c99da43a010599ddaad02',1,'drawDefender(SDL_Renderer *ren, SDL_Texture *tex, Defender *defender):&#160;DrawDefender.c'],['../DrawDefender_8c.html#aa119eb82176c99da43a010599ddaad02',1,'drawDefender(SDL_Renderer *ren, SDL_Texture *tex, Defender *defender):&#160;DrawDefender.c']]],
+  ['drawinvaders',['drawInvaders',['../DrawInvaders_8h.html#a1d8786e4132e02248463f2d940f8e3e1',1,'drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][COLS]):&#160;DrawInvaders.c'],['../DrawInvaders_8c.html#a1d8786e4132e02248463f2d940f8e3e1',1,'drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][COLS]):&#160;DrawInvaders.c']]],
+  ['drawmissiles',['drawMissiles',['../DrawMissiles_8h.html#a18a9d33b808daeaed85e25ecee71e64d',1,'drawMissiles(SDL_Renderer *ren, SDL_Texture *tex, Missile missiles[]):&#160;DrawMissiles.c'],['../DrawMissiles_8c.html#a18a9d33b808daeaed85e25ecee71e64d',1,'drawMissiles(SDL_Renderer *ren, SDL_Texture *tex, Missile missiles[]):&#160;DrawMissiles.c']]],
+  ['drawscore',['drawScore',['../DrawScore_8h.html#a7aaa46a13c27279c343f19c35e2be511',1,'DrawScore.h']]],
+  ['drawtext',['drawText',['../DrawText_8h.html#aeca1d16fe8cfa7ddbdf41c84e2f4223c',1,'drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y, float multiplier):&#160;DrawText.c'],['../DrawText_8c.html#aeca1d16fe8cfa7ddbdf41c84e2f4223c',1,'drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y, float multiplier):&#160;DrawText.c']]]
+];

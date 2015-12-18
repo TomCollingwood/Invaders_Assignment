@@ -1,3 +1,7 @@
+///
+///  @file UpdateBarriers.c
+///  @brief updates barriers to get blasted when missile collides with barrier
+
 #include "include/UpdateBarriers.h"
 #include "BlastBarrier.c"
 
@@ -17,6 +21,8 @@ void updateBarriers(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH], Missile missil
         {
           if(missiles[m].active)
           {
+            // if missile direction is DOWN you need to check y values differently
+            // from if it was UP
             if(missiles[m].dir==DOWN)
             {
               if(missiles[m].pos.x+3>=x && missiles[m].pos.x<x+3 && \

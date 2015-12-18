@@ -1,0 +1,65 @@
+\hypertarget{DrawBarriers_8h}{}\section{include/\+Draw\+Barriers.h File Reference}
+\label{DrawBarriers_8h}\index{include/\+Draw\+Barriers.\+h@{include/\+Draw\+Barriers.\+h}}
+
+
+draws the four barriers from an 3d int array  
+
+
+{\ttfamily \#include $<$S\+D\+L.\+h$>$}\\*
+{\ttfamily \#include $<$S\+D\+L\+\_\+image.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Initialize\+Barriers.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{DrawBarriers_8h_aca35e1e1cc9819dd69efde6246bb3888}{}\#define {\bfseries B\+A\+R\+R\+I\+E\+R\+G\+A\+P}~60\label{DrawBarriers_8h_aca35e1e1cc9819dd69efde6246bb3888}
+
+\item 
+\hypertarget{DrawBarriers_8h_ab820fc9cb20530aaf2cfd1efee72803f}{}\#define {\bfseries B\+A\+R\+R\+I\+E\+R\+S\+T\+A\+R\+T\+X}~100\label{DrawBarriers_8h_ab820fc9cb20530aaf2cfd1efee72803f}
+
+\item 
+\hypertarget{DrawBarriers_8h_a51a9215c78d22bed179a392fe8f72c0b}{}\#define {\bfseries B\+A\+R\+R\+I\+E\+R\+S\+T\+A\+R\+T\+Y}~550\label{DrawBarriers_8h_a51a9215c78d22bed179a392fe8f72c0b}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{DrawBarriers_8h_a2fd8c3e88c02cff2230f80cfcecd122f}{draw\+Barriers} (S\+D\+L\+\_\+\+Renderer $\ast$ren, int barriers\mbox{[}4\mbox{]}\mbox{[}B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T\mbox{]}\mbox{[}B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H\mbox{]})
+\begin{DoxyCompactList}\small\item\em draw\+Barriers \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+draws the four barriers from an 3d int array 
+
+\begin{DoxyAuthor}{Author}
+Thomas Collingwood 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+9/12/15 Updated to N\+C\+C\+A Coding standard 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{DrawBarriers_8h_a2fd8c3e88c02cff2230f80cfcecd122f}{}\index{Draw\+Barriers.\+h@{Draw\+Barriers.\+h}!draw\+Barriers@{draw\+Barriers}}
+\index{draw\+Barriers@{draw\+Barriers}!Draw\+Barriers.\+h@{Draw\+Barriers.\+h}}
+\subsubsection[{draw\+Barriers(\+S\+D\+L\+\_\+\+Renderer $\ast$ren, int barriers[4][B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T][B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H])}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Barriers (
+\begin{DoxyParamCaption}
+\item[{S\+D\+L\+\_\+\+Renderer $\ast$}]{ren, }
+\item[{int}]{barriers\mbox{[}4\mbox{]}\mbox{[}\+B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T\mbox{]}\mbox{[}\+B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{DrawBarriers_8h_a2fd8c3e88c02cff2230f80cfcecd122f}
+
+
+draw\+Barriers 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ren} & the S\+D\+L\+\_\+\+Renderer responsible for rendering images inside the window \\
+\hline
+{\em barriers} & the array of barriers (3d array representation of 3x3 pixel blocks) \\
+\hline
+\end{DoxyParams}

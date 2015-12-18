@@ -1,6 +1,8 @@
-///
-///  @file Missile.h
-///  @brief Contains the structure for Missile
+/// \file Missile.h
+/// \brief struct for missile
+/// \author Thomas Collingwood
+/// \version 1.0
+/// \date 9/12/15 Updated to NCCA Coding standard
 
 #ifndef MISSILE_H__
 #define MISSILE_H__

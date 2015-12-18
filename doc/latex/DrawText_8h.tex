@@ -1,0 +1,73 @@
+\hypertarget{DrawText_8h}{}\section{include/\+Draw\+Text.h File Reference}
+\label{DrawText_8h}\index{include/\+Draw\+Text.\+h@{include/\+Draw\+Text.\+h}}
+
+
+draws the input string onto screen at (x,y) position  
+
+
+{\ttfamily \#include $<$S\+D\+L.\+h$>$}\\*
+{\ttfamily \#include $<$S\+D\+L\+\_\+image.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{DrawText_8h_a421cbe8098f2ec03094a89136f835041}{}\#define {\bfseries L\+E\+T\+T\+E\+R\+H\+E\+I\+G\+H\+T}~21\label{DrawText_8h_a421cbe8098f2ec03094a89136f835041}
+
+\item 
+\hypertarget{DrawText_8h_aad595acce4a8b5aff1581af3c0d3bd17}{}\#define {\bfseries L\+E\+T\+T\+E\+R\+W\+I\+D\+T\+H}~15\label{DrawText_8h_aad595acce4a8b5aff1581af3c0d3bd17}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{DrawText_8h_aeca1d16fe8cfa7ddbdf41c84e2f4223c}{draw\+Text} (S\+D\+L\+\_\+\+Renderer $\ast$ren, S\+D\+L\+\_\+\+Texture $\ast$tex, char text\mbox{[}$\,$\mbox{]}, int x, int y, float multiplier)
+\begin{DoxyCompactList}\small\item\em draw\+Text \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+draws the input string onto screen at (x,y) position 
+
+\begin{DoxyAuthor}{Author}
+Thomas Collingwood 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+9/12/15 Updated to N\+C\+C\+A Coding standard 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{DrawText_8h_aeca1d16fe8cfa7ddbdf41c84e2f4223c}{}\index{Draw\+Text.\+h@{Draw\+Text.\+h}!draw\+Text@{draw\+Text}}
+\index{draw\+Text@{draw\+Text}!Draw\+Text.\+h@{Draw\+Text.\+h}}
+\subsubsection[{draw\+Text(\+S\+D\+L\+\_\+\+Renderer $\ast$ren, S\+D\+L\+\_\+\+Texture $\ast$tex, char text[], int x, int y, float multiplier)}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Text (
+\begin{DoxyParamCaption}
+\item[{S\+D\+L\+\_\+\+Renderer $\ast$}]{ren, }
+\item[{S\+D\+L\+\_\+\+Texture $\ast$}]{tex, }
+\item[{char}]{text\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{float}]{multiplier}
+\end{DoxyParamCaption}
+)}\label{DrawText_8h_aeca1d16fe8cfa7ddbdf41c84e2f4223c}
+
+
+draw\+Text 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ren} & the S\+D\+L\+\_\+\+Renderer responsible for rendering images inside the window \\
+\hline
+{\em tex} & the S\+D\+L\+\_\+\+Texture texture image that contains the game\textquotesingle{}s sprites \\
+\hline
+{\em text} & the char array that you want printed/drawn on screen \\
+\hline
+{\em x} & coordinate of text on screen \\
+\hline
+{\em y} & coordinate of text on screen \\
+\hline
+{\em multiplier} & determines how big the text is (1 being normal size where a pixel is actually 3x3 pixel) \\
+\hline
+\end{DoxyParams}

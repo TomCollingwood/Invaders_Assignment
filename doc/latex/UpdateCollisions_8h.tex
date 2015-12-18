@@ -1,0 +1,65 @@
+\hypertarget{UpdateCollisions_8h}{}\section{include/\+Update\+Collisions.h File Reference}
+\label{UpdateCollisions_8h}\index{include/\+Update\+Collisions.\+h@{include/\+Update\+Collisions.\+h}}
+
+
+updates invader\textquotesingle{}s / defender\textquotesingle{}s active variable when missile collides with it  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Defender.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Invader.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Missile.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{UpdateCollisions_8h_af7a2db057a0c2b12ceba6955afc83de7}{update\+Collisions} (\hyperlink{structMissile}{Missile} missiles\mbox{[}$\,$\mbox{]}, \hyperlink{structInvader}{Invader} invaders\mbox{[}R\+O\+W\+S\mbox{]}\mbox{[}C\+O\+L\+S\mbox{]}, \hyperlink{structDefender}{Defender} $\ast$defender, int $\ast$freeze, int $\ast$score, int frame)
+\begin{DoxyCompactList}\small\item\em update\+Collisions \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+updates invader\textquotesingle{}s / defender\textquotesingle{}s active variable when missile collides with it 
+
+\begin{DoxyAuthor}{Author}
+Thomas Collingwood 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+9/12/15 Updated to N\+C\+C\+A Coding standard 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{UpdateCollisions_8h_af7a2db057a0c2b12ceba6955afc83de7}{}\index{Update\+Collisions.\+h@{Update\+Collisions.\+h}!update\+Collisions@{update\+Collisions}}
+\index{update\+Collisions@{update\+Collisions}!Update\+Collisions.\+h@{Update\+Collisions.\+h}}
+\subsubsection[{update\+Collisions(\+Missile missiles[], Invader invaders[R\+O\+W\+S][C\+O\+L\+S], Defender $\ast$defender, int $\ast$freeze, int $\ast$score, int frame)}]{\setlength{\rightskip}{0pt plus 5cm}void update\+Collisions (
+\begin{DoxyParamCaption}
+\item[{{\bf Missile}}]{missiles\mbox{[}$\,$\mbox{]}, }
+\item[{{\bf Invader}}]{invaders\mbox{[}\+R\+O\+W\+S\mbox{]}\mbox{[}\+C\+O\+L\+S\mbox{]}, }
+\item[{{\bf Defender} $\ast$}]{defender, }
+\item[{int $\ast$}]{freeze, }
+\item[{int $\ast$}]{score, }
+\item[{int}]{frame}
+\end{DoxyParamCaption}
+)}\label{UpdateCollisions_8h_af7a2db057a0c2b12ceba6955afc83de7}
+
+
+update\+Collisions 
+
+
+\begin{DoxyParams}{Parameters}
+{\em missiles} & the array of \hyperlink{structMissile}{Missile} structs (each can be of four different types) \\
+\hline
+{\em invaders} & the 2d array of \hyperlink{structInvader}{Invader} struct objects \\
+\hline
+{\em defender} & the player controlled object that fires at space invaders \\
+\hline
+{\em freeze} & if freeze==1 then no collisions are updated \\
+\hline
+{\em score} & the current score of the session (this is incremented when invader collisions happen) \\
+\hline
+{\em frame} & the score of each invader killed is dependant on the time spent in the game session. We measure time with frames. \\
+\hline
+\end{DoxyParams}

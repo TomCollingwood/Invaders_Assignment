@@ -41,7 +41,8 @@ SOURCES += \
     src/UpdateDefender.c \
     src/UpdateInvaders.c \
     src/UpdateMissiles.c \
-    src/WriteHighscores.c
+    src/WriteHighscores.c \
+    src/HowManyActive.c
 QMAKE_LFLAGS += -F/Library/Frameworks
 LIBS += -framework SDL2
 LIBS += -framework SDL2_image
@@ -61,7 +62,6 @@ HEADERS += \
     include/Direction.h \
     include/DrawBarriers.h \
     include/DrawDefender.h \
-    include/DrawHighscore.h \
     include/DrawInvaders.h \
     include/DrawMissiles.h \
     include/DrawText.h \
@@ -79,7 +79,9 @@ HEADERS += \
     include/UpdateDefender.h \
     include/UpdateInvaders.h \
     include/UpdateMissiles.h \
-    include/WriteHighscores.h
+    include/WriteHighscores.h \
+    include/DrawScore.h \
+    include/HowManyActive.h
 
 DISTFILES +=
 

@@ -1,5 +1,9 @@
+///
+///  @file DrawMissiles.c
+///  @brief draws the missiles
+
 #include "include/DrawMissiles.h"
-// draws missiles - using SDL_RenderFillRect()
+
 void drawMissiles(SDL_Renderer *ren, SDL_Texture *tex, Missile missiles[])
 {
   SDL_Rect SrcZIGZAGS0;
