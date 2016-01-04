@@ -65,6 +65,9 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
     cycleover = 1;
   }
 
+  // Because I want to make the invaders move as in the original
+  // game I have come up with the method below
+
   // howfast is how many frames it takes a cycle
   // a cycle is from one frame when all invaders are alligned
   // to the next when it's all alligned

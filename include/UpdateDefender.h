@@ -20,7 +20,7 @@
 /// \param defender the player controlled object that fires at space invaders
 /// \param input the input from the player
 /// \param missiles the array of Missile structs (each can be of four different types)
-/// \param freeze if freeze==1 a new missile cannot be fired from defender
+/// \param [inout] freeze if freeze==1 a new missile cannot be fired from defender
 ///
 void updateDefender(Defender *defender, enum DIRECTION input, Missile missiles[], int *freeze);
 

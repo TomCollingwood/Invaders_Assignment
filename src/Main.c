@@ -1,6 +1,11 @@
 ///
 ///  @file main.c
 ///  @brief contains the main method - creates window and runs the game
+///
+/// README!!!
+/// The invader's movement is deliberately jagged and ripples
+/// because in the ORIGINAL game the invaders move in a ripple effect
+///
 
 #include "include/Headers.h"
 
@@ -227,6 +232,7 @@ int main()
       drawInvaders(ren,tex,invaders);
 
       if(menu==0){
+        drawText(ren,tex,"SPACE INVADERS",7,50,2.9);
         drawText(ren,tex,"START GAME",(WIDTH/2)-100,370,1);
         drawText(ren,tex,"HIGHSCORES",(WIDTH/2)-100,470,1);
         drawText(ren,tex,"EXIT",WIDTH/2-35,570,1);
@@ -258,6 +264,7 @@ int main()
       }
       else
       {
+        drawText(ren,tex,"SPACE INVADERS",7,50,2.9);
         drawText(ren,tex,"HIGHSCORES",(WIDTH/2)-100,370,1);
         drawText(ren,tex,"EXIT",WIDTH/2-35,570,1);
         drawText(ren,tex,">",(WIDTH/2)-100-15,570,1);

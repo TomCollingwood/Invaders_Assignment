@@ -20,13 +20,13 @@
 
 ///
 /// \brief updateInvaders
-/// \param invaders the 2d array of Invader struct objects
-/// \param missiles the array of Missile structs (each can be of four different types)
-/// \param freeze if freeze==1 the invaders do no move their position
-/// \param howfast the lower howfast is, the faster the invaders move
+/// \param invaders     the 2d array of Invader struct objects
+/// \param missiles     the array of Missile structs (each can be of four different types)
+/// \param freeze       if freeze==1 the invaders do no move their position
+/// \param howfast      the lower howfast is, the faster the invaders move
 /// \param startscreen if startscreen==1 then the invader's y position is not incremented
 ///
 void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBER], \
-                    int *freeze, int *howfast, int startscreen);
+                    int *_freeze, int *howfast, int startscreen);
 
 #endif
