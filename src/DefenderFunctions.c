@@ -1,9 +1,56 @@
 ///
-///  @file UpdateDefender.c
-///  @brief updates defender position depending on input - also updates sprite when exploded
+///  @file DefenderFunctions.c
+///  @brief
 
 #include "include/DefenderFunctions.h"
-// Updates defender position and creates new defender missiles if SPACE bar hit
+
+void drawDefender(SDL_Renderer *ren, SDL_Texture *tex, Defender *defender)
+{
+  SDL_Rect SrcRS0;
+  SrcRS0.x=0;
+  SrcRS0.y=0;
+  SrcRS0.w=DEFENDERWIDTH;
+  SrcRS0.h=DEFENDERHEIGHT;
+
+  SDL_Rect SrcRS1;
+  SrcRS1.x=111;
+  SrcRS1.y=27;
+  SrcRS1.w=EXPLODEDDEFENDERWIDTH;
+  SrcRS1.h=DEFENDERHEIGHT;
+
+  SDL_Rect SrcRS2;
+  SrcRS2.x=69;
+  SrcRS2.y=105;
+  SrcRS2.w=EXPLODEDDEFENDERWIDTH;
+  SrcRS2.h=DEFENDERHEIGHT;
+
+  if(defender->sprite==0)
+  {
+    SDL_RenderCopy(ren,tex,&SrcRS0,&defender->pos);
+  }
+  else
+  {
+    if(defender->sprite==1)
+    {
+      SDL_RenderCopy(ren,tex,&SrcRS1,&defender->pos);
+    }
+    else {
+      SDL_RenderCopy(ren,tex,&SrcRS2,&defender->pos);
+    }
+  }
+}
+
+void initializeDefender(Defender *defender)
+{
+  defender->pos.x=WIDTH/2 - SPRITEWIDTH/2;
+  defender->pos.y=HEIGHT-80;
+  defender->pos.w=39;
+  defender->pos.h=24;
+  defender->sprite=0;
+  defender->active=1;
+  defender->frame=0;
+}
+
 void updateDefender(Defender *defender, enum DIRECTION input, Missile missiles[], int *freeze)
 {
   if(defender->active)

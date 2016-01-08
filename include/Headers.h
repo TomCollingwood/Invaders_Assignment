@@ -15,13 +15,13 @@
 
 #include "Defender.h"
 #include "Direction.h"
-#include "DrawScore.h"
-#include "DrawText.h"
-#include "SelectLetter.h"
+//#include "DrawText.h"
+//#include "SelectLetter.h"
 #include "DefenderFunctions.h"
 #include "InvaderFunctions.h"
 #include "BarrierFunctions.h"
 #include "MissileAndCollisionFunctions.h"
 #include "HighscoreFunctions.h"
+#include "TextFunctions.h"
 
 #endif

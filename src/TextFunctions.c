@@ -1,8 +1,8 @@
 ///
-///  @file DrawText.c
-///  @brief draws the input string onto screen at (x,y) position
+///  @file TextFunctions.c
+///  @brief two functions that deal with text in the project
 
-#include "include/DrawText.h"
+#include "include/TextFunctions.h"
 
 void drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y, float multiplier){
   int xoffset=0;
@@ -447,4 +447,17 @@ void drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y, fl
     else { nochar=0; }
   }
 
+}
+
+void selectLetter(int *asciinumber, enum DIRECTION input, enum DIRECTION previousinput)
+{
+  if(input==UPS && previousinput!=UPS) {(*asciinumber)++;}
+  else if(input==DOWNS && previousinput!=DOWNS) {(*asciinumber)--;}
+
+  // the below else ifs below skip lots of letters that are unused by drawText
+  // also creates a loop ...->A->...->Z->0->...->9->A->...
+  if((*asciinumber)==91) { (*asciinumber)=48; }
+  else if((*asciinumber)==58) { (*asciinumber)=65; }
+  else if((*asciinumber)==64) { (*asciinumber)=57; }
+  else if((*asciinumber)==47) { (*asciinumber)=90; }
 }

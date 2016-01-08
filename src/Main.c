@@ -24,8 +24,6 @@ int main()
   Highscore highscores[3];
   int score = 0;
 
-  initializeHighscores(highscores);
-  writeHighscores(highscores);
   readHighscores(highscores);
   initializeInvaders(invaders);
   initializeDefender(&defender);
@@ -68,7 +66,7 @@ int main()
 
   // we are going to use the extension SDL_image library to load a bmp, documentation can be found here
   // http://www.libsdl.org/projects/SDL_image/
-  image=IMG_Load("SpriteSheet.bmp");
+  image=IMG_Load("textures/SpriteSheet.bmp");
   if(!image)
   {
     printf("IMG_Load: %s\n", IMG_GetError());
@@ -266,8 +264,6 @@ int main()
       {
         drawText(ren,tex,"SPACE INVADERS",7,50,2.9);
         drawText(ren,tex,"HIGHSCORES",(WIDTH/2)-100,370,1);
-        drawText(ren,tex,"EXIT",WIDTH/2-35,570,1);
-        drawText(ren,tex,">",(WIDTH/2)-100-15,570,1);
 
         //reads highscores
         readHighscores(highscores);
@@ -281,8 +277,33 @@ int main()
           yvalue+=50;
         }
 
-        if(input==FIRE && previousinput==NONE) menu=0;
+        static int highscoresSelectPosition = 0;
 
+        drawText(ren,tex,">",240,560+highscoresSelectPosition*50,1);
+        drawText(ren,tex,"RESET",260,560,1);
+        drawText(ren,tex,"BACK",260,610,1);
+
+        if(input==UPS && previousinput==NONE) {
+          if(highscoresSelectPosition==1){
+            highscoresSelectPosition--;
+          }
+        }
+
+        else if(input==DOWNS && previousinput==NONE) {
+          if(highscoresSelectPosition==0){
+            highscoresSelectPosition++;
+          }
+        }
+
+        if(input==FIRE && previousinput==NONE && highscoresSelectPosition == 1)
+        {
+          menu=0;
+        }
+        else if (input==FIRE && previousinput==NONE && highscoresSelectPosition==0)
+        {
+          initializeHighscores(highscores);
+          writeHighscores(highscores);
+        }
       }
       previousinput = input;
       previousmenu=0;
@@ -317,6 +338,8 @@ int main()
         static int letter3int=65;
 
         // the code below allows user to input 3 letter name
+
+        // This resets to AAA if just opened
         if(previousmenu!=3)
         {
           letter1int=65;
@@ -324,10 +347,12 @@ int main()
           letter3int=65;
         }
 
+        // chars to store the letters
         char letter1char[5];
         char letter2char[5];
         char letter3char[5];
 
+        // converting int to char and put into the chars
         sprintf(letter1char,"%c",(char)letter1int);
         sprintf(letter2char,"%c",(char)letter2int);
         sprintf(letter3char,"%c",(char)letter3int);
@@ -340,6 +365,8 @@ int main()
 
         if(selectposition!=3)
         {
+          // when select position is on one of the three letters
+          // change the letter depending on input
           if(selectposition==0)
           {
             selectLetter(&letter1int,input,previousinput);

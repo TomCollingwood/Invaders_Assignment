@@ -15,7 +15,7 @@
 
 #include "Dimensions.h"
 #include "Direction.h"
-#include "HowManyActive.h"
+#include "TextFunctions.h"
 #include "Invader.h"
 #include "Missile.h"
 
@@ -48,5 +48,12 @@ void initializeInvaders(Invader invaders[ROWS][COLS]);
 ///
 void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBER], \
                     int *_freeze, int *howfast, int startscreen);
+
+///
+/// \param invaders the 2d array of Invader struct objects
+/// \return the number of active invaders
+///
+int howManyActive(Invader invaders[ROWS][COLS]);
+
 
 #endif
