@@ -2,7 +2,7 @@
 ///  @file UpdateMissiles.c
 ///  @brief updates all the active missiles' position
 
-#include "include/UpdateMissiles.h"
+#include "include/MissileAndCollisionFunctions.h"
 // Updates missile position depending on direction and activity
 void updateMissiles(Missile missiles[])
 {

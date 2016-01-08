@@ -2,7 +2,7 @@
 ///  @file InitializeHighscores.c
 ///  @brief initializes all highscores to 0 and names to "---"
 
-#include "include/InitializeHighscores.h"
+#include "include/HighscoreFunctions.h"
 
 ///
 /// \brief initializeHighscores

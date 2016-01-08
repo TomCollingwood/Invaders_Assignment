@@ -2,7 +2,7 @@
 ///  @file UpdateCollisions.c
 ///  @brief updates invader's / defender's active variable when missile collides with it
 
-#include "include/UpdateCollisions.h"
+#include "include/MissileAndCollisionFunctions.h"
 
 void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender *defender, \
                       int *freeze, int *score, int frame)

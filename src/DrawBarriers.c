@@ -2,7 +2,7 @@
 ///  @file DrawBarriers.c
 ///  @brief draws the four barriers from an 3d int array
 
-#include "include/DrawBarriers.h"
+#include "include/BarrierFunctions.h"
 
 void drawBarriers(SDL_Renderer *ren, int barriers[4][BARRIERHEIGHT][BARRIERWIDTH]){
   SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);

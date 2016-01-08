@@ -2,7 +2,7 @@
 ///  @file BlastBarrier.c
 ///  @brief updates a barriers to have a crater spreading outwards from (x,y)
 
-#include "include/BlastBarrier.h"
+#include "include/BarrierFunctions.h"
 
 void blastBarrier(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH],int barrier, int x, int y, int type)
 {

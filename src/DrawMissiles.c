@@ -2,7 +2,7 @@
 ///  @file DrawMissiles.c
 ///  @brief draws the missiles
 
-#include "include/DrawMissiles.h"
+#include "include/MissileAndCollisionFunctions.h"
 
 void drawMissiles(SDL_Renderer *ren, SDL_Texture *tex, Missile missiles[])
 {
@@ -80,6 +80,7 @@ void drawMissiles(SDL_Renderer *ren, SDL_Texture *tex, Missile missiles[])
 
 
   SDL_SetRenderDrawColor(ren, 255, 255, 255, 255);
+
   for(int m=0; m<MISSILESNUMBER; ++m)
   {
     if(missiles[m].active)

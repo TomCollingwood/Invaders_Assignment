@@ -2,7 +2,7 @@
 ///  @file InsertHighscore.c
 ///  @brief inserts new highscore to highscore array while keeping ascending order
 
-#include "include/InsertHighscore.h"
+#include "include/HighscoreFunctions.h"
 
 void insertHighscore(Highscore highscores[3],char name[4], int score)
 {

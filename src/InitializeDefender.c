@@ -2,7 +2,7 @@
 ///  @file InitializeDefender.c
 ///  @brief initializes the input defender to active state and original position
 
-#include "include/InitializeDefender.h"
+#include "include/DefenderFunctions.h"
 
 void initializeDefender(Defender *defender)
 {

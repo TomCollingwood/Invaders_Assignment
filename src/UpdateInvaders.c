@@ -2,7 +2,7 @@
 ///  @file UpdateInvaders.c
 ///  @brief updates invaders' position and sprite
 
-#include "include/UpdateInvaders.h"
+#include "include/InvaderFunctions.h"
 
 void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBER], \
                     int *freeze, int *howfast, int startscreen)

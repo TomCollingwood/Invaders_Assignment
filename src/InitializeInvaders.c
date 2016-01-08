@@ -2,7 +2,7 @@
 ///  @file InitializeInvaders.c
 ///  @brief initializes all invaders to starting position and active state
 
-#include "include/InitializeInvaders.h"
+#include "include/InvaderFunctions.h"
 
 // Initializes all invader positions
 void initializeInvaders(Invader invaders[ROWS][COLS])

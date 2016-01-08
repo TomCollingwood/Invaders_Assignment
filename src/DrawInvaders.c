@@ -2,7 +2,7 @@
 ///  @file DrawInvaders.c
 ///  @brief draws the invaders
 
-#include "include/DrawInvaders.h"
+#include "include/InvaderFunctions.h"
 
 void drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][COLS])
 {

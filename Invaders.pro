@@ -27,32 +27,19 @@ HEADERS += \
     include/Defender.h \
     include/Missile.h \
     include/Invader.h \
-    include/BlastBarrier.h \
     include/Dimensions.h \
     include/Dir.h \
     include/Direction.h \
-    include/DrawBarriers.h \
-    include/DrawDefender.h \
-    include/DrawInvaders.h \
-    include/DrawMissiles.h \
     include/DrawText.h \
     include/Headers.h \
     include/Highscore.h \
-    include/InitializeBarriers.h \
-    include/InitializeDefender.h \
-    include/InitializeHighscores.h \
-    include/InitializeInvaders.h \
-    include/InsertHighscore.h \
-    include/ReadHighscores.h \
-    include/UpdateBarriers.h \
     include/SelectLetter.h \
-    include/UpdateCollisions.h \
-    include/UpdateDefender.h \
-    include/UpdateInvaders.h \
-    include/UpdateMissiles.h \
-    include/WriteHighscores.h \
-    include/DrawScore.h \
-    include/HowManyActive.h
+    include/HowManyActive.h \
+    include/InvaderFunctions.h \
+    include/DefenderFunctions.h \
+    include/BarrierFunctions.h \
+    include/MissileAndCollisionFunctions.h \
+    include/HighscoreFunctions.h
 cache()
 QMAKE_CFLAGS+=-std=c99
 QMAKE_CFLAGS+=$$system(sdl2-config  --cflags)
@@ -76,3 +63,5 @@ macx: {
   INCLUDEPATH += /Library/Frameworks/SDL2.framework/Headers
   INCLUDEPATH += /usr/local/include
 }
+
+DISTFILES +=

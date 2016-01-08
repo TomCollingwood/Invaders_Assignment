@@ -2,7 +2,7 @@
 ///  @file WriteHighscores.c
 ///  @brief writes the highscores to highscores save file
 
-#include "include/WriteHighscores.h"
+#include "include/HighscoreFunctions.h"
 
 void writeHighscores(Highscore highscores[3])
 {

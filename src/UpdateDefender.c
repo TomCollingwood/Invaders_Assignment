@@ -2,7 +2,7 @@
 ///  @file UpdateDefender.c
 ///  @brief updates defender position depending on input - also updates sprite when exploded
 
-#include "include/UpdateDefender.h"
+#include "include/DefenderFunctions.h"
 // Updates defender position and creates new defender missiles if SPACE bar hit
 void updateDefender(Defender *defender, enum DIRECTION input, Missile missiles[], int *freeze)
 {

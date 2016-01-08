@@ -2,7 +2,7 @@
 ///  @file UpdateBarriers.c
 ///  @brief updates barriers to get blasted when missile collides with barrier
 
-#include "include/UpdateBarriers.h"
+#include "include/BarrierFunctions.h"
 #include "BlastBarrier.c"
 
 void updateBarriers(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH], Missile missiles[MISSILESNUMBER])

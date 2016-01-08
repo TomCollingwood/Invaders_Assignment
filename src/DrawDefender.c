@@ -2,7 +2,7 @@
 ///  @file DrawDefender.c
 ///  @brief draws the defender
 
-#include "include/DrawDefender.h"
+#include "include/DefenderFunctions.h"
 
 void drawDefender(SDL_Renderer *ren, SDL_Texture *tex, Defender *defender)
 {
