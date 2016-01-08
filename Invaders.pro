@@ -2,27 +2,13 @@ QT -=gui
 TARGET=Invaders
 DESTDIR=./
 SOURCES += \
-    src/BlastBarrier.c \
-    src/DrawBarriers.c \
-    src/DrawDefender.c \
-    src/DrawInvaders.c \
-    src/DrawMissiles.c \
-    src/DrawText.c \
-    src/InitializeBarriers.c \
-    src/InitializeDefender.c \
-    src/InitializeHighscores.c \
-    src/InitializeInvaders.c \
-    src/InsertHighscore.c \
     src/Main.c \
-    src/ReadHighscores.c \
-    src/SelectLetter.c \
-    src/UpdateBarriers.c \
-    src/UpdateCollisions.c \
-    src/UpdateDefender.c \
-    src/UpdateInvaders.c \
-    src/UpdateMissiles.c \
-    src/WriteHighscores.c \
-    src/HowManyActive.c
+    src/TextFunctions.c \
+    src/InvaderFunctions.c \
+    src/BarrierFunctions.c \
+    src/DefenderFunctions.c \
+    src/MissileAndCollisionFunctions.c \
+    src/HighscoreFunctions.c
 HEADERS += \
     include/Defender.h \
     include/Missile.h \
@@ -34,23 +20,26 @@ HEADERS += \
     include/Headers.h \
     include/Highscore.h \
     include/SelectLetter.h \
-    include/HowManyActive.h \
     include/InvaderFunctions.h \
     include/DefenderFunctions.h \
     include/BarrierFunctions.h \
     include/MissileAndCollisionFunctions.h \
-    include/HighscoreFunctions.h
+    include/HighscoreFunctions.h \
+    include/TextFunctions.h
 cache()
 QMAKE_CFLAGS+=-std=c99
-QMAKE_CFLAGS+=$$system(sdl2-config  --cflags)
-message(output from sdl2-config --cflags added to CXXFLAGS= $$QMAKE_CFLAGS)
-INCLUDEPATH+=/usr/local/include/SDL2
-LIBS+=$$system(sdl2-config  --libs)
-message(output from sdl2-config --libs added to LIB=$$LIBS)
-LIBS+=-lSDL2_image
 
 CONFIG += console
 CONFIG -= app_bundle
+
+linux: {
+  QMAKE_CFLAGS+=$$system(sdl2-config  --cflags)
+  message(output from sdl2-config --cflags added to CXXFLAGS= $$QMAKE_CFLAGS)
+  INCLUDEPATH+=/usr/local/include/SDL2
+  LIBS+=$$system(sdl2-config  --libs)
+  message(output from sdl2-config --libs added to LIB=$$LIBS)
+  LIBS+=-lSDL2_image
+}
 
 macx: {
   DEFINES+=MAC_OS_X_VERSION_MIN_REQUIRED=1060
