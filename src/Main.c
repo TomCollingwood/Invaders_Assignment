@@ -7,6 +7,8 @@
 // The invader's movement is deliberately jagged and ripples
 // because in the ORIGINAL game the invaders move in a ripple effect
 //
+// I've included a readme.rtf file in root to read with more information.
+//
 // Also my take on io_ and _o parameters is that if the input is used in as a
 // conditional inside the function, as an input to another function inside the
 // function and/or as output then it's io_.
