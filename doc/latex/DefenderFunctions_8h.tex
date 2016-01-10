@@ -1,0 +1,104 @@
+\hypertarget{DefenderFunctions_8h}{}\section{include/\+Defender\+Functions.h File Reference}
+\label{DefenderFunctions_8h}\index{include/\+Defender\+Functions.\+h@{include/\+Defender\+Functions.\+h}}
+
+
+put all \hyperlink{structDefender}{Defender} functions into this header and c file  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$S\+D\+L.\+h$>$}\\*
+{\ttfamily \#include $<$S\+D\+L\+\_\+image.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Defender.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Dimensions.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Direction.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Missile.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{DefenderFunctions_8h_a7a4074c42352ff181d6242c5ca4d508a}{draw\+Defender} (S\+D\+L\+\_\+\+Renderer $\ast$\+\_\+ren, S\+D\+L\+\_\+\+Texture $\ast$\+\_\+tex, \hyperlink{structDefender}{Defender} $\ast$io\+\_\+defender)
+\begin{DoxyCompactList}\small\item\em draw\+Defender draws the \hyperlink{structDefender}{Defender} with S\+D\+L\+\_\+\+Render\+Copy \end{DoxyCompactList}\item 
+void \hyperlink{DefenderFunctions_8h_a7282d823711e8bae054fe439a7733624}{initialize\+Defender} (\hyperlink{structDefender}{Defender} $\ast$o\+\_\+defender)
+\begin{DoxyCompactList}\small\item\em initialize\+Defender initializes \hyperlink{structDefender}{Defender}\textquotesingle{}s position and active state \end{DoxyCompactList}\item 
+void \hyperlink{DefenderFunctions_8h_a9cff7b838d408ec8333aa34737d22e96}{update\+Defender} (\hyperlink{structDefender}{Defender} $\ast$io\+\_\+defender, enum D\+I\+R\+E\+C\+T\+I\+O\+N \+\_\+input, \hyperlink{structMissile}{Missile} io\+\_\+missiles\mbox{[}$\,$\mbox{]}, int \+\_\+freeze)
+\begin{DoxyCompactList}\small\item\em update\+Defender updates the defender\textquotesingle{}s position and creates missiles depending on input \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+put all \hyperlink{structDefender}{Defender} functions into this header and c file 
+
+\begin{DoxyAuthor}{Author}
+Thomas Collingwood 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+9/12/15 Updated to N\+C\+C\+A Coding standard 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{DefenderFunctions_8h_a7a4074c42352ff181d6242c5ca4d508a}{}\index{Defender\+Functions.\+h@{Defender\+Functions.\+h}!draw\+Defender@{draw\+Defender}}
+\index{draw\+Defender@{draw\+Defender}!Defender\+Functions.\+h@{Defender\+Functions.\+h}}
+\subsubsection[{draw\+Defender(\+S\+D\+L\+\_\+\+Renderer $\ast$\+\_\+ren, S\+D\+L\+\_\+\+Texture $\ast$\+\_\+tex, Defender $\ast$io\+\_\+defender)}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Defender (
+\begin{DoxyParamCaption}
+\item[{S\+D\+L\+\_\+\+Renderer $\ast$}]{\+\_\+ren, }
+\item[{S\+D\+L\+\_\+\+Texture $\ast$}]{\+\_\+tex, }
+\item[{{\bf Defender} $\ast$}]{io\+\_\+defender}
+\end{DoxyParamCaption}
+)}\label{DefenderFunctions_8h_a7a4074c42352ff181d6242c5ca4d508a}
+
+
+draw\+Defender draws the \hyperlink{structDefender}{Defender} with S\+D\+L\+\_\+\+Render\+Copy 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+ren} & the S\+D\+L\+\_\+\+Renderer responsible for rendering images inside the window \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+tex} & the S\+D\+L\+\_\+\+Texture texture image that contains the game\textquotesingle{}s sprites \\
+\hline
+\mbox{\tt in,out}  & {\em io\+\_\+defender} & the player controlled object that fires at space invaders \\
+\hline
+\end{DoxyParams}
+\hypertarget{DefenderFunctions_8h_a7282d823711e8bae054fe439a7733624}{}\index{Defender\+Functions.\+h@{Defender\+Functions.\+h}!initialize\+Defender@{initialize\+Defender}}
+\index{initialize\+Defender@{initialize\+Defender}!Defender\+Functions.\+h@{Defender\+Functions.\+h}}
+\subsubsection[{initialize\+Defender(\+Defender $\ast$o\+\_\+defender)}]{\setlength{\rightskip}{0pt plus 5cm}void initialize\+Defender (
+\begin{DoxyParamCaption}
+\item[{{\bf Defender} $\ast$}]{o\+\_\+defender}
+\end{DoxyParamCaption}
+)}\label{DefenderFunctions_8h_a7282d823711e8bae054fe439a7733624}
+
+
+initialize\+Defender initializes \hyperlink{structDefender}{Defender}\textquotesingle{}s position and active state 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em o\+\_\+defender} & the player controlled object that fires at space invaders \\
+\hline
+\end{DoxyParams}
+\hypertarget{DefenderFunctions_8h_a9cff7b838d408ec8333aa34737d22e96}{}\index{Defender\+Functions.\+h@{Defender\+Functions.\+h}!update\+Defender@{update\+Defender}}
+\index{update\+Defender@{update\+Defender}!Defender\+Functions.\+h@{Defender\+Functions.\+h}}
+\subsubsection[{update\+Defender(\+Defender $\ast$io\+\_\+defender, enum D\+I\+R\+E\+C\+T\+I\+O\+N \+\_\+input, Missile io\+\_\+missiles[], int \+\_\+freeze)}]{\setlength{\rightskip}{0pt plus 5cm}void update\+Defender (
+\begin{DoxyParamCaption}
+\item[{{\bf Defender} $\ast$}]{io\+\_\+defender, }
+\item[{enum D\+I\+R\+E\+C\+T\+I\+O\+N}]{\+\_\+input, }
+\item[{{\bf Missile}}]{io\+\_\+missiles\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{\+\_\+freeze}
+\end{DoxyParamCaption}
+)}\label{DefenderFunctions_8h_a9cff7b838d408ec8333aa34737d22e96}
+
+
+update\+Defender updates the defender\textquotesingle{}s position and creates missiles depending on input 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em io\+\_\+defender} & the player controlled object that fires at space invaders \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+input} & the input from the player \\
+\hline
+\mbox{\tt in,out}  & {\em io\+\_\+missiles} & the array of \hyperlink{structMissile}{Missile} structs (each can be of four different types) \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+freeze} & if freeze==1 a new missile cannot be fired from defender \\
+\hline
+\end{DoxyParams}

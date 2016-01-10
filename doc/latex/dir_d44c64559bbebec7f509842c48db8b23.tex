@@ -3,61 +3,29 @@
 \subsection*{Files}
 \begin{DoxyCompactItemize}
 \item 
-file \hyperlink{BlastBarrier_8h}{Blast\+Barrier.\+h}
-\begin{DoxyCompactList}\small\item\em updates a barriers to have a crater spreading outwards from coordinates given \end{DoxyCompactList}\item 
+file \hyperlink{BarrierFunctions_8h}{Barrier\+Functions.\+h}
+\begin{DoxyCompactList}\small\item\em all functions that operate on Barriers \end{DoxyCompactList}\item 
 file \hyperlink{Defender_8h}{Defender.\+h}
 \begin{DoxyCompactList}\small\item\em structure for \hyperlink{structDefender}{Defender} -\/ the object the player controls and shoots from \end{DoxyCompactList}\item 
+file \hyperlink{DefenderFunctions_8h}{Defender\+Functions.\+h}
+\begin{DoxyCompactList}\small\item\em put all \hyperlink{structDefender}{Defender} functions into this header and c file \end{DoxyCompactList}\item 
 file \hyperlink{Dimensions_8h}{Dimensions.\+h}
 \begin{DoxyCompactList}\small\item\em defines window width and height in pixels \end{DoxyCompactList}\item 
-file {\bfseries Dir.\+h}
-\item 
 file \hyperlink{Direction_8h}{Direction.\+h}
-\begin{DoxyCompactList}\small\item\em has the enum D\+I\+R\+E\+C\+T\+I\+O\+N used for input and missiles \end{DoxyCompactList}\item 
-file \hyperlink{DrawBarriers_8h}{Draw\+Barriers.\+h}
-\begin{DoxyCompactList}\small\item\em draws the four barriers from an 3d int array \end{DoxyCompactList}\item 
-file \hyperlink{DrawDefender_8h}{Draw\+Defender.\+h}
-\begin{DoxyCompactList}\small\item\em draws the defender \end{DoxyCompactList}\item 
-file \hyperlink{DrawInvaders_8h}{Draw\+Invaders.\+h}
-\begin{DoxyCompactList}\small\item\em draws the invaders \end{DoxyCompactList}\item 
-file \hyperlink{DrawMissiles_8h}{Draw\+Missiles.\+h}
-\begin{DoxyCompactList}\small\item\em draws the missiles \end{DoxyCompactList}\item 
-file \hyperlink{DrawScore_8h}{Draw\+Score.\+h}
-\begin{DoxyCompactList}\small\item\em draws the current score and highscore \end{DoxyCompactList}\item 
-file \hyperlink{DrawText_8h}{Draw\+Text.\+h}
-\begin{DoxyCompactList}\small\item\em draws the input string onto screen at (x,y) position \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em has the enum D\+I\+R\+E\+C\+T\+I\+O\+N used for input and missiles \hyperlink{Invader_8h}{invader.\+h} has it\textquotesingle{}s own direction enum so I had to change U\+P -\/$>$ U\+P\+S and D\+O\+W\+N -\/$>$ D\+O\+W\+N\+S \end{DoxyCompactList}\item 
 file \hyperlink{Headers_8h}{Headers.\+h}
-\begin{DoxyCompactList}\small\item\em has all \#include s for \hyperlink{Main_8c}{main.\+c} \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em has all \#includes for \hyperlink{Main_8c}{Main.\+c} \end{DoxyCompactList}\item 
 file \hyperlink{Highscore_8h}{Highscore.\+h}
 \begin{DoxyCompactList}\small\item\em struct for highscore \end{DoxyCompactList}\item 
-file \hyperlink{HowManyActive_8h}{How\+Many\+Active.\+h}
-\begin{DoxyCompactList}\small\item\em returns int of how many invaders active \end{DoxyCompactList}\item 
-file \hyperlink{InitializeBarriers_8h}{Initialize\+Barriers.\+h}
-\begin{DoxyCompactList}\small\item\em initializes barriers to unblasted state \end{DoxyCompactList}\item 
-file \hyperlink{InitializeDefender_8h}{Initialize\+Defender.\+h}
-\begin{DoxyCompactList}\small\item\em initializes the input defender to active state and original position \end{DoxyCompactList}\item 
-file \hyperlink{InitializeHighscores_8h}{Initialize\+Highscores.\+h}
-\begin{DoxyCompactList}\small\item\em initializes all highscores to 0 and names to \char`\"{}-\/-\/-\/\char`\"{} \end{DoxyCompactList}\item 
-file \hyperlink{InitializeInvaders_8h}{Initialize\+Invaders.\+h}
-\begin{DoxyCompactList}\small\item\em initializes all invaders to starting position and active state \end{DoxyCompactList}\item 
-file \hyperlink{InsertHighscore_8h}{Insert\+Highscore.\+h}
-\begin{DoxyCompactList}\small\item\em inserts new highscore to highscore array while keeping ascending order \end{DoxyCompactList}\item 
+file \hyperlink{HighscoreFunctions_8h}{Highscore\+Functions.\+h}
+\begin{DoxyCompactList}\small\item\em put all \hyperlink{structHighscore}{Highscore} related functions in this header and c file \end{DoxyCompactList}\item 
 file \hyperlink{Invader_8h}{Invader.\+h}
 \begin{DoxyCompactList}\small\item\em struct for \hyperlink{structInvader}{Invader} \end{DoxyCompactList}\item 
+file \hyperlink{InvaderFunctions_8h}{Invader\+Functions.\+h}
+\begin{DoxyCompactList}\small\item\em put all invader functions into this header and c file \end{DoxyCompactList}\item 
 file \hyperlink{Missile_8h}{Missile.\+h}
 \begin{DoxyCompactList}\small\item\em struct for missile \end{DoxyCompactList}\item 
-file \hyperlink{ReadHighscores_8h}{Read\+Highscores.\+h}
-\begin{DoxyCompactList}\small\item\em reads highscore from highscores file and updates highscores array \end{DoxyCompactList}\item 
-file \hyperlink{SelectLetter_8h}{Select\+Letter.\+h}
-\begin{DoxyCompactList}\small\item\em deals with character switching when inputting your name for new highscore \end{DoxyCompactList}\item 
-file \hyperlink{UpdateBarriers_8h}{Update\+Barriers.\+h}
-\begin{DoxyCompactList}\small\item\em updates barriers to get blasted when missile collides with barrier \end{DoxyCompactList}\item 
-file \hyperlink{UpdateCollisions_8h}{Update\+Collisions.\+h}
-\begin{DoxyCompactList}\small\item\em updates invader\textquotesingle{}s / defender\textquotesingle{}s active variable when missile collides with it \end{DoxyCompactList}\item 
-file \hyperlink{UpdateDefender_8h}{Update\+Defender.\+h}
-\begin{DoxyCompactList}\small\item\em updates defender position depending on input -\/ also updates sprite when exploded \end{DoxyCompactList}\item 
-file \hyperlink{UpdateInvaders_8h}{Update\+Invaders.\+h}
-\begin{DoxyCompactList}\small\item\em updates invaders\textquotesingle{} position and sprite \end{DoxyCompactList}\item 
-file \hyperlink{UpdateMissiles_8h}{Update\+Missiles.\+h}
-\begin{DoxyCompactList}\small\item\em updates all the active missiles\textquotesingle{} position \end{DoxyCompactList}\item 
-file \hyperlink{WriteHighscores_8h}{Write\+Highscores.\+h}
-\begin{DoxyCompactList}\small\item\em writes the highscores to highscores save file \end{DoxyCompactList}\end{DoxyCompactItemize}
+file \hyperlink{MissileAndCollisionFunctions_8h}{Missile\+And\+Collision\+Functions.\+h}
+\begin{DoxyCompactList}\small\item\em put all \hyperlink{structMissile}{Missile} and Collision functions in this header and c file \end{DoxyCompactList}\item 
+file \hyperlink{TextFunctions_8h}{Text\+Functions.\+h}
+\begin{DoxyCompactList}\small\item\em an assortment of functions used in main \end{DoxyCompactList}\end{DoxyCompactItemize}

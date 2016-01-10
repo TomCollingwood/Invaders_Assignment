@@ -1,0 +1,109 @@
+\hypertarget{BarrierFunctions_8c}{}\section{src/\+Barrier\+Functions.c File Reference}
+\label{BarrierFunctions_8c}\index{src/\+Barrier\+Functions.\+c@{src/\+Barrier\+Functions.\+c}}
+
+
+all the functions that operate directly on the barriers  
+
+
+{\ttfamily \#include \char`\"{}include/\+Barrier\+Functions.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{BarrierFunctions_8c_aecff60bef857ed5fe116982b5a2dd390}{blast\+Barrier} (int io\+\_\+barriers\mbox{[}4\mbox{]}\mbox{[}B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T\mbox{]}\mbox{[}B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H\mbox{]}, int \+\_\+barrier, int \+\_\+x, int \+\_\+y, int \+\_\+type)
+\begin{DoxyCompactList}\small\item\em blast\+Barrier creates a blast centered around barriers\mbox{[}barrier\mbox{]}\mbox{[}y\mbox{]}\mbox{[}x\mbox{]}. A blast is the undrawn barrier pixels in a blast shape. The type of blast (invader or defender) depends on type. \end{DoxyCompactList}\item 
+void \hyperlink{BarrierFunctions_8c_ab3603b1322dc4fcfe41ed154acc4bbc3}{draw\+Barriers} (S\+D\+L\+\_\+\+Renderer $\ast$\+\_\+ren, int \+\_\+barriers\mbox{[}4\mbox{]}\mbox{[}B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T\mbox{]}\mbox{[}B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H\mbox{]})
+\begin{DoxyCompactList}\small\item\em draw\+Barriers This draws the barriers using S\+D\+L\+\_\+\+Render\+Fill\+Rect \end{DoxyCompactList}\item 
+void \hyperlink{BarrierFunctions_8c_a951b7da97308046c14a146173ec6b279}{initialize\+Barriers} (int io\+\_\+barriers\mbox{[}4\mbox{]}\mbox{[}B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T\mbox{]}\mbox{[}B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H\mbox{]})
+\begin{DoxyCompactList}\small\item\em initialize\+Barriers Sets all the barriers to default unblasted state \end{DoxyCompactList}\item 
+void \hyperlink{BarrierFunctions_8c_a7015645f290268b2d0842f16e81d00ce}{update\+Barriers} (int io\+\_\+barriers\mbox{[}4\mbox{]}\mbox{[}B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T\mbox{]}\mbox{[}B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H\mbox{]}, \hyperlink{structMissile}{Missile} io\+\_\+missiles\mbox{[}M\+I\+S\+S\+I\+L\+E\+S\+N\+U\+M\+B\+E\+R\mbox{]})
+\begin{DoxyCompactList}\small\item\em update\+Barriers checks for missile collisions to barrier and calls blast\+Barrier if they collide \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+all the functions that operate directly on the barriers 
+
+
+
+\subsection{Function Documentation}
+\hypertarget{BarrierFunctions_8c_aecff60bef857ed5fe116982b5a2dd390}{}\index{Barrier\+Functions.\+c@{Barrier\+Functions.\+c}!blast\+Barrier@{blast\+Barrier}}
+\index{blast\+Barrier@{blast\+Barrier}!Barrier\+Functions.\+c@{Barrier\+Functions.\+c}}
+\subsubsection[{blast\+Barrier(int io\+\_\+barriers[4][B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T][B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H], int \+\_\+barrier, int \+\_\+x, int \+\_\+y, int \+\_\+type)}]{\setlength{\rightskip}{0pt plus 5cm}void blast\+Barrier (
+\begin{DoxyParamCaption}
+\item[{int}]{io\+\_\+barriers\mbox{[}4\mbox{]}\mbox{[}\+B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T\mbox{]}\mbox{[}\+B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H\mbox{]}, }
+\item[{int}]{\+\_\+barrier, }
+\item[{int}]{\+\_\+x, }
+\item[{int}]{\+\_\+y, }
+\item[{int}]{\+\_\+type}
+\end{DoxyParamCaption}
+)}\label{BarrierFunctions_8c_aecff60bef857ed5fe116982b5a2dd390}
+
+
+blast\+Barrier creates a blast centered around barriers\mbox{[}barrier\mbox{]}\mbox{[}y\mbox{]}\mbox{[}x\mbox{]}. A blast is the undrawn barrier pixels in a blast shape. The type of blast (invader or defender) depends on type. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em io\+\_\+barriers} & The array of barriers (3d array representation of 3x3 pixel blocks) \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+barrier} & Which barrier to blast \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+x} & Co-\/ordinate of blast of barrier \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+y} & Co-\/ordinate of blast of barrier \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+type} & If type is 0 then it\textquotesingle{}s an invader blast, if 1 then a defender blast \\
+\hline
+\end{DoxyParams}
+\hypertarget{BarrierFunctions_8c_ab3603b1322dc4fcfe41ed154acc4bbc3}{}\index{Barrier\+Functions.\+c@{Barrier\+Functions.\+c}!draw\+Barriers@{draw\+Barriers}}
+\index{draw\+Barriers@{draw\+Barriers}!Barrier\+Functions.\+c@{Barrier\+Functions.\+c}}
+\subsubsection[{draw\+Barriers(\+S\+D\+L\+\_\+\+Renderer $\ast$\+\_\+ren, int \+\_\+barriers[4][B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T][B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H])}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Barriers (
+\begin{DoxyParamCaption}
+\item[{S\+D\+L\+\_\+\+Renderer $\ast$}]{\+\_\+ren, }
+\item[{int}]{\+\_\+barriers\mbox{[}4\mbox{]}\mbox{[}\+B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T\mbox{]}\mbox{[}\+B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{BarrierFunctions_8c_ab3603b1322dc4fcfe41ed154acc4bbc3}
+
+
+draw\+Barriers This draws the barriers using S\+D\+L\+\_\+\+Render\+Fill\+Rect 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+ren} & the S\+D\+L\+\_\+\+Renderer responsible for rendering images inside the window \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+barriers} & the array of barriers (3d array representation of 3x3 pixel blocks) \\
+\hline
+\end{DoxyParams}
+\hypertarget{BarrierFunctions_8c_a951b7da97308046c14a146173ec6b279}{}\index{Barrier\+Functions.\+c@{Barrier\+Functions.\+c}!initialize\+Barriers@{initialize\+Barriers}}
+\index{initialize\+Barriers@{initialize\+Barriers}!Barrier\+Functions.\+c@{Barrier\+Functions.\+c}}
+\subsubsection[{initialize\+Barriers(int io\+\_\+barriers[4][B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T][B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H])}]{\setlength{\rightskip}{0pt plus 5cm}void initialize\+Barriers (
+\begin{DoxyParamCaption}
+\item[{int}]{io\+\_\+barriers\mbox{[}4\mbox{]}\mbox{[}\+B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T\mbox{]}\mbox{[}\+B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{BarrierFunctions_8c_a951b7da97308046c14a146173ec6b279}
+
+
+initialize\+Barriers Sets all the barriers to default unblasted state 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em io\+\_\+barriers} & the array of barriers (3d array representation of 3x3 pixel blocks) \\
+\hline
+\end{DoxyParams}
+\hypertarget{BarrierFunctions_8c_a7015645f290268b2d0842f16e81d00ce}{}\index{Barrier\+Functions.\+c@{Barrier\+Functions.\+c}!update\+Barriers@{update\+Barriers}}
+\index{update\+Barriers@{update\+Barriers}!Barrier\+Functions.\+c@{Barrier\+Functions.\+c}}
+\subsubsection[{update\+Barriers(int io\+\_\+barriers[4][B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T][B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H], Missile io\+\_\+missiles[M\+I\+S\+S\+I\+L\+E\+S\+N\+U\+M\+B\+E\+R])}]{\setlength{\rightskip}{0pt plus 5cm}void update\+Barriers (
+\begin{DoxyParamCaption}
+\item[{int}]{io\+\_\+barriers\mbox{[}4\mbox{]}\mbox{[}\+B\+A\+R\+R\+I\+E\+R\+H\+E\+I\+G\+H\+T\mbox{]}\mbox{[}\+B\+A\+R\+R\+I\+E\+R\+W\+I\+D\+T\+H\mbox{]}, }
+\item[{{\bf Missile}}]{io\+\_\+missiles\mbox{[}\+M\+I\+S\+S\+I\+L\+E\+S\+N\+U\+M\+B\+E\+R\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{BarrierFunctions_8c_a7015645f290268b2d0842f16e81d00ce}
+
+
+update\+Barriers checks for missile collisions to barrier and calls blast\+Barrier if they collide 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em io\+\_\+barriers} & the array of barriers (3d array representation of 3x3 pixel blocks) \\
+\hline
+\mbox{\tt in,out}  & {\em io\+\_\+missiles} & the array of \hyperlink{structMissile}{Missile} structs (each can be of four different types) \\
+\hline
+\end{DoxyParams}

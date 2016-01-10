@@ -1,6 +1,6 @@
 /// \file Invader.h
 /// \brief struct for Invader
-/// \author Thomas Collingwood
+/// \author Jon Macey & Thomas Collingwood
 /// \version 1.0
 /// \date 9/12/15 Updated to NCCA Coding standard
 
@@ -9,8 +9,6 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
-
-#include "Dir.h"
 
 enum InvaderType{TYPE1,TYPE2,TYPE3,EXPLOSION};
 enum DIR{FWD,BWD,DWNFWD,DWNBWD,UP,DOWN};
@@ -23,7 +21,7 @@ enum DIR{FWD,BWD,DWNFWD,DWNBWD,UP,DOWN};
 
 typedef struct
 {
-  SDL_Rect pos; /**< if 1 then invader is exploding */
+  SDL_Rect pos;
   int active;
   int frame;
   int sprite;

@@ -1,10 +1,11 @@
 ///
 ///  @file DefenderFunctions.c
-///  @brief
+///  @brief all the functions that operate directly on the defender
 
 #include "include/DefenderFunctions.h"
 
-void drawDefender(SDL_Renderer *ren, SDL_Texture *tex, Defender *defender)
+//----------------------------------------------------------------------------------------------------------------------
+void drawDefender(SDL_Renderer *_ren, SDL_Texture *_tex, Defender *io_defender)
 {
   SDL_Rect SrcRS0;
   SrcRS0.x=0;
@@ -24,74 +25,78 @@ void drawDefender(SDL_Renderer *ren, SDL_Texture *tex, Defender *defender)
   SrcRS2.w=EXPLODEDDEFENDERWIDTH;
   SrcRS2.h=DEFENDERHEIGHT;
 
-  if(defender->sprite==0)
+  if(io_defender->sprite==0)
   {
-    SDL_RenderCopy(ren,tex,&SrcRS0,&defender->pos);
+    SDL_RenderCopy(_ren,_tex,&SrcRS0,&io_defender->pos);
   }
   else
   {
-    if(defender->sprite==1)
+    if(io_defender->sprite==1)
     {
-      SDL_RenderCopy(ren,tex,&SrcRS1,&defender->pos);
+      SDL_RenderCopy(_ren,_tex,&SrcRS1,&io_defender->pos);
     }
     else {
-      SDL_RenderCopy(ren,tex,&SrcRS2,&defender->pos);
+      SDL_RenderCopy(_ren,_tex,&SrcRS2,&io_defender->pos);
     }
   }
 }
 
-void initializeDefender(Defender *defender)
+//----------------------------------------------------------------------------------------------------------------------
+void initializeDefender(Defender *o_defender)
 {
-  defender->pos.x=WIDTH/2 - SPRITEWIDTH/2;
-  defender->pos.y=HEIGHT-80;
-  defender->pos.w=39;
-  defender->pos.h=24;
-  defender->sprite=0;
-  defender->active=1;
-  defender->frame=0;
+  o_defender->pos.x=WIDTH/2 - SPRITEWIDTH/2;
+  o_defender->pos.y=HEIGHT-80;
+  o_defender->pos.w=39;
+  o_defender->pos.h=24;
+  o_defender->sprite=0;
+  o_defender->active=1;
+  o_defender->frame=0;
 }
 
-void updateDefender(Defender *defender, enum DIRECTION input, Missile missiles[], int *freeze)
+//----------------------------------------------------------------------------------------------------------------------
+void updateDefender(Defender *io_defender, enum DIRECTION _input, Missile io_missiles[], int _freeze)
 {
-  if(defender->active)
+  if(io_defender->active)
   {
-    if(input == RIGHT)
+    if(_input == RIGHT)
     {
-      defender->pos.x += 5;
+      io_defender->pos.x += 5;
     }
-    else if (input == LEFT)
+    else if (_input == LEFT)
     {
-      defender->pos.x += -5;
+      io_defender->pos.x += -5;
     }
 
     // below makes defender come out at other side when gone too far off screen
-    if(defender->pos.x<-DEFENDERWIDTH)
+    if(io_defender->pos.x<-DEFENDERWIDTH)
     {
-      defender->pos.x=WIDTH+DEFENDERWIDTH;
+      io_defender->pos.x=WIDTH+DEFENDERWIDTH;
     }
-    else if(defender->pos.x>WIDTH+DEFENDERWIDTH)
+    else if(io_defender->pos.x>WIDTH+DEFENDERWIDTH)
     {
-      defender->pos.x=-DEFENDERWIDTH;
+      io_defender->pos.x=-DEFENDERWIDTH;
     }
 
     // Here we create a new missile
-    else if (input == FIRE && missiles[0].active==0 && *freeze==0)
+    else if (_input == FIRE && io_missiles[0].active==0 && _freeze==0)
     {
       Missile newmissile;
       newmissile.dir = UP;
-      newmissile.pos.x = defender->pos.x + 18;
-      newmissile.pos.y = defender->pos.y - 10;
+      newmissile.pos.x = io_defender->pos.x + 18;
+      newmissile.pos.y = io_defender->pos.y - 10;
       newmissile.pos.w = 3;
       newmissile.pos.h = 14;
       newmissile.active = 1;
       newmissile.type = DEFENDER;
-      missiles[0] = newmissile;
+      io_missiles[0] = newmissile;
     }
   }
   else
   {
     // here we animate the exploded defender (not draw just update sprite)
-    defender->frame++;
-    if(defender->frame%5==0) (defender->sprite == 1) ? (defender->sprite=2) : (defender->sprite=1);
+    io_defender->frame++;
+    if(io_defender->frame%5==0) {
+      (io_defender->sprite == 1) ? (io_defender->sprite=2) : (io_defender->sprite=1);
+    }
   }
 }

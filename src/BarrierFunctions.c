@@ -1,10 +1,11 @@
 ///
 ///  @file BarrierFunctions.c
-///  @brief
+///  @brief all the functions that operate directly on the barriers
 
 #include "include/BarrierFunctions.h"
 
-void blastBarrier(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH],int barrier, int x, int y, int type)
+//----------------------------------------------------------------------------------------------------------------------
+void blastBarrier(int io_barriers[4][BARRIERHEIGHT][BARRIERWIDTH],int _barrier, int _x, int _y, int _type)
 {
   int invaderBlast[7][6] = { \
       {1,0,0,0,1,0},
@@ -25,15 +26,15 @@ void blastBarrier(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH],int barrier, int 
       {0,0,0,0,0,0,0,0},
       {1,0,0,0,0,0,0,1}
     };
-  if(type==0)
+  if(_type==0)
   {
     int displacementx=0;
     int displacementy=0;
 
     // as x and y are in center of blast
     // we must find the top-left x and y to draw blast
-    int topleftx=x-3;
-    int toplefty=y-3;
+    int topleftx=_x-3;
+    int toplefty=_y-3;
 
     // the top-left coorindates may go off-screen (negative)
     // to correct this we set them to zero and offset the blast
@@ -51,7 +52,7 @@ void blastBarrier(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH],int barrier, int 
 
     for(int j=displacementy; j<7; j++)
     {
-      // two if statements below make sure we don't go outside of array
+      // the two if statements below make sure we don't go outside of array
       if((toplefty+j)<BARRIERHEIGHT)
       {
         for(int i=displacementx; i<6; i++)
@@ -60,10 +61,10 @@ void blastBarrier(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH],int barrier, int 
           {
             // if both pixels for barrier and blast are set then
             // make barrier pixel 0
-            if(barriers[barrier][toplefty-displacementy+j][topleftx-displacementx+i] \
+            if(io_barriers[_barrier][toplefty-displacementy+j][topleftx-displacementx+i] \
                &&invaderBlast[j][i])
             {
-              barriers[barrier][toplefty-displacementy+j][topleftx-displacementx+i]=0;
+              io_barriers[_barrier][toplefty-displacementy+j][topleftx-displacementx+i]=0;
             }
           }
         }
@@ -74,8 +75,8 @@ void blastBarrier(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH],int barrier, int 
   {
     int displacementx=0;
     int displacementy=0;
-    int topleftx=x-4;
-    int toplefty=y-4;
+    int topleftx=_x-4;
+    int toplefty=_y-4;
     if(topleftx<0)
     {
       displacementx=abs(topleftx);
@@ -94,10 +95,10 @@ void blastBarrier(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH],int barrier, int 
         {
           if((topleftx+i)<BARRIERWIDTH)
           {
-            if(barriers[barrier][toplefty-displacementy+j][topleftx-displacementx+i] \
+            if(io_barriers[_barrier][toplefty-displacementy+j][topleftx-displacementx+i] \
                &&defenderBlast[j][i])
             {
-              barriers[barrier][toplefty-displacementy+j][topleftx-displacementx+i]=0;
+              io_barriers[_barrier][toplefty-displacementy+j][topleftx-displacementx+i]=0;
             }
           }
         }
@@ -106,8 +107,9 @@ void blastBarrier(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH],int barrier, int 
   }
 }
 
-void drawBarriers(SDL_Renderer *ren, int barriers[4][BARRIERHEIGHT][BARRIERWIDTH]){
-  SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
+//----------------------------------------------------------------------------------------------------------------------
+void drawBarriers(SDL_Renderer *_ren, int _barriers[4][BARRIERHEIGHT][BARRIERWIDTH]){
+  SDL_SetRenderDrawColor(_ren, 0, 255, 0, 255);
   for(int i=0; i<4; ++i)
   {
     int initialX=BARRIERSTARTX+3*BARRIERWIDTH*i+BARRIERGAP*i;
@@ -118,11 +120,11 @@ void drawBarriers(SDL_Renderer *ren, int barriers[4][BARRIERHEIGHT][BARRIERWIDTH
     {
       for(int w=0; w<BARRIERWIDTH; ++w)
       {
-        if(barriers[i][h][w])
+        if(_barriers[i][h][w])
         {
           // each 'pixel' in barrier array is actually 3x3 pixels
           SDL_Rect pixel = {x,y,3,3};
-          SDL_RenderFillRect(ren,&pixel);
+          SDL_RenderFillRect(_ren,&pixel);
         }
         x+=3;
       }
@@ -132,7 +134,8 @@ void drawBarriers(SDL_Renderer *ren, int barriers[4][BARRIERHEIGHT][BARRIERWIDTH
   }
 }
 
-void initializeBarriers(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH])
+//----------------------------------------------------------------------------------------------------------------------
+void initializeBarriers(int io_barriers[4][BARRIERHEIGHT][BARRIERWIDTH])
 {
   for(int i=0; i<4; ++i)
   {
@@ -159,13 +162,14 @@ void initializeBarriers(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH])
     {
       for(int k=0; k<BARRIERWIDTH; ++k)
       {
-        barriers[i][j][k]=barrier[j][k];
+        io_barriers[i][j][k]=barrier[j][k];
       }
     }
   }
 }
 
-void updateBarriers(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH], Missile missiles[MISSILESNUMBER])
+//----------------------------------------------------------------------------------------------------------------------
+void updateBarriers(int io_barriers[4][BARRIERHEIGHT][BARRIERWIDTH], Missile io_missiles[MISSILESNUMBER])
 {
   for(int i=0; i<4; ++i)
   {
@@ -179,26 +183,26 @@ void updateBarriers(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH], Missile missil
       {
         for(int m=0; m<MISSILESNUMBER; m++)
         {
-          if(missiles[m].active)
+          if(io_missiles[m].active)
           {
             // if missile direction is DOWN you need to check y values differently
             // from if it was UP
-            if(missiles[m].dir==DOWN)
+            if(io_missiles[m].dir==DOWN)
             {
-              if(missiles[m].pos.x+3>=x && missiles[m].pos.x<x+3 && \
-                 missiles[m].pos.y>y && barriers[i][h][w])
+              if(io_missiles[m].pos.x+3>=x && io_missiles[m].pos.x<x+3 && \
+                 io_missiles[m].pos.y>y && io_barriers[i][h][w])
               {
-                missiles[m].active=0;
-                blastBarrier(barriers,i,w,h,0);
+                io_missiles[m].active=0;
+                blastBarrier(io_barriers,i,w,h,0);
               }
             }
             else
             {
-              if(missiles[m].pos.x+3>=x && missiles[m].pos.x<x+3 && \
-                 missiles[m].pos.y-14<y && barriers[i][h][w])
+              if(io_missiles[m].pos.x+3>=x && io_missiles[m].pos.x<x+3 && \
+                 io_missiles[m].pos.y-14<y && io_barriers[i][h][w])
               {
-                missiles[m].active=0;
-                blastBarrier(barriers,i,w,h,1);
+                io_missiles[m].active=0;
+                blastBarrier(io_barriers,i,w,h,1);
               }
             }
           }

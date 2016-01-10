@@ -1,15 +1,18 @@
 ///
-///  @file main.c
-///  @brief contains the main method - creates window and runs the game
+///  @file    Main.c
+///  @brief   contains the main method - creates window and runs the game
+///  @author  John Macey & Thomas Collingwood
 ///
-/// README!!!
-/// The invader's movement is deliberately jagged and ripples
-/// because in the ORIGINAL game the invaders move in a ripple effect
-///
+// README!!!
+// The invader's movement is deliberately jagged and ripples
+// because in the ORIGINAL game the invaders move in a ripple effect
+//
+// Also my take on io_ and _o parameters is that if the input is used in as a
+// conditional inside the function, as an input to another function inside the
+// function and/or as output then it's io_.
+//
 
 #include "include/Headers.h"
-
-int numberactive(Invader invaders[ROWS][COLS]);
 
 int main()
 {
@@ -137,13 +140,6 @@ int main()
 
     // now we clear the screen (will use the clear colour set previously)
 
-//    if(red>=0) red++;
-//    else if (red>255) red=0;
-//    if(green>=0) green+=2;
-//    else if (green>255) green=0;
-//    if(blue>=0) blue+=5;
-//    else if (blue>255) blue=0;
-
     SDL_SetRenderDrawColor(ren, red, green, blue, 255);
 
     SDL_RenderClear(ren);
@@ -158,14 +154,14 @@ int main()
       menu=0;
     }
 
-    // INGAME MODE
+    //-------------------------------GAME-------------------------------------------------
     if(menu==2)
     {
-      // if invader dead go to GAMEOVER SCREEN
+      // if defender is dead go to GAMEOVER SCREEN
       if(defender.active==0) {menu=3;}
 
       // if first frame of INGAME MODE
-      if(previousmenu==0)
+      if(previousmenu==0 || previousmenu==3)
       {
         score = 0;
         initializeBarriers(barriers);
@@ -184,7 +180,7 @@ int main()
       updateBarriers(barriers,missiles);
       drawBarriers(ren,barriers);
 
-      updateDefender(&defender,input,missiles,&freeze);
+      updateDefender(&defender,input,missiles,freeze);
       drawDefender(ren,tex,&defender);
 
       updateMissiles(missiles);
@@ -193,21 +189,22 @@ int main()
       updateCollisions(missiles,invaders,&defender,&freeze,&score,frame);
 
       // only update invaders if there are any invaders otherwise quit to gameover
-      if(numberactive(invaders)>0) {updateInvaders(invaders,missiles,&freeze,&howfast,0);}
+      if(howManyActive(invaders)>0) {updateInvaders(invaders,missiles,&freeze,&howfast,0);}
       else {menu=3;}
 
       drawInvaders(ren,tex,invaders);
 
-      // create a function for these three lines
-      char scoretext[50];
-      sprintf(scoretext,"HIGHSCORE= %d Score= %d",highscores[0].score,score);
-      drawText(ren,tex,scoretext,80,30,1);
+      // quit if invaders are on level with defender
+      if(getLowestY(invaders)>HEIGHT-120) { menu=3; }
+
+      drawScore(ren,tex,score,highscores);
 
       frame++;
 
       previousmenu=2;
     }
-    // MAIN MENU OR HIGHSCORE
+
+    //-------------------------------MAIN MENU/HIGHSCORES---------------------------------
     else if(menu==0 || menu==1){
       howfast=55;
       drawText(ren,tex,"SPACE INVADERS",7,50,2.9);
@@ -220,7 +217,7 @@ int main()
         initializeInvaders(invaders);
       }
 
-      updateDefender(&defender,startscreeninput,startscreenmissiles,&freeze);
+      updateDefender(&defender,startscreeninput,startscreenmissiles,freeze);
       drawDefender(ren,tex,&defender);
 
       updateMissiles(startscreenmissiles);
@@ -229,6 +226,7 @@ int main()
       updateInvaders(invaders,startscreenmissiles,&freeze,&howfast,1);
       drawInvaders(ren,tex,invaders);
 
+      //-------------------------------MAIN MENU------------------------------------------
       if(menu==0){
         drawText(ren,tex,"SPACE INVADERS",7,50,2.9);
         drawText(ren,tex,"START GAME",(WIDTH/2)-100,370,1);
@@ -260,12 +258,13 @@ int main()
         else
           drawText(ren,tex,">",(WIDTH/2)-100-15,570,1);
       }
+
+      //-------------------------------HIGHSCORES-----------------------------------------
       else
       {
         drawText(ren,tex,"SPACE INVADERS",7,50,2.9);
         drawText(ren,tex,"HIGHSCORES",(WIDTH/2)-100,370,1);
 
-        //reads highscores
         readHighscores(highscores);
 
         int yvalue = 420;
@@ -273,7 +272,7 @@ int main()
         {
           char highscore[100];
           sprintf(highscore,"%s - %d",highscores[i].name,highscores[i].score);
-          drawText(ren,tex,highscore,260,yvalue,1);
+          drawText(ren,tex,highscore,(WIDTH/2)-95,yvalue,1);
           yvalue+=50;
         }
 
@@ -309,10 +308,11 @@ int main()
       previousmenu=0;
     }
 
+    //-------------------------------GAMEOVER/NEWHIGHSCORE--------------------------------
     else if(menu==3)
     {
       drawDefender(ren,tex,&defender);
-      updateDefender(&defender,NONE,missiles,&freeze);
+      updateDefender(&defender,NONE,missiles,freeze);
 
       readHighscores(highscores);
 
@@ -327,6 +327,7 @@ int main()
         }
       }
 
+      //-------------------------------NEW HIGHSCORE--------------------------------------
       if(newhighscore){
         drawText(ren,tex,"NEW HIGHSCORE",20,30,3);
         static int selectposition=0;
@@ -407,10 +408,12 @@ int main()
           sprintf(name,"%c%c%c",letter1char[0],letter2char[0],letter3char[0]);
           insertHighscore(highscores,name,score);
           writeHighscores(highscores);
+          selectposition=0;
           menu=0;
         }
 
       }
+      //-------------------------------GAMEOVER-------------------------------------------
       else
       {
         drawText(ren,tex,"GAME OVER",5,270,4.6);
@@ -438,22 +441,9 @@ int main()
       previousmenu=3;
     }
     // Up until now everything was drawn behind the scenes.
-    // This will show the new, red contents of the window.
+    // This will show the new, rendered contents of the window.
     SDL_RenderPresent(ren);
   }
   SDL_Quit();
   return 0;
-}
-
-int numberactive(Invader invaders[ROWS][COLS])
-{
-  int numberactive=0;
-  for(int r=0; r<ROWS; ++r)
-  {
-    for(int c=0; c<COLS; ++c)
-    {
-      if(invaders[r][c].active) {numberactive++;}
-    }
-  }
-  return numberactive;
 }

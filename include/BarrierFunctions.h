@@ -1,8 +1,8 @@
 /// \file BarrierFunctions.h
-/// \brief put all Barrier related functions into this header and c file
+/// \brief all functions that operate on Barriers
 /// \author Thomas Collingwood
 /// \version 1.0
-/// \date 9/12/15 Updated to NCCA Coding standard
+/// \date 8/1/16 put all Barriers functions into one file
 
 #ifndef _BARRIERFUNCTIONS_H_
 #define _BARRIERFUNCTIONS_H_
@@ -21,38 +21,38 @@
 #define BARRIERSTARTX 100
 #define BARRIERSTARTY 550
 
-///
-/// \brief initializeBarriers
-/// \param barriers the array of barriers (3d array representation of 3x3 pixel blocks)
-///
-void initializeBarriers(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH]);
+//----------------------------------------------------------------------------------------------------------------------
+/// \brief blastBarrier       creates a blast centered around barriers[barrier][y][x].
+///                           A blast is the undrawn barrier pixels in a blast shape.
+///                           The type of blast (invader or defender) depends on type.
+/// \param[inout] io_barriers The array of barriers (3d array representation of 3x3 pixel blocks)
+/// \param[in] _barrier       Which barrier to blast
+/// \param[in] _x             Co-ordinate of blast of barrier
+/// \param[in] _y             Co-ordinate of blast of barrier
+/// \param[in] _type          If type is 0 then it's an invader blast,
+///                           if 1 then a defender blast
+//----------------------------------------------------------------------------------------------------------------------
+void blastBarrier(int io_barriers[4][BARRIERHEIGHT][BARRIERWIDTH],int _barrier, int _x, int _y, int _type);
 
-///
-/// \brief updateBarriers
-/// \param barriers the array of barriers (3d array representation of 3x3 pixel blocks)
-/// \param missiles the array of Missile structs (each can be of four different types)
-///
-void updateBarriers(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH], Missile missiles[MISSILESNUMBER]);
+//----------------------------------------------------------------------------------------------------------------------
+/// \brief drawBarriers   This draws the barriers using SDL_RenderFillRect
+/// \param[in] _ren the   SDL_Renderer responsible for rendering images inside the window
+/// \param[in] _barriers  the array of barriers (3d array representation of 3x3 pixel blocks)
+//----------------------------------------------------------------------------------------------------------------------
+void drawBarriers(SDL_Renderer *_ren, int _barriers[4][BARRIERHEIGHT][BARRIERWIDTH]);
 
-///
-/// \brief drawBarriers
-/// \param ren the SDL_Renderer responsible for rendering images inside the window
-/// \param barriers the array of barriers (3d array representation of 3x3 pixel blocks)
-///
-void drawBarriers(SDL_Renderer *ren, int barriers[4][BARRIERHEIGHT][BARRIERWIDTH]);
+//----------------------------------------------------------------------------------------------------------------------
+/// \brief initializeBarriers Sets all the barriers to default unblasted state
+/// \param[inout] io_barriers the array of barriers (3d array representation of 3x3 pixel blocks)
+//----------------------------------------------------------------------------------------------------------------------
+void initializeBarriers(int io_barriers[4][BARRIERHEIGHT][BARRIERWIDTH]);
 
-///
-/// \brief blastBarrier
-/// blastBarrier creates a blast centered around barriers[barrier][y][x].
-/// A blast is undrawn barrier pixels in a blast shape.
-/// The type of blast (invader or defender) depends on type.
-/// \param barriers the array of barriers (3d array representation of 3x3 pixel blocks)
-/// \param barrier which barrier to blast
-/// \param x coordinate of blast of barrier
-/// \param y coordinate of blast of barrier
-/// \param type if type is 0 then it's an invader blast, if 1 then a defender blast
-///
-void blastBarrier(int barriers[4][BARRIERHEIGHT][BARRIERWIDTH],int barrier, int x, int y, int type);
-
+//----------------------------------------------------------------------------------------------------------------------
+/// \brief updateBarriers   checks for missile collisions to barrier and calls blastBarrier
+///                         if they collide
+/// \param[inout]   io_barriers the array of barriers (3d array representation of 3x3 pixel blocks)
+/// \param[inout]   io_missiles the array of Missile structs (each can be of four different types)
+//----------------------------------------------------------------------------------------------------------------------
+void updateBarriers(int io_barriers[4][BARRIERHEIGHT][BARRIERWIDTH], Missile io_missiles[MISSILESNUMBER]);
 
 #endif

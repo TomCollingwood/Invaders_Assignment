@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['selectletter_2ec',['SelectLetter.c',['../SelectLetter_8c.html',1,'']]],
-  ['selectletter_2eh',['SelectLetter.h',['../SelectLetter_8h.html',1,'']]]
+  ['textfunctions_2ec',['TextFunctions.c',['../TextFunctions_8c.html',1,'']]],
+  ['textfunctions_2eh',['TextFunctions.h',['../TextFunctions_8h.html',1,'']]]
 ];

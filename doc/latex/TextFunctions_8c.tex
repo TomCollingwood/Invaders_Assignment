@@ -1,0 +1,78 @@
+\hypertarget{TextFunctions_8c}{}\section{src/\+Text\+Functions.c File Reference}
+\label{TextFunctions_8c}\index{src/\+Text\+Functions.\+c@{src/\+Text\+Functions.\+c}}
+
+
+two functions that deal with text in the project  
+
+
+{\ttfamily \#include \char`\"{}include/\+Text\+Functions.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{TextFunctions_8c_a5ed26135c043eda86ffe8464306c8469}{draw\+Text} (S\+D\+L\+\_\+\+Renderer $\ast$\+\_\+ren, S\+D\+L\+\_\+\+Texture $\ast$\+\_\+tex, char \+\_\+text\mbox{[}$\,$\mbox{]}, int \+\_\+x, int \+\_\+y, float \+\_\+multiplier)
+\begin{DoxyCompactList}\small\item\em draw\+Text draws the text on screen at \+\_\+x, \+\_\+y position. You can make the text bigger with the \+\_\+multiplier input \end{DoxyCompactList}\item 
+void \hyperlink{TextFunctions_8c_ad7347b275ff1fc8a8b64201f7a954cbc}{select\+Letter} (int $\ast$io\+\_\+asciinumber, enum D\+I\+R\+E\+C\+T\+I\+O\+N \+\_\+input, enum D\+I\+R\+E\+C\+T\+I\+O\+N \+\_\+previousinput)
+\begin{DoxyCompactList}\small\item\em select\+Letter gives the next asciinumber depending on input this function exists as we want only the upper caps alphabet and the numbers so this function only outputs those ascii numbers \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+two functions that deal with text in the project 
+
+
+
+\subsection{Function Documentation}
+\hypertarget{TextFunctions_8c_a5ed26135c043eda86ffe8464306c8469}{}\index{Text\+Functions.\+c@{Text\+Functions.\+c}!draw\+Text@{draw\+Text}}
+\index{draw\+Text@{draw\+Text}!Text\+Functions.\+c@{Text\+Functions.\+c}}
+\subsubsection[{draw\+Text(\+S\+D\+L\+\_\+\+Renderer $\ast$\+\_\+ren, S\+D\+L\+\_\+\+Texture $\ast$\+\_\+tex, char \+\_\+text[], int \+\_\+x, int \+\_\+y, float \+\_\+multiplier)}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Text (
+\begin{DoxyParamCaption}
+\item[{S\+D\+L\+\_\+\+Renderer $\ast$}]{\+\_\+ren, }
+\item[{S\+D\+L\+\_\+\+Texture $\ast$}]{\+\_\+tex, }
+\item[{char}]{\+\_\+text\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{\+\_\+x, }
+\item[{int}]{\+\_\+y, }
+\item[{float}]{\+\_\+multiplier}
+\end{DoxyParamCaption}
+)}\label{TextFunctions_8c_a5ed26135c043eda86ffe8464306c8469}
+
+
+draw\+Text draws the text on screen at \+\_\+x, \+\_\+y position. You can make the text bigger with the \+\_\+multiplier input 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+ren} & the S\+D\+L\+\_\+\+Renderer responsible for rendering images inside the window \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+tex} & the S\+D\+L\+\_\+\+Texture texture image that contains the game\textquotesingle{}s sprites \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+text} & the char array that you want printed/drawn on screen \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+x} & coordinate of text on screen \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+y} & coordinate of text on screen \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+multiplier} & determines how big the text is (1 being normal size where a pixel is actually 3x3 pixel) \\
+\hline
+\end{DoxyParams}
+\hypertarget{TextFunctions_8c_ad7347b275ff1fc8a8b64201f7a954cbc}{}\index{Text\+Functions.\+c@{Text\+Functions.\+c}!select\+Letter@{select\+Letter}}
+\index{select\+Letter@{select\+Letter}!Text\+Functions.\+c@{Text\+Functions.\+c}}
+\subsubsection[{select\+Letter(int $\ast$io\+\_\+asciinumber, enum D\+I\+R\+E\+C\+T\+I\+O\+N \+\_\+input, enum D\+I\+R\+E\+C\+T\+I\+O\+N \+\_\+previousinput)}]{\setlength{\rightskip}{0pt plus 5cm}void select\+Letter (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{io\+\_\+asciinumber, }
+\item[{enum D\+I\+R\+E\+C\+T\+I\+O\+N}]{\+\_\+input, }
+\item[{enum D\+I\+R\+E\+C\+T\+I\+O\+N}]{\+\_\+previousinput}
+\end{DoxyParamCaption}
+)}\label{TextFunctions_8c_ad7347b275ff1fc8a8b64201f7a954cbc}
+
+
+select\+Letter gives the next asciinumber depending on input this function exists as we want only the upper caps alphabet and the numbers so this function only outputs those ascii numbers 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em io\+\_\+asciinumber} & the current asciinumber to be incremented/decremented/maintained \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+input} & the input from user \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+previousinput} & this is the input prior to the current input having this means that the asciinumber is only incremented once for one keydown for example\+: ~\newline
+ if (input==U\+P\+S and previousinput==N\+O\+N\+E)\+: ~\newline
+ increment asciinumber and return it \\
+\hline
+\end{DoxyParams}

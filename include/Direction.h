@@ -1,5 +1,7 @@
 /// \file Direction.h
 /// \brief has the enum DIRECTION used for input and missiles
+/// invader.h has it's own direction enum so I had to change
+/// UP -> UPS and DOWN -> DOWNS
 /// \author Thomas Collingwood
 /// \version 1.0
 /// \date 9/12/15 Updated to NCCA Coding standard

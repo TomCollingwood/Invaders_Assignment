@@ -1,0 +1,94 @@
+\hypertarget{MissileAndCollisionFunctions_8c}{}\section{src/\+Missile\+And\+Collision\+Functions.c File Reference}
+\label{MissileAndCollisionFunctions_8c}\index{src/\+Missile\+And\+Collision\+Functions.\+c@{src/\+Missile\+And\+Collision\+Functions.\+c}}
+
+
+all the functions that operate directly with the missiles  
+
+
+{\ttfamily \#include \char`\"{}include/\+Missile\+And\+Collision\+Functions.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{MissileAndCollisionFunctions_8c_a4b2cb807bf23c9ebd6072fea07817249}{draw\+Missiles} (S\+D\+L\+\_\+\+Renderer $\ast$\+\_\+ren, S\+D\+L\+\_\+\+Texture $\ast$\+\_\+tex, \hyperlink{structMissile}{Missile} \+\_\+missiles\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em draw\+Missiles draws the missiles on screen depending on missile type and S\+D\+L\+\_\+\+Rect \end{DoxyCompactList}\item 
+void \hyperlink{MissileAndCollisionFunctions_8c_a9d86d6c874f9d30e48c6b6143611fe90}{update\+Collisions} (\hyperlink{structMissile}{Missile} io\+\_\+missiles\mbox{[}$\,$\mbox{]}, \hyperlink{structInvader}{Invader} io\+\_\+invaders\mbox{[}R\+O\+W\+S\mbox{]}\mbox{[}C\+O\+L\+S\mbox{]}, \hyperlink{structDefender}{Defender} $\ast$io\+\_\+defender, int $\ast$o\+\_\+freeze, int $\ast$o\+\_\+score, int \+\_\+frame)
+\begin{DoxyCompactList}\small\item\em update\+Collisions this checks to see if missiles have collided with defender or invaders. When collided it makes the invader or defender destroyed and adds to the current score. \end{DoxyCompactList}\item 
+void \hyperlink{MissileAndCollisionFunctions_8c_aaae453d1e6b96a6f3858fcbf5305d3b5}{update\+Missiles} (\hyperlink{structMissile}{Missile} io\+\_\+missiles\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em update\+Missiles updates all active missiles\textquotesingle{} position\+: going up or down \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+all the functions that operate directly with the missiles 
+
+
+
+\subsection{Function Documentation}
+\hypertarget{MissileAndCollisionFunctions_8c_a4b2cb807bf23c9ebd6072fea07817249}{}\index{Missile\+And\+Collision\+Functions.\+c@{Missile\+And\+Collision\+Functions.\+c}!draw\+Missiles@{draw\+Missiles}}
+\index{draw\+Missiles@{draw\+Missiles}!Missile\+And\+Collision\+Functions.\+c@{Missile\+And\+Collision\+Functions.\+c}}
+\subsubsection[{draw\+Missiles(\+S\+D\+L\+\_\+\+Renderer $\ast$\+\_\+ren, S\+D\+L\+\_\+\+Texture $\ast$\+\_\+tex, Missile \+\_\+missiles[])}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Missiles (
+\begin{DoxyParamCaption}
+\item[{S\+D\+L\+\_\+\+Renderer $\ast$}]{\+\_\+ren, }
+\item[{S\+D\+L\+\_\+\+Texture $\ast$}]{\+\_\+tex, }
+\item[{{\bf Missile}}]{\+\_\+missiles\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{MissileAndCollisionFunctions_8c_a4b2cb807bf23c9ebd6072fea07817249}
+
+
+draw\+Missiles draws the missiles on screen depending on missile type and S\+D\+L\+\_\+\+Rect 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+ren} & the S\+D\+L\+\_\+\+Renderer responsible for rendering images inside the window \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+tex} & the S\+D\+L\+\_\+\+Texture texture image that contains the game\textquotesingle{}s sprites \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+missiles} & the array of \hyperlink{structMissile}{Missile} structs (each can be of four different types) \\
+\hline
+\end{DoxyParams}
+\hypertarget{MissileAndCollisionFunctions_8c_a9d86d6c874f9d30e48c6b6143611fe90}{}\index{Missile\+And\+Collision\+Functions.\+c@{Missile\+And\+Collision\+Functions.\+c}!update\+Collisions@{update\+Collisions}}
+\index{update\+Collisions@{update\+Collisions}!Missile\+And\+Collision\+Functions.\+c@{Missile\+And\+Collision\+Functions.\+c}}
+\subsubsection[{update\+Collisions(\+Missile io\+\_\+missiles[], Invader io\+\_\+invaders[R\+O\+W\+S][C\+O\+L\+S], Defender $\ast$io\+\_\+defender, int $\ast$o\+\_\+freeze, int $\ast$o\+\_\+score, int \+\_\+frame)}]{\setlength{\rightskip}{0pt plus 5cm}void update\+Collisions (
+\begin{DoxyParamCaption}
+\item[{{\bf Missile}}]{missiles\mbox{[}$\,$\mbox{]}, }
+\item[{{\bf Invader}}]{invaders\mbox{[}\+R\+O\+W\+S\mbox{]}\mbox{[}\+C\+O\+L\+S\mbox{]}, }
+\item[{{\bf Defender} $\ast$}]{defender, }
+\item[{int $\ast$}]{freeze, }
+\item[{int $\ast$}]{score, }
+\item[{int}]{frame}
+\end{DoxyParamCaption}
+)}\label{MissileAndCollisionFunctions_8c_a9d86d6c874f9d30e48c6b6143611fe90}
+
+
+update\+Collisions this checks to see if missiles have collided with defender or invaders. When collided it makes the invader or defender destroyed and adds to the current score. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em io\+\_\+missiles} & the array of \hyperlink{structMissile}{Missile} structs (each can be of four different types) \\
+\hline
+\mbox{\tt in,out}  & {\em io\+\_\+invaders} & the 2d array of \hyperlink{structInvader}{Invader} struct objects \\
+\hline
+\mbox{\tt in,out}  & {\em io\+\_\+defender} & the player controlled object that fires at space invaders \\
+\hline
+\mbox{\tt out}  & {\em o\+\_\+freeze} & if freeze==1 then no collisions are updated \\
+\hline
+\mbox{\tt out}  & {\em o\+\_\+score} & the current score of the session (this is incremented when invader collisions happen) \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+frame} & the score of each invader killed is dependant on the time spent in the game session. We measure time with frames. \\
+\hline
+\end{DoxyParams}
+\hypertarget{MissileAndCollisionFunctions_8c_aaae453d1e6b96a6f3858fcbf5305d3b5}{}\index{Missile\+And\+Collision\+Functions.\+c@{Missile\+And\+Collision\+Functions.\+c}!update\+Missiles@{update\+Missiles}}
+\index{update\+Missiles@{update\+Missiles}!Missile\+And\+Collision\+Functions.\+c@{Missile\+And\+Collision\+Functions.\+c}}
+\subsubsection[{update\+Missiles(\+Missile io\+\_\+missiles[])}]{\setlength{\rightskip}{0pt plus 5cm}void update\+Missiles (
+\begin{DoxyParamCaption}
+\item[{{\bf Missile}}]{io\+\_\+missiles\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{MissileAndCollisionFunctions_8c_aaae453d1e6b96a6f3858fcbf5305d3b5}
+
+
+update\+Missiles updates all active missiles\textquotesingle{} position\+: going up or down 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em io\+\_\+missiles} & the array of \hyperlink{structMissile}{Missile} structs (each can be of four different types) \\
+\hline
+\end{DoxyParams}

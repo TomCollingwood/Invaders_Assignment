@@ -1,10 +1,11 @@
 ///
 ///  @file InvaderFunctions.c
-///  @brief
+///  @brief all the functions that operate directly on the invaders
 
 #include "include/InvaderFunctions.h"
 
-void drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][COLS])
+//----------------------------------------------------------------------------------------------------------------------
+void drawInvaders(SDL_Renderer *_ren, SDL_Texture *_tex, Invader io_invaders[ROWS][COLS])
 {
   SDL_Rect SrcExplode;
   SrcExplode.x=0;
@@ -53,52 +54,67 @@ void drawInvaders(SDL_Renderer *ren, SDL_Texture *tex, Invader invaders[ROWS][CO
   {
     for(int c=0; c<COLS; ++c)
     {
-      if(invaders[r][c].active == 1){
-        switch(invaders[r][c].type)
+      if(io_invaders[r][c].active == 1){
+        switch(io_invaders[r][c].type)
         {
         case TYPE1 :
-          if(invaders[r][c].sprite == 0)
+          if(io_invaders[r][c].sprite == 0)
           {
-            SDL_RenderCopy(ren, tex,&SrcTYPE1S0,&invaders[r][c].pos);
+            SDL_RenderCopy(_ren, _tex,&SrcTYPE1S0,&io_invaders[r][c].pos);
           }
-          else {SDL_RenderCopy(ren, tex,&SrcTYPE1S1,&invaders[r][c].pos);}
+          else {SDL_RenderCopy(_ren, _tex,&SrcTYPE1S1,&io_invaders[r][c].pos);}
           break;
         case TYPE2 :
-          if(invaders[r][c].sprite == 0)
+          if(io_invaders[r][c].sprite == 0)
           {
-            SDL_RenderCopy(ren, tex,&SrcTYPE2S0,&invaders[r][c].pos);
+            SDL_RenderCopy(_ren, _tex,&SrcTYPE2S0,&io_invaders[r][c].pos);
           }
-          else {SDL_RenderCopy(ren, tex,&SrcTYPE2S1,&invaders[r][c].pos);}
+          else {SDL_RenderCopy(_ren, _tex,&SrcTYPE2S1,&io_invaders[r][c].pos);}
           break;
         case TYPE3 :
-          if(invaders[r][c].sprite == 0)
+          if(io_invaders[r][c].sprite == 0)
           {
-            SDL_RenderCopy(ren, tex,&SrcTYPE3S0,&invaders[r][c].pos);
+            SDL_RenderCopy(_ren, _tex,&SrcTYPE3S0,&io_invaders[r][c].pos);
           }
-          else {SDL_RenderCopy(ren, tex,&SrcTYPE3S1,&invaders[r][c].pos);}
+          else {SDL_RenderCopy(_ren, _tex,&SrcTYPE3S1,&io_invaders[r][c].pos);}
           break;
         case EXPLOSION :
-          SDL_RenderCopy(ren, tex,&SrcExplode,&invaders[r][c].pos);
+          SDL_RenderCopy(_ren, _tex,&SrcExplode,&io_invaders[r][c].pos);
         }
       }
     }
   }
 }
 
-int howManyActive(Invader invaders[ROWS][COLS])
+//----------------------------------------------------------------------------------------------------------------------
+int getLowestY(Invader io_invaders[ROWS][COLS])
+{
+  for(int r=ROWS-1; r>-1; --r){
+    for(int c=0; c<COLS; ++c){
+     if(io_invaders[r][c].active==1){
+       return io_invaders[r][c].pos.y;
+     }
+    }
+  }
+  return HEIGHT;
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+int howManyActive(Invader _invaders[ROWS][COLS])
 {
   int numberactive=0;
   for(int r=0; r<ROWS; ++r)
   {
     for(int c=0; c<COLS; ++c)
     {
-      if(invaders[r][c].active) {numberactive++;}
+      if(_invaders[r][c].active) {numberactive++;}
     }
   }
   return numberactive;
 }
 
-void initializeInvaders(Invader invaders[ROWS][COLS])
+//----------------------------------------------------------------------------------------------------------------------
+void initializeInvaders(Invader o_invaders[ROWS][COLS])
 {
   SDL_Rect pos;
   pos.w=SPRITEWIDTH;
@@ -115,44 +131,45 @@ void initializeInvaders(Invader invaders[ROWS][COLS])
       pos.x=xpos+SPRITEWIDTH;
       pos.y=ypos+SPRITEHEIGHT;
       xpos+=(GAP+SPRITEWIDTH);
-      invaders[r][c].pos=pos;
-      invaders[r][c].active=1;
-      invaders[r][c].frame=0;
-      invaders[r][c].frame=frameoffset;
+      o_invaders[r][c].pos=pos;
+      o_invaders[r][c].active=1;
+      o_invaders[r][c].frame=0;
+      o_invaders[r][c].frame=frameoffset;
       frameoffset+=1;
-      invaders[r][c].explosionframe=0;
-      invaders[r][c].sprite=0;
-      invaders[r][c].direction=FWD;
+      o_invaders[r][c].explosionframe=0;
+      o_invaders[r][c].sprite=0;
+      o_invaders[r][c].direction=FWD;
       if(r==0)
       {
-        invaders[r][c].type=TYPE1;
+        o_invaders[r][c].type=TYPE1;
       }
       else if(r==1 || r==2)
       {
-        invaders[r][c].type=TYPE2;
+        o_invaders[r][c].type=TYPE2;
       }
       else
       {
-        invaders[r][c].type=TYPE3;
+        o_invaders[r][c].type=TYPE3;
       }
 
       if(r!=4)
       {
-        invaders[r][c].bottom=0;
+        o_invaders[r][c].bottom=0;
       }
       else
       {
-        invaders[r][c].bottom=1;
+        o_invaders[r][c].bottom=1;
       }
     }
     ypos+=(GAP+SPRITEHEIGHT);
   }
 }
 
-void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBER], \
-                    int *freeze, int *howfast, int startscreen)
+//----------------------------------------------------------------------------------------------------------------------
+void updateInvaders(Invader io_invaders[ROWS][COLS], Missile io_missiles[MISSILESNUMBER], \
+                    int *io_freeze, int *io_howfast, int _startscreen)
 {
-  int freezelagfix = *freeze;
+  int freezelagfix = *io_freeze;
 
   // find leftmost & rightmost column with at least one active invader
   int lcol = 0;
@@ -162,7 +179,7 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
     int counter = 0;
     for(int r=0; r<ROWS; ++r)
     {
-      if(invaders[r][c].active) {counter++;}
+      if(io_invaders[r][c].active) {counter++;}
     }
     if (counter==0 && lcol==c)
     {
@@ -175,7 +192,7 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
     int counter = 0;
     for(int r=0; r<ROWS; ++r)
     {
-      if(invaders[r][c].active) counter++;
+      if(io_invaders[r][c].active) counter++;
     }
     if (counter==0 && rcol==c)
     {
@@ -191,7 +208,7 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
   {
     for(int c=0; c<COLS; ++c)
     {
-      if(hasfirstbeenfound==0 && invaders[r][c].active)
+      if(hasfirstbeenfound==0 && io_invaders[r][c].active)
       {
         firstr = r;
         firstc = c;
@@ -204,8 +221,8 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
 
   // cycleover==1 when all invaders are alligned in a rectangle
   int cycleover = 0;
-  // this comparison is made as invaders[firstr][firstc] is first to move
-  if(invaders[firstr][firstc].frame%*howfast==0)
+  // this comparison is made as io_invaders[firstr][firstc] is first to move
+  if(io_invaders[firstr][firstc].frame%*io_howfast==0)
   {
     cycleover = 1;
   }
@@ -213,37 +230,40 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
   // Because I want to make the invaders move as in the original
   // game I have come up with the method below
 
-  // howfast is how many frames it takes a cycle
+  // io_howfast is how many frames it takes a cycle
   // a cycle is from one frame when all invaders are alligned
   // to the next when it's all alligned
 
-  // we need howfast to be the number of frames between the first invader
+  // the invaders are not always alligned as the invaders take turns
+  // to move each frame
+
+  // we need io_howfast to be the number of frames between the first invader
   // to move to the last invader to move
 
-  // howfast is the number of invaders active as we update the position of
+  // io_howfast is the number of invaders active as we update the position of
   // one invader per frame
 
   // we want the invaders to go quicker, the fewer there are
 
-  // we cannot update howfast in the middle of a cycle, this would make
+  // we cannot update io_howfast in the middle of a cycle, this would make
   // the movement of invaders to be out of sync - or march so to speak
 
-  // so we decrease howfast to how many invaders there are when
+  // so we decrease io_howfast to how many invaders active when
   // cycleover==1
 
-  // here we redistribute the frames and update howfast
-  if(cycleover && *freeze==0 && !startscreen)
+  // here we redistribute the frames and update io_howfast
+  if(cycleover && *io_freeze==0 && !_startscreen)
   {
-    int howmanyactive = howManyActive(invaders);
-    *howfast = howmanyactive;
+    int howmanyactive = howManyActive(io_invaders);
+    *io_howfast = howmanyactive;
     howmanyactive--;
     for(int r=ROWS-1; r>=0; --r)
     {
       for(int c=COLS-1; c>=0; --c)
       {
-        if(invaders[r][c].active)
+        if(io_invaders[r][c].active)
         {
-          invaders[r][c].frame=howmanyactive;
+          io_invaders[r][c].frame=howmanyactive;
           howmanyactive--;
         }
       }
@@ -259,7 +279,7 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
   {
     for(int i=0; i<ROWS; ++i)
     {
-      if(invaders[i][rcol].active)
+      if(io_invaders[i][rcol].active)
       {
         toprightr=i;
         break;
@@ -267,7 +287,7 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
     }
     for(int i=0; i<ROWS; ++i)
     {
-      if(invaders[i][lcol].active)
+      if(io_invaders[i][lcol].active)
       {
         topleftr=i;
         break;
@@ -280,11 +300,11 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
   int moveright=0;
   if(cycleover)
   {
-    if(invaders[topleftr][lcol].pos.x <= SPRITEWIDTH) moveright=1;
-    if(invaders[toprightr][rcol].pos.x >= WIDTH-(2*SPRITEWIDTH)) moveleft=1;
+    if(io_invaders[topleftr][lcol].pos.x <= SPRITEWIDTH) moveright=1;
+    if(io_invaders[toprightr][rcol].pos.x >= WIDTH-(2*SPRITEWIDTH)) moveleft=1;
   }
 
-  // changes direction when all rows of leftmost/rightmost are outside
+  // changes direction when all rows of leftmost/rightmost column are outside
   // respective boundaries when all invaders are alligned (cycleover=1)
   if(moveleft && cycleover)
     {
@@ -292,18 +312,19 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
     {
       for(int c=0; c<COLS; ++c)
       {
-          if(invaders[r][c].direction==FWD && !startscreen)
+          if(io_invaders[r][c].direction==FWD && !_startscreen)
           {
             // I used DWNBWD to save the info that it will then go BWD after
             // moving downwards
-            invaders[r][c].direction=DWNBWD;
+            io_invaders[r][c].direction=DWNBWD;
+            // if on startscreen then invaders wouldn't move down
           }
           else
           {
             // this else clause happens when direction==BWD
             // the direction BWD is assigned further below in code
             // this stops invaders moving downwards indefinately
-            invaders[r][c].direction=BWD;
+            io_invaders[r][c].direction=BWD;
           }
       }
     }
@@ -315,13 +336,13 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
     {
       for(int c=0; c<COLS; ++c)
       {
-          if(invaders[r][c].direction==BWD && !startscreen)
+          if(io_invaders[r][c].direction==BWD && !_startscreen)
           {
-            invaders[r][c].direction=DWNFWD;
+            io_invaders[r][c].direction=DWNFWD;
           }
           else
           {
-            invaders[r][c].direction=FWD;
+            io_invaders[r][c].direction=FWD;
           }
       }
     }
@@ -333,66 +354,66 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
     for(int c=0; c<COLS; ++c)
     {
       // below if statement stops invaders from moving when invader explodes
-      if(*freeze==0)
+      if(*io_freeze==0)
       {
-        invaders[r][c].frame++;
+        io_invaders[r][c].frame++;
       }
       // the explosion frame measures how long the explosion has been active
-      if(invaders[r][c].type == EXPLOSION)
+      if(io_invaders[r][c].type == EXPLOSION)
       {
-        invaders[r][c].explosionframe++;
+        io_invaders[r][c].explosionframe++;
       }
       // we limit the explosion to 3 frames below
-      if(invaders[r][c].type == EXPLOSION && invaders[r][c].explosionframe > 3 && invaders[r][c].active)
+      if(io_invaders[r][c].type == EXPLOSION && io_invaders[r][c].explosionframe > 15 && io_invaders[r][c].active)
       {
-        invaders[r][c].active = 0;
+        io_invaders[r][c].active = 0;
         // If I update freeze directly in middle of iterating through invaders
         // the rest of the invaders will be ofset from the others so I use freezelag
         // I assign freeze to freezelagfix at bottom of updateinvaders function
         freezelagfix = 0;
       }
 
-      if(invaders[r][c].frame%*howfast==0 && *freeze==0 && invaders[r][c].active)
+      if(io_invaders[r][c].frame%*io_howfast==0 && *io_freeze==0 && io_invaders[r][c].active)
       {
         // moves the invader depending on direction
-        if(invaders[r][c].direction==FWD)
+        if(io_invaders[r][c].direction==FWD)
         {
-          invaders[r][c].pos.x+=10;
+          io_invaders[r][c].pos.x+=10;
         }
-        else if(invaders[r][c].direction==BWD)
+        else if(io_invaders[r][c].direction==BWD)
         {
-          invaders[r][c].pos.x-=10;
+          io_invaders[r][c].pos.x-=10;
         }
-        else if(invaders[r][c].direction==DWNBWD)
+        else if(io_invaders[r][c].direction==DWNBWD)
         {
-          invaders[r][c].pos.y+=20;
-          invaders[r][c].direction=BWD;
+          io_invaders[r][c].pos.y+=20;
+          io_invaders[r][c].direction=BWD;
         }
-        else if(invaders[r][c].direction==DWNFWD)
+        else if(io_invaders[r][c].direction==DWNFWD)
         {
-          invaders[r][c].pos.y+=20;
-          invaders[r][c].direction=FWD;
+          io_invaders[r][c].pos.y+=20;
+          io_invaders[r][c].direction=FWD;
         }
 
-        if(invaders[r][c].sprite==0){
-          invaders[r][c].sprite=1;
+        if(io_invaders[r][c].sprite==0){
+          io_invaders[r][c].sprite=1;
         }
         else{
-          invaders[r][c].sprite=0;
+          io_invaders[r][c].sprite=0;
         }
         // fires missile
-        if(invaders[r][c].bottom)
+        if(io_invaders[r][c].bottom)
         {
           int random = rand();
-          // if startscreen then the missiles must not fire in front of the text
-          if((!startscreen && random%2==0) || (random%2==0 && startscreen && (invaders[r][c].pos.x>410 || \
-                                               invaders[r][c].pos.x<(WIDTH/2)-115))){
+          // if _startscreen then the missiles must not fire in front of the text
+          if((!_startscreen && random%2==0) || (random%2==0 && _startscreen && (io_invaders[r][c].pos.x>410 || \
+                                               io_invaders[r][c].pos.x<(WIDTH/2)-115))){
             for(int m=1; m<MISSILESNUMBER; ++m)
             {
-              if(missiles[m].active==0){
+              if(io_missiles[m].active==0){
                 Missile newinvadermissile;
-                newinvadermissile.pos.x = invaders[r][c].pos.x;
-                newinvadermissile.pos.y = invaders[r][c].pos.y;
+                newinvadermissile.pos.x = io_invaders[r][c].pos.x;
+                newinvadermissile.pos.y = io_invaders[r][c].pos.y;
                 newinvadermissile.pos.w = 9;
                 newinvadermissile.pos.h = 24;
                 newinvadermissile.dir = DOWN;
@@ -411,7 +432,7 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
                 }
                 newinvadermissile.frame=0;
                 newinvadermissile.active=1;
-                missiles[m]=newinvadermissile;
+                io_missiles[m]=newinvadermissile;
                 break;
               }
             }
@@ -420,6 +441,6 @@ void updateInvaders(Invader invaders[ROWS][COLS], Missile missiles[MISSILESNUMBE
       }
     }
   }
-  *freeze = freezelagfix;
+  *io_freeze = freezelagfix;
 }
 

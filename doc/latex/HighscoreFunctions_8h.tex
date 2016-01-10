@@ -1,0 +1,139 @@
+\hypertarget{HighscoreFunctions_8h}{}\section{include/\+Highscore\+Functions.h File Reference}
+\label{HighscoreFunctions_8h}\index{include/\+Highscore\+Functions.\+h@{include/\+Highscore\+Functions.\+h}}
+
+
+put all \hyperlink{structHighscore}{Highscore} related functions in this header and c file  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$S\+D\+L.\+h$>$}\\*
+{\ttfamily \#include $<$S\+D\+L\+\_\+image.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Highscore.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Text\+Functions.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{HighscoreFunctions_8h_a0ed8fe3b1a60254eff0e1fab8aa90472}{draw\+Score} (S\+D\+L\+\_\+\+Renderer $\ast$\+\_\+ren, S\+D\+L\+\_\+\+Texture $\ast$\+\_\+tex, int score, \hyperlink{structHighscore}{Highscore} \+\_\+highscores\mbox{[}5\mbox{]})
+\begin{DoxyCompactList}\small\item\em draw\+Score Draws the current and highest score on top of screen. \end{DoxyCompactList}\item 
+void \hyperlink{HighscoreFunctions_8h_a73fe05e4d150d8a87ede1f1d0c274ecf}{initialize\+Highscores} (\hyperlink{structHighscore}{Highscore} o\+\_\+highscores\mbox{[}3\mbox{]})
+\begin{DoxyCompactList}\small\item\em initialize\+Highscores sets all highscores in highscore array to name \char`\"{}-\/-\/-\/\char`\"{} and score 0 \end{DoxyCompactList}\item 
+void \hyperlink{HighscoreFunctions_8h_a89e0c91ad2842f2fe1ddb64262b4122a}{insert\+Highscore} (\hyperlink{structHighscore}{Highscore} io\+\_\+highscores\mbox{[}3\mbox{]}, char \+\_\+name\mbox{[}3\mbox{]}, int \+\_\+score)
+\begin{DoxyCompactList}\small\item\em insert\+Highscore inserts highscore into highscores array while keeping right order \end{DoxyCompactList}\item 
+void \hyperlink{HighscoreFunctions_8h_a1cee0369f6e623cd635102328287c57b}{read\+Highscores} (\hyperlink{structHighscore}{Highscore} io\+\_\+highscores\mbox{[}3\mbox{]})
+\begin{DoxyCompactList}\small\item\em read\+Highscores reads highscores from \char`\"{}other/highscores\char`\"{} and writes to io\+\_\+highscores array \end{DoxyCompactList}\item 
+void \hyperlink{HighscoreFunctions_8h_aaee90323c1c2992af0f5b1aaff7ec4ed}{write\+Highscores} (\hyperlink{structHighscore}{Highscore} \+\_\+highscores\mbox{[}3\mbox{]})
+\begin{DoxyCompactList}\small\item\em write\+Highscores takes the highscores from io\+\_\+highscores and writes them to file \char`\"{}other/highscores\char`\"{} \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+put all \hyperlink{structHighscore}{Highscore} related functions in this header and c file 
+
+\begin{DoxyAuthor}{Author}
+Thomas Collingwood 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+9/12/15 Updated to N\+C\+C\+A Coding standard 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{HighscoreFunctions_8h_a0ed8fe3b1a60254eff0e1fab8aa90472}{}\index{Highscore\+Functions.\+h@{Highscore\+Functions.\+h}!draw\+Score@{draw\+Score}}
+\index{draw\+Score@{draw\+Score}!Highscore\+Functions.\+h@{Highscore\+Functions.\+h}}
+\subsubsection[{draw\+Score(\+S\+D\+L\+\_\+\+Renderer $\ast$\+\_\+ren, S\+D\+L\+\_\+\+Texture $\ast$\+\_\+tex, int score, Highscore \+\_\+highscores[5])}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Score (
+\begin{DoxyParamCaption}
+\item[{S\+D\+L\+\_\+\+Renderer $\ast$}]{\+\_\+ren, }
+\item[{S\+D\+L\+\_\+\+Texture $\ast$}]{\+\_\+tex, }
+\item[{int}]{score, }
+\item[{{\bf Highscore}}]{\+\_\+highscores\mbox{[}5\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{HighscoreFunctions_8h_a0ed8fe3b1a60254eff0e1fab8aa90472}
+
+
+draw\+Score Draws the current and highest score on top of screen. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+ren} & the S\+D\+L\+\_\+\+Renderer responsible for rendering images inside the window \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+tex} & the S\+D\+L\+\_\+\+Texture texture image that contains the game\textquotesingle{}s sprites \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+score} & current game score \\
+\hline
+\mbox{\tt in}  & {\em } & \\
+\hline
+\end{DoxyParams}
+\hypertarget{HighscoreFunctions_8h_a73fe05e4d150d8a87ede1f1d0c274ecf}{}\index{Highscore\+Functions.\+h@{Highscore\+Functions.\+h}!initialize\+Highscores@{initialize\+Highscores}}
+\index{initialize\+Highscores@{initialize\+Highscores}!Highscore\+Functions.\+h@{Highscore\+Functions.\+h}}
+\subsubsection[{initialize\+Highscores(\+Highscore o\+\_\+highscores[3])}]{\setlength{\rightskip}{0pt plus 5cm}void initialize\+Highscores (
+\begin{DoxyParamCaption}
+\item[{{\bf Highscore}}]{o\+\_\+highscores\mbox{[}3\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{HighscoreFunctions_8h_a73fe05e4d150d8a87ede1f1d0c274ecf}
+
+
+initialize\+Highscores sets all highscores in highscore array to name \char`\"{}-\/-\/-\/\char`\"{} and score 0 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em o\+\_\+highscores} & an ordered array of \hyperlink{structHighscore}{Highscore} struct objects that are the highscores in the game \\
+\hline
+\end{DoxyParams}
+\hypertarget{HighscoreFunctions_8h_a89e0c91ad2842f2fe1ddb64262b4122a}{}\index{Highscore\+Functions.\+h@{Highscore\+Functions.\+h}!insert\+Highscore@{insert\+Highscore}}
+\index{insert\+Highscore@{insert\+Highscore}!Highscore\+Functions.\+h@{Highscore\+Functions.\+h}}
+\subsubsection[{insert\+Highscore(\+Highscore io\+\_\+highscores[3], char \+\_\+name[3], int \+\_\+score)}]{\setlength{\rightskip}{0pt plus 5cm}void insert\+Highscore (
+\begin{DoxyParamCaption}
+\item[{{\bf Highscore}}]{io\+\_\+highscores\mbox{[}3\mbox{]}, }
+\item[{char}]{\+\_\+name\mbox{[}3\mbox{]}, }
+\item[{int}]{\+\_\+score}
+\end{DoxyParamCaption}
+)}\label{HighscoreFunctions_8h_a89e0c91ad2842f2fe1ddb64262b4122a}
+
+
+insert\+Highscore inserts highscore into highscores array while keeping right order 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em io\+\_\+highscores} & the ordered array of \hyperlink{structHighscore}{Highscore} structs that are the highscores of the game \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+name} & the name to be inserted into highscores \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+score} & the score to be inserted into the highscores \\
+\hline
+\end{DoxyParams}
+\hypertarget{HighscoreFunctions_8h_a1cee0369f6e623cd635102328287c57b}{}\index{Highscore\+Functions.\+h@{Highscore\+Functions.\+h}!read\+Highscores@{read\+Highscores}}
+\index{read\+Highscores@{read\+Highscores}!Highscore\+Functions.\+h@{Highscore\+Functions.\+h}}
+\subsubsection[{read\+Highscores(\+Highscore io\+\_\+highscores[3])}]{\setlength{\rightskip}{0pt plus 5cm}void read\+Highscores (
+\begin{DoxyParamCaption}
+\item[{{\bf Highscore}}]{io\+\_\+highscores\mbox{[}3\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{HighscoreFunctions_8h_a1cee0369f6e623cd635102328287c57b}
+
+
+read\+Highscores reads highscores from \char`\"{}other/highscores\char`\"{} and writes to io\+\_\+highscores array 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em io\+\_\+highscores} & an ordered array of \hyperlink{structHighscore}{Highscore} structs that are the highscores in the game \\
+\hline
+\end{DoxyParams}
+\hypertarget{HighscoreFunctions_8h_aaee90323c1c2992af0f5b1aaff7ec4ed}{}\index{Highscore\+Functions.\+h@{Highscore\+Functions.\+h}!write\+Highscores@{write\+Highscores}}
+\index{write\+Highscores@{write\+Highscores}!Highscore\+Functions.\+h@{Highscore\+Functions.\+h}}
+\subsubsection[{write\+Highscores(\+Highscore \+\_\+highscores[3])}]{\setlength{\rightskip}{0pt plus 5cm}void write\+Highscores (
+\begin{DoxyParamCaption}
+\item[{{\bf Highscore}}]{\+\_\+highscores\mbox{[}3\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{HighscoreFunctions_8h_aaee90323c1c2992af0f5b1aaff7ec4ed}
+
+
+write\+Highscores takes the highscores from io\+\_\+highscores and writes them to file \char`\"{}other/highscores\char`\"{} 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+highscores} & an ordered array of \hyperlink{structHighscore}{Highscore} structs that are the highscores in the game \\
+\hline
+\end{DoxyParams}

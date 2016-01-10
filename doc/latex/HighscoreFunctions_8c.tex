@@ -1,0 +1,79 @@
+\hypertarget{HighscoreFunctions_8c}{}\section{src/\+Highscore\+Functions.c File Reference}
+\label{HighscoreFunctions_8c}\index{src/\+Highscore\+Functions.\+c@{src/\+Highscore\+Functions.\+c}}
+
+
+all the functions that operate on the highscores  
+
+
+{\ttfamily \#include \char`\"{}include/\+Highscore\+Functions.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{HighscoreFunctions_8c_aa169101da6d64e26a3232cb1e4c13dd1}{}void {\bfseries draw\+Score} (S\+D\+L\+\_\+\+Renderer $\ast$\+\_\+ren, S\+D\+L\+\_\+\+Texture $\ast$\+\_\+tex, int \+\_\+score, \hyperlink{structHighscore}{Highscore} \+\_\+highscores\mbox{[}3\mbox{]})\label{HighscoreFunctions_8c_aa169101da6d64e26a3232cb1e4c13dd1}
+
+\item 
+void \hyperlink{HighscoreFunctions_8c_ad06619c050fe985f69d02522a6bcd74b}{initialize\+Highscores} (\hyperlink{structHighscore}{Highscore} \+\_\+highscores\mbox{[}3\mbox{]})
+\begin{DoxyCompactList}\small\item\em initialize\+Highscores sets all highscores in highscore array to name \char`\"{}-\/-\/-\/\char`\"{} and score 0 \end{DoxyCompactList}\item 
+\hypertarget{HighscoreFunctions_8c_a3e7771a29d1033fe59bc7f7a4ee2733e}{}void {\bfseries insert\+Highscore} (\hyperlink{structHighscore}{Highscore} io\+\_\+highscores\mbox{[}3\mbox{]}, char \+\_\+name\mbox{[}4\mbox{]}, int \+\_\+score)\label{HighscoreFunctions_8c_a3e7771a29d1033fe59bc7f7a4ee2733e}
+
+\item 
+void \hyperlink{HighscoreFunctions_8c_a1cee0369f6e623cd635102328287c57b}{read\+Highscores} (\hyperlink{structHighscore}{Highscore} io\+\_\+highscores\mbox{[}3\mbox{]})
+\begin{DoxyCompactList}\small\item\em read\+Highscores reads highscores from \char`\"{}other/highscores\char`\"{} and writes to io\+\_\+highscores array \end{DoxyCompactList}\item 
+void \hyperlink{HighscoreFunctions_8c_aaee90323c1c2992af0f5b1aaff7ec4ed}{write\+Highscores} (\hyperlink{structHighscore}{Highscore} \+\_\+highscores\mbox{[}3\mbox{]})
+\begin{DoxyCompactList}\small\item\em write\+Highscores takes the highscores from io\+\_\+highscores and writes them to file \char`\"{}other/highscores\char`\"{} \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+all the functions that operate on the highscores 
+
+
+
+\subsection{Function Documentation}
+\hypertarget{HighscoreFunctions_8c_ad06619c050fe985f69d02522a6bcd74b}{}\index{Highscore\+Functions.\+c@{Highscore\+Functions.\+c}!initialize\+Highscores@{initialize\+Highscores}}
+\index{initialize\+Highscores@{initialize\+Highscores}!Highscore\+Functions.\+c@{Highscore\+Functions.\+c}}
+\subsubsection[{initialize\+Highscores(\+Highscore \+\_\+highscores[3])}]{\setlength{\rightskip}{0pt plus 5cm}void initialize\+Highscores (
+\begin{DoxyParamCaption}
+\item[{{\bf Highscore}}]{o\+\_\+highscores\mbox{[}3\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{HighscoreFunctions_8c_ad06619c050fe985f69d02522a6bcd74b}
+
+
+initialize\+Highscores sets all highscores in highscore array to name \char`\"{}-\/-\/-\/\char`\"{} and score 0 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em o\+\_\+highscores} & an ordered array of \hyperlink{structHighscore}{Highscore} struct objects that are the highscores in the game \\
+\hline
+\end{DoxyParams}
+\hypertarget{HighscoreFunctions_8c_a1cee0369f6e623cd635102328287c57b}{}\index{Highscore\+Functions.\+c@{Highscore\+Functions.\+c}!read\+Highscores@{read\+Highscores}}
+\index{read\+Highscores@{read\+Highscores}!Highscore\+Functions.\+c@{Highscore\+Functions.\+c}}
+\subsubsection[{read\+Highscores(\+Highscore io\+\_\+highscores[3])}]{\setlength{\rightskip}{0pt plus 5cm}void read\+Highscores (
+\begin{DoxyParamCaption}
+\item[{{\bf Highscore}}]{io\+\_\+highscores\mbox{[}3\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{HighscoreFunctions_8c_a1cee0369f6e623cd635102328287c57b}
+
+
+read\+Highscores reads highscores from \char`\"{}other/highscores\char`\"{} and writes to io\+\_\+highscores array 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em io\+\_\+highscores} & an ordered array of \hyperlink{structHighscore}{Highscore} structs that are the highscores in the game \\
+\hline
+\end{DoxyParams}
+\hypertarget{HighscoreFunctions_8c_aaee90323c1c2992af0f5b1aaff7ec4ed}{}\index{Highscore\+Functions.\+c@{Highscore\+Functions.\+c}!write\+Highscores@{write\+Highscores}}
+\index{write\+Highscores@{write\+Highscores}!Highscore\+Functions.\+c@{Highscore\+Functions.\+c}}
+\subsubsection[{write\+Highscores(\+Highscore \+\_\+highscores[3])}]{\setlength{\rightskip}{0pt plus 5cm}void write\+Highscores (
+\begin{DoxyParamCaption}
+\item[{{\bf Highscore}}]{\+\_\+highscores\mbox{[}3\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{HighscoreFunctions_8c_aaee90323c1c2992af0f5b1aaff7ec4ed}
+
+
+write\+Highscores takes the highscores from io\+\_\+highscores and writes them to file \char`\"{}other/highscores\char`\"{} 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+highscores} & an ordered array of \hyperlink{structHighscore}{Highscore} structs that are the highscores in the game \\
+\hline
+\end{DoxyParams}

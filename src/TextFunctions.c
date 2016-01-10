@@ -4,13 +4,14 @@
 
 #include "include/TextFunctions.h"
 
-void drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y, float multiplier){
+//----------------------------------------------------------------------------------------------------------------------
+void drawText(SDL_Renderer *_ren, SDL_Texture *_tex, char _text[], int _x, int _y, float _multiplier){
   int xoffset=0;
   SDL_Rect SrcR;
   int nochar=0;
-  for(int i=0; i<(int)strlen(text); ++i)
+  for(int i=0; i<(int)strlen(_text); ++i)
   {
-    switch(text[i])
+    switch(_text[i])
     {
     case 'A':
     {
@@ -437,27 +438,28 @@ void drawText(SDL_Renderer *ren, SDL_Texture *tex, char text[], int x, int y, fl
     if(nochar==0)
     {
       SDL_Rect letter;
-      letter.x = x + xoffset;
-      letter.y = y;
-      letter.w = SrcR.w*multiplier;
-      letter.h = SrcR.h*multiplier;
-      xoffset += SrcR.w*multiplier + 6;
-      SDL_RenderCopy(ren,tex,&SrcR,&letter);
+      letter.x = _x + xoffset;
+      letter.y = _y;
+      letter.w = SrcR.w*_multiplier;
+      letter.h = SrcR.h*_multiplier;
+      xoffset += SrcR.w*_multiplier + 6;
+      SDL_RenderCopy(_ren,_tex,&SrcR,&letter);
     }
     else { nochar=0; }
   }
 
 }
 
-void selectLetter(int *asciinumber, enum DIRECTION input, enum DIRECTION previousinput)
+//----------------------------------------------------------------------------------------------------------------------
+void selectLetter(int *io_asciinumber, enum DIRECTION _input, enum DIRECTION _previousinput)
 {
-  if(input==UPS && previousinput!=UPS) {(*asciinumber)++;}
-  else if(input==DOWNS && previousinput!=DOWNS) {(*asciinumber)--;}
+  if(_input==UPS && _previousinput!=UPS) {(*io_asciinumber)++;}
+  else if(_input==DOWNS && _previousinput!=DOWNS) {(*io_asciinumber)--;}
 
   // the below else ifs below skip lots of letters that are unused by drawText
   // also creates a loop ...->A->...->Z->0->...->9->A->...
-  if((*asciinumber)==91) { (*asciinumber)=48; }
-  else if((*asciinumber)==58) { (*asciinumber)=65; }
-  else if((*asciinumber)==64) { (*asciinumber)=57; }
-  else if((*asciinumber)==47) { (*asciinumber)=90; }
+  if((*io_asciinumber)==91) { (*io_asciinumber)=48; }
+  else if((*io_asciinumber)==58) { (*io_asciinumber)=65; }
+  else if((*io_asciinumber)==64) { (*io_asciinumber)=57; }
+  else if((*io_asciinumber)==47) { (*io_asciinumber)=90; }
 }

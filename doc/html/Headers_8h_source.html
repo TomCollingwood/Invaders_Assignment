@@ -90,63 +90,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <a href="Headers_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef _HEADERS_H_</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define _HEADERS_H_</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;SDL.h&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;SDL_image.h&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef _HEADERS_H_</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define _HEADERS_H_</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;SDL.h&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;SDL_image.h&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="BarrierFunctions_8h.html">BarrierFunctions.h</a>&quot;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Defender_8h.html">Defender.h</a>&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Direction_8h.html">Direction.h</a>&quot;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="DrawBarriers_8h.html">DrawBarriers.h</a>&quot;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="DrawDefender_8h.html">DrawDefender.h</a>&quot;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="DrawScore_8h.html">DrawScore.h</a>&quot;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="DrawInvaders_8h.html">DrawInvaders.h</a>&quot;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="DrawMissiles_8h.html">DrawMissiles.h</a>&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="DrawText_8h.html">DrawText.h</a>&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="InitializeBarriers_8h.html">InitializeBarriers.h</a>&quot;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="InitializeDefender_8h.html">InitializeDefender.h</a>&quot;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="InitializeHighscores_8h.html">InitializeHighscores.h</a>&quot;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="InitializeInvaders_8h.html">InitializeInvaders.h</a>&quot;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="InsertHighscore_8h.html">InsertHighscore.h</a>&quot;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ReadHighscores_8h.html">ReadHighscores.h</a>&quot;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SelectLetter_8h.html">SelectLetter.h</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="UpdateMissiles_8h.html">UpdateMissiles.h</a>&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="UpdateBarriers_8h.html">UpdateBarriers.h</a>&quot;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="UpdateCollisions_8h.html">UpdateCollisions.h</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="UpdateDefender_8h.html">UpdateDefender.h</a>&quot;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="UpdateInvaders_8h.html">UpdateInvaders.h</a>&quot;</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="WriteHighscores_8h.html">WriteHighscores.h</a>&quot;</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="InitializeInvaders_8h_html"><div class="ttname"><a href="InitializeInvaders_8h.html">InitializeInvaders.h</a></div><div class="ttdoc">initializes all invaders to starting position and active state </div></div>
-<div class="ttc" id="DrawMissiles_8h_html"><div class="ttname"><a href="DrawMissiles_8h.html">DrawMissiles.h</a></div><div class="ttdoc">draws the missiles </div></div>
-<div class="ttc" id="DrawDefender_8h_html"><div class="ttname"><a href="DrawDefender_8h.html">DrawDefender.h</a></div><div class="ttdoc">draws the defender </div></div>
-<div class="ttc" id="Direction_8h_html"><div class="ttname"><a href="Direction_8h.html">Direction.h</a></div><div class="ttdoc">has the enum DIRECTION used for input and missiles </div></div>
-<div class="ttc" id="DrawText_8h_html"><div class="ttname"><a href="DrawText_8h.html">DrawText.h</a></div><div class="ttdoc">draws the input string onto screen at (x,y) position </div></div>
-<div class="ttc" id="UpdateInvaders_8h_html"><div class="ttname"><a href="UpdateInvaders_8h.html">UpdateInvaders.h</a></div><div class="ttdoc">updates invaders&#39; position and sprite </div></div>
-<div class="ttc" id="DrawInvaders_8h_html"><div class="ttname"><a href="DrawInvaders_8h.html">DrawInvaders.h</a></div><div class="ttdoc">draws the invaders </div></div>
-<div class="ttc" id="InsertHighscore_8h_html"><div class="ttname"><a href="InsertHighscore_8h.html">InsertHighscore.h</a></div><div class="ttdoc">inserts new highscore to highscore array while keeping ascending order </div></div>
-<div class="ttc" id="UpdateDefender_8h_html"><div class="ttname"><a href="UpdateDefender_8h.html">UpdateDefender.h</a></div><div class="ttdoc">updates defender position depending on input - also updates sprite when exploded </div></div>
-<div class="ttc" id="InitializeHighscores_8h_html"><div class="ttname"><a href="InitializeHighscores_8h.html">InitializeHighscores.h</a></div><div class="ttdoc">initializes all highscores to 0 and names to "---" </div></div>
-<div class="ttc" id="SelectLetter_8h_html"><div class="ttname"><a href="SelectLetter_8h.html">SelectLetter.h</a></div><div class="ttdoc">deals with character switching when inputting your name for new highscore </div></div>
-<div class="ttc" id="WriteHighscores_8h_html"><div class="ttname"><a href="WriteHighscores_8h.html">WriteHighscores.h</a></div><div class="ttdoc">writes the highscores to highscores save file </div></div>
-<div class="ttc" id="DrawBarriers_8h_html"><div class="ttname"><a href="DrawBarriers_8h.html">DrawBarriers.h</a></div><div class="ttdoc">draws the four barriers from an 3d int array </div></div>
-<div class="ttc" id="InitializeBarriers_8h_html"><div class="ttname"><a href="InitializeBarriers_8h.html">InitializeBarriers.h</a></div><div class="ttdoc">initializes barriers to unblasted state </div></div>
-<div class="ttc" id="UpdateBarriers_8h_html"><div class="ttname"><a href="UpdateBarriers_8h.html">UpdateBarriers.h</a></div><div class="ttdoc">updates barriers to get blasted when missile collides with barrier </div></div>
-<div class="ttc" id="UpdateCollisions_8h_html"><div class="ttname"><a href="UpdateCollisions_8h.html">UpdateCollisions.h</a></div><div class="ttdoc">updates invader&#39;s / defender&#39;s active variable when missile collides with it </div></div>
-<div class="ttc" id="InitializeDefender_8h_html"><div class="ttname"><a href="InitializeDefender_8h.html">InitializeDefender.h</a></div><div class="ttdoc">initializes the input defender to active state and original position </div></div>
-<div class="ttc" id="DrawScore_8h_html"><div class="ttname"><a href="DrawScore_8h.html">DrawScore.h</a></div><div class="ttdoc">draws the current score and highscore </div></div>
-<div class="ttc" id="ReadHighscores_8h_html"><div class="ttname"><a href="ReadHighscores_8h.html">ReadHighscores.h</a></div><div class="ttdoc">reads highscore from highscores file and updates highscores array </div></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="DefenderFunctions_8h.html">DefenderFunctions.h</a>&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Direction_8h.html">Direction.h</a>&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="HighscoreFunctions_8h.html">HighscoreFunctions.h</a>&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="InvaderFunctions_8h.html">InvaderFunctions.h</a>&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="MissileAndCollisionFunctions_8h.html">MissileAndCollisionFunctions.h</a>&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="TextFunctions_8h.html">TextFunctions.h</a>&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="Direction_8h_html"><div class="ttname"><a href="Direction_8h.html">Direction.h</a></div><div class="ttdoc">has the enum DIRECTION used for input and missiles invader.h has it&#39;s own direction enum so I had to ...</div></div>
+<div class="ttc" id="HighscoreFunctions_8h_html"><div class="ttname"><a href="HighscoreFunctions_8h.html">HighscoreFunctions.h</a></div><div class="ttdoc">put all Highscore related functions in this header and c file </div></div>
+<div class="ttc" id="BarrierFunctions_8h_html"><div class="ttname"><a href="BarrierFunctions_8h.html">BarrierFunctions.h</a></div><div class="ttdoc">all functions that operate on Barriers </div></div>
+<div class="ttc" id="InvaderFunctions_8h_html"><div class="ttname"><a href="InvaderFunctions_8h.html">InvaderFunctions.h</a></div><div class="ttdoc">put all invader functions into this header and c file </div></div>
+<div class="ttc" id="TextFunctions_8h_html"><div class="ttname"><a href="TextFunctions_8h.html">TextFunctions.h</a></div><div class="ttdoc">an assortment of functions used in main </div></div>
+<div class="ttc" id="DefenderFunctions_8h_html"><div class="ttname"><a href="DefenderFunctions_8h.html">DefenderFunctions.h</a></div><div class="ttdoc">put all Defender functions into this header and c file </div></div>
 <div class="ttc" id="Defender_8h_html"><div class="ttname"><a href="Defender_8h.html">Defender.h</a></div><div class="ttdoc">structure for Defender - the object the player controls and shoots from </div></div>
-<div class="ttc" id="UpdateMissiles_8h_html"><div class="ttname"><a href="UpdateMissiles_8h.html">UpdateMissiles.h</a></div><div class="ttdoc">updates all the active missiles&#39; position </div></div>
+<div class="ttc" id="MissileAndCollisionFunctions_8h_html"><div class="ttname"><a href="MissileAndCollisionFunctions_8h.html">MissileAndCollisionFunctions.h</a></div><div class="ttdoc">put all Missile and Collision functions in this header and c file </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Dec 18 2015 16:23:58 for “Invaders_Assignment” by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 10 2016 17:21:21 for “Invaders_Assignment” by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

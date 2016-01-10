@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['readhighscores_2ec',['ReadHighscores.c',['../ReadHighscores_8c.html',1,'']]],
-  ['readhighscores_2eh',['ReadHighscores.h',['../ReadHighscores_8h.html',1,'']]]
+  ['textfunctions_2ec',['TextFunctions.c',['../TextFunctions_8c.html',1,'']]],
+  ['textfunctions_2eh',['TextFunctions.h',['../TextFunctions_8h.html',1,'']]]
 ];

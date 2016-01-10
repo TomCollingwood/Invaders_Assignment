@@ -1,0 +1,155 @@
+\hypertarget{InvaderFunctions_8h}{}\section{include/\+Invader\+Functions.h File Reference}
+\label{InvaderFunctions_8h}\index{include/\+Invader\+Functions.\+h@{include/\+Invader\+Functions.\+h}}
+
+
+put all invader functions into this header and c file  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$S\+D\+L.\+h$>$}\\*
+{\ttfamily \#include $<$S\+D\+L\+\_\+image.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Dimensions.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Direction.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Text\+Functions.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Invader.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Missile.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{InvaderFunctions_8h_a241aeeb764887ae5e3de58b98f04b16d}{}\#define {\bfseries W\+I\+D\+T\+H}~651\label{InvaderFunctions_8h_a241aeeb764887ae5e3de58b98f04b16d}
+
+\item 
+\hypertarget{InvaderFunctions_8h_aed89bd71aee8be823e8a20ec4e093c1e}{}\#define {\bfseries H\+E\+I\+G\+H\+T}~744\label{InvaderFunctions_8h_aed89bd71aee8be823e8a20ec4e093c1e}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{InvaderFunctions_8h_aa72699259937df16380428bbed63461c}{draw\+Invaders} (S\+D\+L\+\_\+\+Renderer $\ast$\+\_\+ren, S\+D\+L\+\_\+\+Texture $\ast$\+\_\+tex, \hyperlink{structInvader}{Invader} io\+\_\+invaders\mbox{[}R\+O\+W\+S\mbox{]}\mbox{[}C\+O\+L\+S\mbox{]})
+\begin{DoxyCompactList}\small\item\em draw\+Invaders Draws the invaders on screen using their S\+D\+L\+\_\+\+Rect, active and type variables inside the invader struct \end{DoxyCompactList}\item 
+int \hyperlink{InvaderFunctions_8h_aa5754325484bd706c0383d65686a3c35}{get\+Lowest\+Y} (\hyperlink{structInvader}{Invader} io\+\_\+invaders\mbox{[}R\+O\+W\+S\mbox{]}\mbox{[}C\+O\+L\+S\mbox{]})
+\begin{DoxyCompactList}\small\item\em get\+Highest\+Y returns the highest value of Y out of all active invaders \end{DoxyCompactList}\item 
+void \hyperlink{InvaderFunctions_8h_a5ab9b99c14cc7bbe06617e13872abb91}{initialize\+Invaders} (\hyperlink{structInvader}{Invader} o\+\_\+invaders\mbox{[}R\+O\+W\+S\mbox{]}\mbox{[}C\+O\+L\+S\mbox{]})
+\begin{DoxyCompactList}\small\item\em initialize\+Invaders Initializes invaders to a starting position and making them all active. \end{DoxyCompactList}\item 
+void \hyperlink{InvaderFunctions_8h_a14fef11a0782eb2645bbca0faa53c572}{update\+Invaders} (\hyperlink{structInvader}{Invader} io\+\_\+invaders\mbox{[}R\+O\+W\+S\mbox{]}\mbox{[}C\+O\+L\+S\mbox{]}, \hyperlink{structMissile}{Missile} io\+\_\+missiles\mbox{[}M\+I\+S\+S\+I\+L\+E\+S\+N\+U\+M\+B\+E\+R\mbox{]}, int $\ast$io\+\_\+freeze, int $\ast$io\+\_\+howfast, int \+\_\+startscreen)
+\begin{DoxyCompactList}\small\item\em update\+Invaders \end{DoxyCompactList}\item 
+int \hyperlink{InvaderFunctions_8h_a09f3f5f4230dec29140992d5128e0f1d}{how\+Many\+Active} (\hyperlink{structInvader}{Invader} invaders\mbox{[}R\+O\+W\+S\mbox{]}\mbox{[}C\+O\+L\+S\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+put all invader functions into this header and c file 
+
+\begin{DoxyAuthor}{Author}
+Thomas Collingwood 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+8/1/16 Updated to N\+C\+C\+A Coding standard 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{InvaderFunctions_8h_aa72699259937df16380428bbed63461c}{}\index{Invader\+Functions.\+h@{Invader\+Functions.\+h}!draw\+Invaders@{draw\+Invaders}}
+\index{draw\+Invaders@{draw\+Invaders}!Invader\+Functions.\+h@{Invader\+Functions.\+h}}
+\subsubsection[{draw\+Invaders(\+S\+D\+L\+\_\+\+Renderer $\ast$\+\_\+ren, S\+D\+L\+\_\+\+Texture $\ast$\+\_\+tex, Invader io\+\_\+invaders[R\+O\+W\+S][C\+O\+L\+S])}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Invaders (
+\begin{DoxyParamCaption}
+\item[{S\+D\+L\+\_\+\+Renderer $\ast$}]{\+\_\+ren, }
+\item[{S\+D\+L\+\_\+\+Texture $\ast$}]{\+\_\+tex, }
+\item[{{\bf Invader}}]{io\+\_\+invaders\mbox{[}\+R\+O\+W\+S\mbox{]}\mbox{[}\+C\+O\+L\+S\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{InvaderFunctions_8h_aa72699259937df16380428bbed63461c}
+
+
+draw\+Invaders Draws the invaders on screen using their S\+D\+L\+\_\+\+Rect, active and type variables inside the invader struct 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+ren} & the S\+D\+L\+\_\+\+Renderer responsible for rendering images inside the window \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+tex} & the S\+D\+L\+\_\+\+Texture texture image that contains the game\textquotesingle{}s sprites \\
+\hline
+\mbox{\tt in,out}  & {\em io\+\_\+invaders} & the 2d array of \hyperlink{structInvader}{Invader} struct objects \\
+\hline
+\end{DoxyParams}
+\hypertarget{InvaderFunctions_8h_aa5754325484bd706c0383d65686a3c35}{}\index{Invader\+Functions.\+h@{Invader\+Functions.\+h}!get\+Lowest\+Y@{get\+Lowest\+Y}}
+\index{get\+Lowest\+Y@{get\+Lowest\+Y}!Invader\+Functions.\+h@{Invader\+Functions.\+h}}
+\subsubsection[{get\+Lowest\+Y(\+Invader io\+\_\+invaders[R\+O\+W\+S][C\+O\+L\+S])}]{\setlength{\rightskip}{0pt plus 5cm}int get\+Lowest\+Y (
+\begin{DoxyParamCaption}
+\item[{{\bf Invader}}]{io\+\_\+invaders\mbox{[}\+R\+O\+W\+S\mbox{]}\mbox{[}\+C\+O\+L\+S\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{InvaderFunctions_8h_aa5754325484bd706c0383d65686a3c35}
+
+
+get\+Highest\+Y returns the highest value of Y out of all active invaders 
+
+
+\begin{DoxyParams}{Parameters}
+{\em io\+\_\+invaders} & the 2d array of \hyperlink{structInvader}{Invader} struct objects \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the highest value of Y out of all active invaders 
+\end{DoxyReturn}
+\hypertarget{InvaderFunctions_8h_a09f3f5f4230dec29140992d5128e0f1d}{}\index{Invader\+Functions.\+h@{Invader\+Functions.\+h}!how\+Many\+Active@{how\+Many\+Active}}
+\index{how\+Many\+Active@{how\+Many\+Active}!Invader\+Functions.\+h@{Invader\+Functions.\+h}}
+\subsubsection[{how\+Many\+Active(\+Invader invaders[R\+O\+W\+S][C\+O\+L\+S])}]{\setlength{\rightskip}{0pt plus 5cm}int how\+Many\+Active (
+\begin{DoxyParamCaption}
+\item[{{\bf Invader}}]{invaders\mbox{[}\+R\+O\+W\+S\mbox{]}\mbox{[}\+C\+O\+L\+S\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{InvaderFunctions_8h_a09f3f5f4230dec29140992d5128e0f1d}
+
+\begin{DoxyParams}{Parameters}
+{\em invaders} & the 2d array of \hyperlink{structInvader}{Invader} struct objects \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the number of active invaders 
+\end{DoxyReturn}
+\hypertarget{InvaderFunctions_8h_a5ab9b99c14cc7bbe06617e13872abb91}{}\index{Invader\+Functions.\+h@{Invader\+Functions.\+h}!initialize\+Invaders@{initialize\+Invaders}}
+\index{initialize\+Invaders@{initialize\+Invaders}!Invader\+Functions.\+h@{Invader\+Functions.\+h}}
+\subsubsection[{initialize\+Invaders(\+Invader o\+\_\+invaders[R\+O\+W\+S][C\+O\+L\+S])}]{\setlength{\rightskip}{0pt plus 5cm}void initialize\+Invaders (
+\begin{DoxyParamCaption}
+\item[{{\bf Invader}}]{o\+\_\+invaders\mbox{[}\+R\+O\+W\+S\mbox{]}\mbox{[}\+C\+O\+L\+S\mbox{]}}
+\end{DoxyParamCaption}
+)}\label{InvaderFunctions_8h_a5ab9b99c14cc7bbe06617e13872abb91}
+
+
+initialize\+Invaders Initializes invaders to a starting position and making them all active. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em invaders} & the 2d array of \hyperlink{structInvader}{Invader} struct objects \\
+\hline
+\end{DoxyParams}
+\hypertarget{InvaderFunctions_8h_a14fef11a0782eb2645bbca0faa53c572}{}\index{Invader\+Functions.\+h@{Invader\+Functions.\+h}!update\+Invaders@{update\+Invaders}}
+\index{update\+Invaders@{update\+Invaders}!Invader\+Functions.\+h@{Invader\+Functions.\+h}}
+\subsubsection[{update\+Invaders(\+Invader io\+\_\+invaders[R\+O\+W\+S][C\+O\+L\+S], Missile io\+\_\+missiles[M\+I\+S\+S\+I\+L\+E\+S\+N\+U\+M\+B\+E\+R], int $\ast$io\+\_\+freeze, int $\ast$io\+\_\+howfast, int \+\_\+startscreen)}]{\setlength{\rightskip}{0pt plus 5cm}void update\+Invaders (
+\begin{DoxyParamCaption}
+\item[{{\bf Invader}}]{io\+\_\+invaders\mbox{[}\+R\+O\+W\+S\mbox{]}\mbox{[}\+C\+O\+L\+S\mbox{]}, }
+\item[{{\bf Missile}}]{io\+\_\+missiles\mbox{[}\+M\+I\+S\+S\+I\+L\+E\+S\+N\+U\+M\+B\+E\+R\mbox{]}, }
+\item[{int $\ast$}]{io\+\_\+freeze, }
+\item[{int $\ast$}]{io\+\_\+howfast, }
+\item[{int}]{\+\_\+startscreen}
+\end{DoxyParamCaption}
+)}\label{InvaderFunctions_8h_a14fef11a0782eb2645bbca0faa53c572}
+
+
+update\+Invaders 
+
+
+\begin{DoxyParams}{Parameters}
+{\em io\+\_\+invaders} & the 2d array of \hyperlink{structInvader}{Invader} struct objects \\
+\hline
+{\em io\+\_\+missiles} & the array of \hyperlink{structMissile}{Missile} structs (each can be of four different types) \\
+\hline
+{\em io\+\_\+freeze} & if freeze==1 the invaders do no move their position. I will also update freeze. However if I update freeze directly, in middle of iterating through invaders the rest of the invaders will be ofset from the others so I use a new variable\+: freezelagfix. I assign freeze to freezelagfix at bottom of updateinvaders function. \\
+\hline
+{\em io\+\_\+howfast} & the lower howfast is, the faster the invaders move \\
+\hline
+{\em \+\_\+startscreen} & if startscreen==1 then the invader\textquotesingle{}s y position is not incremented \\
+\hline
+\end{DoxyParams}

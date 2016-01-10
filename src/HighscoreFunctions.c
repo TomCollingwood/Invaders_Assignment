@@ -1,71 +1,81 @@
 ///
 ///  @file HighscoreFunctions.c
-///  @brief
+///  @brief all the functions that operate on the highscores
 
 #include "include/HighscoreFunctions.h"
 
-//void drawScore(SDL_Renderer *ren, SDL_Texture *tex,);
+//----------------------------------------------------------------------------------------------------------------------
+void drawScore(SDL_Renderer *_ren, SDL_Texture *_tex, int _score, Highscore _highscores[3])
+{
+  char scoretext[50];
+  sprintf(scoretext,"HIGHSCORE= %d SCORE= %d",_highscores[0].score,_score);
+  drawText(_ren,_tex,scoretext,80,30,1);
+}
 
-void initializeHighscores(Highscore highscores[3])
+//----------------------------------------------------------------------------------------------------------------------
+void initializeHighscores(Highscore _highscores[3])
 {
   for(int i=0; i<3; ++i)
   {
-    strcpy(highscores[i].name,"---");
-    highscores[i].score=0;
+    strcpy(_highscores[i].name,"---");
+    _highscores[i].score=0;
   }
 }
 
-void insertHighscore(Highscore highscores[3],char name[4], int score)
+//----------------------------------------------------------------------------------------------------------------------
+void insertHighscore(Highscore io_highscores[3],char _name[4], int _score)
 {
-  if(score>highscores[0].score)
+  if(_score>io_highscores[0].score)
   {
-    Highscore tmp = highscores[1];
-    highscores[1]=highscores[0];
-    highscores[2]=tmp;
-    strcpy(highscores[0].name,name);
-    highscores[0].score=score;
+    Highscore tmp = io_highscores[1];
+    io_highscores[1]=io_highscores[0];
+    io_highscores[2]=tmp;
+    strcpy(io_highscores[0].name,_name);
+    io_highscores[0].score=_score;
   }
-  else if(score>highscores[1].score)
+  else if(_score>io_highscores[1].score)
   {
-    highscores[2]=highscores[1];
-    strcpy(highscores[1].name,name);
-    highscores[1].score=score;
+    io_highscores[2]=io_highscores[1];
+    strcpy(io_highscores[1].name,_name);
+    io_highscores[1].score=_score;
   }
   else
   {
-    strcpy(highscores[2].name,name);
-    highscores[2].score=score;
+    strcpy(io_highscores[2].name,_name);
+    io_highscores[2].score=_score;
   }
 }
 
-void readHighscores(Highscore highscores[3])
+//----------------------------------------------------------------------------------------------------------------------
+void readHighscores(Highscore io_highscores[3])
 {
   FILE *file;
   if( (file=fopen("other/highscores","r")) ==NULL)
   {
-    printf("could not open highscores file\n");
+    perror("Error: Could not open highscores file\n");
     exit(EXIT_FAILURE);
   }
   for(int i=0; i<3; ++i)
   {
-    fread(&highscores[i].name,sizeof(highscores[i].name),1,file);
-    fread(&highscores[i].score,sizeof(highscores[i].score),1,file);
+    fread(&io_highscores[i].name,sizeof(io_highscores[i].name),1,file);
+    fread(&io_highscores[i].score,sizeof(io_highscores[i].score),1,file);
   }
   fclose(file);
 }
 
-void writeHighscores(Highscore highscores[3])
+//----------------------------------------------------------------------------------------------------------------------
+void writeHighscores(Highscore _highscores[3])
 {
   FILE *file;
   if( (file=fopen("other/highscores","w")) ==NULL)
   {
-    printf("could not open highscores file\n");
+    perror("Error: Could not open highscores file\n");
     exit(EXIT_FAILURE);
   }
   for(int i=0; i<3; ++i)
   {
-    fwrite(&highscores[i].name,sizeof(highscores[i].name),1,file);
-    fwrite(&highscores[i].score,sizeof(highscores[i].score),1,file);
+    fwrite(&_highscores[i].name,sizeof(_highscores[i].name),1,file);
+    fwrite(&_highscores[i].score,sizeof(_highscores[i].score),1,file);
   }
   fclose(file);
 }

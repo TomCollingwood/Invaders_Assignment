@@ -96,38 +96,35 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;SDL.h&gt;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;SDL_image.h&gt;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;Dir.h&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">enum</span> InvaderType{TYPE1,TYPE2,TYPE3,EXPLOSION};</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">enum</span> DIR{FWD,BWD,DWNFWD,DWNBWD,UP,DOWN};</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#define SPRITEWIDTH 36</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#define SPRITEHEIGHT 24</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#define COLS 11</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define ROWS 5</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define GAP 12</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="structInvader.html">   24</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="structInvader.html#aa2028665eb1a567b754596ea72e76855">   26</a></span>&#160;  SDL_Rect <a class="code" href="structInvader.html#aa2028665eb1a567b754596ea72e76855">pos</a>; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">int</span> active;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordtype">int</span> frame;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keywordtype">int</span> sprite;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keyword">enum</span> DIR direction;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keyword">enum</span> InvaderType type;</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="structInvader.html#aa09d48ba0bdf587a6532711c226594c7">   32</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="structInvader.html#aa09d48ba0bdf587a6532711c226594c7">explosionframe</a>; </div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="structInvader.html#ae58a7596b4a32ba1f3a23941b1fc6995">   33</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="structInvader.html#ae58a7596b4a32ba1f3a23941b1fc6995">bottom</a>; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}<a class="code" href="structInvader.html">Invader</a>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="structInvader_html_aa09d48ba0bdf587a6532711c226594c7"><div class="ttname"><a href="structInvader.html#aa09d48ba0bdf587a6532711c226594c7">Invader::explosionframe</a></div><div class="ttdeci">int explosionframe</div><div class="ttdef"><b>Definition:</b> Invader.h:32</div></div>
-<div class="ttc" id="structInvader_html_aa2028665eb1a567b754596ea72e76855"><div class="ttname"><a href="structInvader.html#aa2028665eb1a567b754596ea72e76855">Invader::pos</a></div><div class="ttdeci">SDL_Rect pos</div><div class="ttdef"><b>Definition:</b> Invader.h:26</div></div>
-<div class="ttc" id="structInvader_html_ae58a7596b4a32ba1f3a23941b1fc6995"><div class="ttname"><a href="structInvader.html#ae58a7596b4a32ba1f3a23941b1fc6995">Invader::bottom</a></div><div class="ttdeci">int bottom</div><div class="ttdef"><b>Definition:</b> Invader.h:33</div></div>
-<div class="ttc" id="structInvader_html"><div class="ttname"><a href="structInvader.html">Invader</a></div><div class="ttdef"><b>Definition:</b> Invader.h:24</div></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">enum</span> InvaderType{TYPE1,TYPE2,TYPE3,EXPLOSION};</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">enum</span> DIR{FWD,BWD,DWNFWD,DWNBWD,UP,DOWN};</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define SPRITEWIDTH 36</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define SPRITEHEIGHT 24</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#define COLS 11</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#define ROWS 5</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#define GAP 12</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="structInvader.html">   22</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  SDL_Rect pos;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">int</span> active;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordtype">int</span> frame;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">int</span> sprite;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keyword">enum</span> DIR direction;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keyword">enum</span> InvaderType type;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="structInvader.html#aa09d48ba0bdf587a6532711c226594c7">   30</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="structInvader.html#aa09d48ba0bdf587a6532711c226594c7">explosionframe</a>; </div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="structInvader.html#ae58a7596b4a32ba1f3a23941b1fc6995">   31</a></span>&#160;  <span class="keywordtype">int</span> <a class="code" href="structInvader.html#ae58a7596b4a32ba1f3a23941b1fc6995">bottom</a>; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}<a class="code" href="structInvader.html">Invader</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="structInvader_html_aa09d48ba0bdf587a6532711c226594c7"><div class="ttname"><a href="structInvader.html#aa09d48ba0bdf587a6532711c226594c7">Invader::explosionframe</a></div><div class="ttdeci">int explosionframe</div><div class="ttdef"><b>Definition:</b> Invader.h:30</div></div>
+<div class="ttc" id="structInvader_html_ae58a7596b4a32ba1f3a23941b1fc6995"><div class="ttname"><a href="structInvader.html#ae58a7596b4a32ba1f3a23941b1fc6995">Invader::bottom</a></div><div class="ttdeci">int bottom</div><div class="ttdef"><b>Definition:</b> Invader.h:31</div></div>
+<div class="ttc" id="structInvader_html"><div class="ttname"><a href="structInvader.html">Invader</a></div><div class="ttdef"><b>Definition:</b> Invader.h:22</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Dec 18 2015 16:23:58 for “Invaders_Assignment” by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 10 2016 17:21:21 for “Invaders_Assignment” by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.10
 </small></address>

@@ -1,10 +1,11 @@
 ///
 ///  @file MissileAndCollisionFunctions.c
-///  @brief
+///  @brief all the functions that operate directly with the missiles
 
 #include "include/MissileAndCollisionFunctions.h"
 
-void drawMissiles(SDL_Renderer *ren, SDL_Texture *tex, Missile missiles[])
+//----------------------------------------------------------------------------------------------------------------------
+void drawMissiles(SDL_Renderer *_ren, SDL_Texture *_tex, Missile _missiles[])
 {
   SDL_Rect SrcZIGZAGS0;
   SrcZIGZAGS0.x=0;
@@ -79,124 +80,129 @@ void drawMissiles(SDL_Renderer *ren, SDL_Texture *tex, Missile missiles[])
   SrcSNAKES3.h=24;
 
 
-  SDL_SetRenderDrawColor(ren, 255, 255, 255, 255);
+  SDL_SetRenderDrawColor(_ren, 255, 255, 255, 255);
 
   for(int m=0; m<MISSILESNUMBER; ++m)
   {
-    if(missiles[m].active)
+    if(_missiles[m].active)
     {
-      if(missiles[m].type == DEFENDER)
+      if(_missiles[m].type == DEFENDER)
       {
-        SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
-        SDL_RenderFillRect(ren,&missiles[m].pos);
+        SDL_SetRenderDrawColor(_ren, 0, 255, 0, 255);
+        SDL_RenderFillRect(_ren,&_missiles[m].pos);
       }
 
-      else if(missiles[m].type == ZIGZAG)
+      else if(_missiles[m].type == ZIGZAG)
       {
-        if(missiles[m].sprite==0)
+        if(_missiles[m].sprite==0)
         {
-          SDL_RenderCopy(ren, tex,&SrcZIGZAGS0,&missiles[m].pos);
+          SDL_RenderCopy(_ren, _tex,&SrcZIGZAGS0,&_missiles[m].pos);
         }
-        else if(missiles[m].sprite==1)
+        else if(_missiles[m].sprite==1)
         {
-          SDL_RenderCopy(ren, tex,&SrcZIGZAGS1,&missiles[m].pos);
+          SDL_RenderCopy(_ren, _tex,&SrcZIGZAGS1,&_missiles[m].pos);
         }
-        else if(missiles[m].sprite==2)
+        else if(_missiles[m].sprite==2)
         {
-          SDL_RenderCopy(ren, tex,&SrcZIGZAGS2,&missiles[m].pos);
+          SDL_RenderCopy(_ren, _tex,&SrcZIGZAGS2,&_missiles[m].pos);
         }
         else
         {
-          SDL_RenderCopy(ren, tex,&SrcZIGZAGS3,&missiles[m].pos);
+          SDL_RenderCopy(_ren, _tex,&SrcZIGZAGS3,&_missiles[m].pos);
         }
       }
 
-      else if(missiles[m].type == LETTERT)
+      else if(_missiles[m].type == LETTERT)
       {
-        if(missiles[m].sprite==0)
+        if(_missiles[m].sprite==0)
         {
-          SDL_RenderCopy(ren, tex,&SrcLETTERTS0,&missiles[m].pos);
+          SDL_RenderCopy(_ren, _tex,&SrcLETTERTS0,&_missiles[m].pos);
         }
-        else if(missiles[m].sprite==1)
+        else if(_missiles[m].sprite==1)
         {
-          SDL_RenderCopy(ren, tex,&SrcLETTERTS1,&missiles[m].pos);
+          SDL_RenderCopy(_ren, _tex,&SrcLETTERTS1,&_missiles[m].pos);
         }
-        else if(missiles[m].sprite==2)
+        else if(_missiles[m].sprite==2)
         {
-          SDL_RenderCopy(ren, tex,&SrcLETTERTS2,&missiles[m].pos);
+          SDL_RenderCopy(_ren, _tex,&SrcLETTERTS2,&_missiles[m].pos);
         }
         else
         {
-          SDL_RenderCopy(ren, tex,&SrcLETTERTS3,&missiles[m].pos);
+          SDL_RenderCopy(_ren, _tex,&SrcLETTERTS3,&_missiles[m].pos);
         }
       }
 
       else
       {
-        if(missiles[m].sprite==0)
+        if(_missiles[m].sprite==0)
         {
-          SDL_RenderCopy(ren, tex,&SrcSNAKES0,&missiles[m].pos);
+          SDL_RenderCopy(_ren, _tex,&SrcSNAKES0,&_missiles[m].pos);
         }
-        else if(missiles[m].sprite==1)
+        else if(_missiles[m].sprite==1)
         {
-          SDL_RenderCopy(ren, tex,&SrcSNAKES1,&missiles[m].pos);
+          SDL_RenderCopy(_ren, _tex,&SrcSNAKES1,&_missiles[m].pos);
         }
-        else if(missiles[m].sprite==2)
+        else if(_missiles[m].sprite==2)
         {
-          SDL_RenderCopy(ren, tex,&SrcSNAKES2,&missiles[m].pos);
+          SDL_RenderCopy(_ren, _tex,&SrcSNAKES2,&_missiles[m].pos);
         }
         else
         {
-          SDL_RenderCopy(ren, tex,&SrcSNAKES3,&missiles[m].pos);
+          SDL_RenderCopy(_ren, _tex,&SrcSNAKES3,&_missiles[m].pos);
         }
       }
     }
   }
 }
 
-void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender *defender, \
-                      int *freeze, int *score, int frame)
+//----------------------------------------------------------------------------------------------------------------------
+void updateCollisions(Missile io_missiles[], Invader io_invaders[ROWS][COLS], Defender *io_defender, \
+                      int *o_freeze, int *o_score, int _frame)
 {
   for(int m=0; m<MISSILESNUMBER; ++m)
   {
-    if(missiles[m].type == DEFENDER && missiles[m].active)
+    if(io_missiles[m].type == DEFENDER && io_missiles[m].active)
     {
       int hit = 0;
       for(int r=0; r<ROWS; ++r)
       {
         for(int c=0; c<COLS; ++c)
         {
-          if(invaders[r][c].active)
+          if(io_invaders[r][c].active)
           {
-            int misX = missiles[m].pos.x;
-            int invX = invaders[r][c].pos.x;
-            int invW = invaders[r][c].pos.w;
-            int misY = missiles[m].pos.y;
-            int invY = invaders[r][c].pos.y;
-            int misH = missiles[m].pos.h;
+            int misX = io_missiles[m].pos.x;
+            int invX = io_invaders[r][c].pos.x;
+            int invW = io_invaders[r][c].pos.w;
+            int misY = io_missiles[m].pos.y;
+            int invY = io_invaders[r][c].pos.y;
+            int misH = io_missiles[m].pos.h;
 
             // we check the hit variable below as this makes sure only one invader is
             // destroyed per missile
             if ((misX > invX) && (misX < invX+invW) && (misY-misH < invY) && hit ==0)
             {
               // add to score here
-              if(invaders[r][c].type==TYPE1)
+              if(io_invaders[r][c].type==TYPE1)
               {
-                (frame<3000) ? (*score)+=((-0.1)*frame+400) : (*score+=100);
+                (_frame<3000) ? (*o_score)+=((-0.1)*_frame+400) : (*o_score+=100);
               }
-              else if(invaders[r][c].type==TYPE2)
+              else if(io_invaders[r][c].type==TYPE2)
               {
-                (frame<3000) ? (*score)+=((-0.05)*frame+200) : (*score+=50);
+                (_frame<3000) ? (*o_score)+=((-0.05)*_frame+200) : (*o_score+=50);
               }
               else
               {
-                (frame<3000) ? (*score)+=((-0.025)*frame+100) : (*score+=25);
+                (_frame<3000) ? (*o_score)+=((-0.025)*_frame+100) : (*o_score+=25);
               }
 
-              invaders[r][c].type = EXPLOSION;
-              (*freeze) = 1;
-              missiles[m].active = 0;
+              io_invaders[r][c].type = EXPLOSION;
+              (*o_freeze) = 1;
+              io_missiles[m].active = 0;
               hit = 1;
+
+              // sound effect - be sure to "Run in terminal" to hear it
+              printf("\a");
+              fflush(stdout);
 
               // below updates the bottom variable for the invader
               // above the one destroyed
@@ -204,9 +210,9 @@ void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender
               {
                 for(int i=r-1; i>=0; --i)
                 {
-                  if(invaders[i][c].active)
+                  if(io_invaders[i][c].active)
                   {
-                    invaders[i][c].bottom=1;
+                    io_invaders[i][c].bottom=1;
                     break;
                   }
                 }
@@ -218,57 +224,58 @@ void updateCollisions(Missile missiles[], Invader invaders[ROWS][COLS], Defender
     }
     // else missile's direction is DOWN
     // we check defender collision
-    else if (missiles[m].active)
+    else if (io_missiles[m].active)
     {
-      int misX = missiles[m].pos.x;
-      int misY = missiles[m].pos.y;
-      int defX = defender->pos.x;
-      int defY = defender->pos.y;
-      int defW = defender->pos.w;
-      int defH = defender->pos.h;
+      int misX = io_missiles[m].pos.x;
+      int misY = io_missiles[m].pos.y;
+      int defX = io_defender->pos.x;
+      int defY = io_defender->pos.y;
+      int defW = io_defender->pos.w;
+      int defH = io_defender->pos.h;
 
-      if ((misX > defX) && (misX < defX+defW) && (misY < defY +defH) && (misY > defY) && defender->active)
+      if ((misX > defX) && (misX < defX+defW) && (misY < defY +defH) && (misY > defY) && io_defender->active)
       {
-        defender->sprite = 1;
-        defender->active=0;
+        io_defender->sprite = 1;
+        io_defender->active=0;
         // exploded sprite is slightly wider than normal sprite
-        defender->pos.w=EXPLODEDDEFENDERWIDTH;
-        missiles[m].active = 0;
+        io_defender->pos.w=EXPLODEDDEFENDERWIDTH;
+        io_missiles[m].active = 0;
 
       }
     }
   }
 }
 
-void updateMissiles(Missile missiles[])
+//----------------------------------------------------------------------------------------------------------------------
+void updateMissiles(Missile io_missiles[])
 {
   for(int m=0; m<MISSILESNUMBER; ++m)
   {
-    if((missiles[m].pos.y < 0 || missiles[m].pos.y >HEIGHT) && missiles[m].active)
+    if((io_missiles[m].pos.y < 0 || io_missiles[m].pos.y >HEIGHT) && io_missiles[m].active)
     {
-      missiles[m].active = 0;
+      io_missiles[m].active = 0;
     }
-    if(missiles[m].active)
+    if(io_missiles[m].active)
     {
-      missiles[m].frame++;
-      if(missiles[m].dir == UP)
+      io_missiles[m].frame++;
+      if(io_missiles[m].dir == UP)
       {
-        missiles[m].pos.y += -15;
+        io_missiles[m].pos.y += -15;
       }
-      else if (missiles[m].dir == DOWN)
+      else if (io_missiles[m].dir == DOWN)
       {
-        missiles[m].pos.y += 5;
+        io_missiles[m].pos.y += 5;
       }
 
       // animate sprites
-      if(missiles[m].frame%3==0)
+      if(io_missiles[m].frame%3==0)
       {
-        if(missiles[m].sprite==3)
+        if(io_missiles[m].sprite==3)
         {
-          missiles[m].sprite=0;
+          io_missiles[m].sprite=0;
         }
         else{
-          missiles[m].sprite++;
+          io_missiles[m].sprite++;
         }
       }
     }

@@ -14,12 +14,9 @@ HEADERS += \
     include/Missile.h \
     include/Invader.h \
     include/Dimensions.h \
-    include/Dir.h \
     include/Direction.h \
-    include/DrawText.h \
     include/Headers.h \
     include/Highscore.h \
-    include/SelectLetter.h \
     include/InvaderFunctions.h \
     include/DefenderFunctions.h \
     include/BarrierFunctions.h \

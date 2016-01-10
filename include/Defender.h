@@ -1,6 +1,6 @@
 /// \file Defender.h
 /// \brief structure for Defender - the object the player controls and shoots from
-/// \author Thomas Collingwood
+/// \author Jon Macey & Thomas Collingwood
 /// \version 1.0
 /// \date 9/12/15 Updated to NCCA Coding standard
 
