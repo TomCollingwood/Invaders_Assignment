@@ -364,7 +364,7 @@ void updateInvaders(Invader io_invaders[ROWS][COLS], Missile io_missiles[MISSILE
         io_invaders[r][c].explosionframe++;
       }
       // we limit the explosion to 3 frames below
-      if(io_invaders[r][c].type == EXPLOSION && io_invaders[r][c].explosionframe > 15 && io_invaders[r][c].active)
+      if(io_invaders[r][c].type == EXPLOSION && io_invaders[r][c].explosionframe > 6 && io_invaders[r][c].active)
       {
         io_invaders[r][c].active = 0;
         // If I update freeze directly in middle of iterating through invaders
